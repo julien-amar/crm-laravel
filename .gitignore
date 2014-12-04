@@ -1,0 +1,4 @@
+/src/bootstrap/compiled.php
+/src/vendor
+composer.phar
+composer.lock
