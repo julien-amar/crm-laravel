@@ -7,6 +7,8 @@
   <title>Authentication App With Laravel 4</title>
 
   {{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
+  {{ HTML::style('packages/bootstrap/css/bootstrap.sidebar.css') }}
+  {{ HTML::style('packages/bootstrap/css/bootstrap.datepicker.css') }}
   {{ HTML::style('css/main.css')}}
 </head>
 
@@ -59,7 +61,7 @@
 
 
 
-<div class="container">
+<div class="page-container">
   @if(Session::has('message'))
   <p class="alert alert-warning">{{ Session::get('message') }}</p>
   @endif
@@ -69,6 +71,16 @@
 
 {{ HTML::script('packages/jquery/js/jquery.min.js') }}
 {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
+{{ HTML::script('packages/bootstrap/js/bootstrap.datepicker.js') }}
 {{ HTML::script('js/bootstrap.ext.js') }}
+
+<!-- Menu Toggle Script -->
+<script>
+$("#advanced-search").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+});
+</script>
+
 </body>
 </html>
