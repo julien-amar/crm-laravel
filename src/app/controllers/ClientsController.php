@@ -12,29 +12,29 @@ class ClientsController extends BaseController {
                 $results = DB::table('clients')
                         ->get();
 
-                $this->layout->content = View::make('clients.list', array(
+                return View::make('clients.list', array(
                         'results' => $results
                 ));
         }
 
 	public function getCreate() {
-                $this->layout->content = View::make('clients.create');
+                return View::make('clients.create');
         }
 
 	public function getEdit() {
-                $this->layout->content = View::make('clients.edit');
+                return View::make('clients.edit');
         }
 
 	public function getDelete() {
-                $this->layout->content = View::make('clients.delete');
+                return View::make('clients.delete');
         }
 
 	public function getImport() {
-                $this->layout->content = View::make('clients.import');
+                return View::make('clients.import');
         }
 
 	public function getRelances() {
-                $this->layout->content = View::make('clients.relances');
+                return View::make('clients.relances');
         }
 }
 

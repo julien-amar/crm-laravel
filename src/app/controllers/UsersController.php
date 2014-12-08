@@ -9,7 +9,7 @@ class UsersController extends BaseController {
 	}
 
 	public function getRegister() {
-		$this->layout->content = View::make('users.register');
+		return View::make('users.register');
 	}
 
 	public function postCreate() {
@@ -40,7 +40,7 @@ class UsersController extends BaseController {
 	}
 
 	public function getLogin() {
-		$this->layout->content = View::make('users.login');
+		return View::make('users.login');
 	}
 
 	public function postSignin() {
@@ -64,7 +64,7 @@ class UsersController extends BaseController {
 	public function getAuthentication() {
 		$users = DB::table('users')->get();
 
-		$this->layout->content = View::make('users.authentication', array(
+		return View::make('users.authentication', array(
 			'users' => $users,
 			'userId' => Auth::user()->id
 		));
@@ -82,7 +82,7 @@ class UsersController extends BaseController {
 	}
 
 	public function getDashboard() {
-		$this->layout->content = View::make('users.dashboard');
+		return View::make('users.dashboard');
 	}
 
 	public function getLogout() {

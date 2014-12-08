@@ -1,13 +1,16 @@
+@extends('layouts.standard')
+
+@section('content')
 <div class="row">
-	<div class="col-lg-12">
-		<div class="page-header">
-			<h1>{{ trans('clients.form.edit.title') }}</h1>
-		</div>
-	</div>
+    <div class="col-md-4 col-md-offset-4">
+        <h1 class="page-header">{{ trans('clients.form.edit.title') }}</h1>
+    </div>
+    <!-- /.col-lg-12 -->
 </div>
+<!-- /.row -->
 
 <div class="row">
-	<div class="col-lg-12">
+    <div class="col-md-4 col-md-offset-4">
 		{{ Form::open(array('url' => 'clients/edit', 'class' => 'form-edit')) }}
 
 		@if (!empty($errors->count()))
@@ -84,7 +87,7 @@
 			{{ Form::label('lastname', trans('clients.form.edit.fields.lastname')) }}
 			{{ Form::text('lastname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.lastname.default') )) }}
 		</div>
-		
+
 		<div class="form-group">
 			{{ Form::label('firstname', trans('clients.form.edit.fields.firstname')) }}
 			{{ Form::text('firstname', array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.firstname.default') )) }}
@@ -176,3 +179,4 @@
 		{{ Form::close() }}
 	</div>
 </div>
+@stop

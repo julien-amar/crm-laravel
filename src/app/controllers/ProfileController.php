@@ -25,7 +25,7 @@ class ProfileController extends BaseController {
 	public function getProfiles() {
 		$users = DB::table('users')->get();
 
-        $this->layout->content = View::make('profiles.profiles', array(
+        return View::make('profiles.profiles', array(
         	'users' => $users
     	));
     }
@@ -35,7 +35,7 @@ class ProfileController extends BaseController {
 
 		$user = $this->getUser();
 
-        $this->layout->content = View::make('profiles.profile', array(
+        return View::make('profiles.profile', array(
         	'user' => $user,
         	'emails' => $emails
     	));

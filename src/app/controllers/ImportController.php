@@ -9,7 +9,7 @@ class ImportController extends BaseController {
 	}
 
 	public function getData() {
-		$this->layout->content = View::make('import.import');
+		return View::make('import.import');
 	}
 
 	public function postData() {
