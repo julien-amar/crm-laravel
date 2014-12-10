@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>{{ trans('main.menu.brand') }}</title>
 
     <!-- Bootstrap Core CSS -->
     {{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
@@ -35,9 +35,7 @@
 <body>
 
     <div class="container">
-        @if(Session::has('message'))
-            <p class="alert alert-warning">{{ Session::get('message') }}</p>
-        @endif
+        @include('layouts.alerts')
 
         @yield('content')
     </div>

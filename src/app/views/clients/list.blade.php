@@ -76,11 +76,28 @@
 		{{ Form::open(array('url' => 'client/search', 'class' => 'form-search', 'role' => 'form')) }}
         <ul class="nav" id="side-menu">
             <li>
-                <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dates</a>
-            </li>
-            <li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-phone fa-fw"></i> {{ trans('clients.form.advanced-search.category.date') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
+					<li>
+						{{ Form::label('firstname', trans('clients.form.advanced-search.fields.firstname')) }}
+						{{ Form::text('firstname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.firstname.default') )) }}
+					</li>
+
+					<li>
+						{{ Form::label('lastname', trans('clients.form.advanced-search.fields.lastname')) }}
+						{{ Form::text('lastname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.lastname.default') )) }}
+					</li>
+
+					<li>
+						{{ Form::label('email', trans('clients.form.advanced-search.fields.email')) }}
+						{{ Form::text('email', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.email.default') )) }}
+					</li>
+
+					<li>
+						{{ Form::label('phone', trans('clients.form.advanced-search.fields.phone')) }}
+						{{ Form::text('phone', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.phone.default') )) }}
+					</li>
+
 					<li>
 						{{ Form::label('birthday', trans('clients.form.advanced-search.fields.birthday')) }}<br />
 						From :
@@ -120,34 +137,24 @@
 						To :
 						{{ Form::text('update-date', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default') )) }}
 					</li>
+
+					<li>
+						{{ Form::label('comment', trans('clients.form.advanced-search.fields.comment')) }}
+						{{ Form::textarea('comment', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.comment.default') )) }}
+					</li>
 				</ul>
 			</li>
 			<li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Chaines de charactère<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-edit fa-fw"></i> {{ trans('clients.form.advanced-search.category.address') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
+					<li>
+						{{ Form::label('company', trans('clients.form.advanced-search.fields.company')) }}
+						{{ Form::text('company', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.company.default') )) }}
+					</li>
+
 					<li>
 						{{ Form::label('street', trans('clients.form.advanced-search.fields.street')) }}
 						{{ Form::text('street', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.street.default') )) }}
-					</li>
-
-					<li>
-						{{ Form::label('firstname', trans('clients.form.advanced-search.fields.firstname')) }}
-						{{ Form::text('firstname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.firstname.default') )) }}
-					</li>
-
-					<li>
-						{{ Form::label('lastname', trans('clients.form.advanced-search.fields.lastname')) }}
-						{{ Form::text('lastname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.lastname.default') )) }}
-					</li>
-
-					<li>
-						{{ Form::label('email', trans('clients.form.advanced-search.fields.email')) }}
-						{{ Form::text('email', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.email.default') )) }}
-					</li>
-
-					<li>
-						{{ Form::label('phone', trans('clients.form.advanced-search.fields.phone')) }}
-						{{ Form::text('phone', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.phone.default') )) }}
 					</li>
 
 					<li>
@@ -159,32 +166,11 @@
 						{{ Form::label('zip-code', trans('clients.form.advanced-search.fields.zip-code')) }}
 						{{ Form::text('zip-code', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.zip-code.default') )) }}
 					</li>
-
-					<li>
-						{{ Form::label('company', trans('clients.form.advanced-search.fields.company')) }}
-						{{ Form::text('company', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.company.default') )) }}
-					</li>
-
-					<li>
-						{{ Form::label('state', trans('clients.form.advanced-search.fields.state')) }}
-						{{ Form::text('state', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.state.default') )) }}
-					</li>
 				</ul>
 			</li>
 
 			<li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Commentaires<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-
-					<li>
-						{{ Form::label('comment', trans('clients.form.advanced-search.fields.comment')) }}
-						{{ Form::text('comment', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.comment.default') )) }}
-					</li>
-				</ul>
-			</li>
-
-			<li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Choix multiples<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-users fa-fw"></i> {{ trans('clients.form.advanced-search.category.offer') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
 					<li>
 						{{ Form::label('user', trans('clients.form.advanced-search.fields.user')) }}
@@ -210,11 +196,15 @@
 						{{ Form::label('surface', trans('clients.form.advanced-search.fields.surface')) }}
 						{{ Form::text('surface', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
 					</li>
+
+					<li>
+						{{ Form::label('state', trans('clients.form.advanced-search.fields.state')) }}
+						{{ Form::text('state', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.state.default') )) }}
+					</li>
 				</ul>
 			</li>
 
 			<li class="form-group pull-right">
-
 				{{ Form::reset(trans('clients.form.advanced-search.reset'), array('class'=>'btn btn-large btn-info'))}}
 				{{ Form::submit(trans('clients.form.advanced-search.submit'), array('class'=>'btn btn-large btn-primary'))}}
 				{{ Form::hidden('_token', csrf_token(), array()) }}

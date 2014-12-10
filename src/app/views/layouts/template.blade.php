@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>{{ trans('main.menu.brand') }}</title>
 
     <!-- Bootstrap Core CSS -->
     {{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
@@ -51,7 +51,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#" title="Gestion de la relation client">Cross Immobilier</a>
+                <a class="navbar-brand" href="#" title="Gestion de la relation client">{{ trans('main.menu.brand') }}</a>
             </div>
             <!-- /.navbar-header -->
 

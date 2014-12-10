@@ -1,6 +1,8 @@
 <?php
 
 return array(
+	'menu.brand' => 'Cross Immobilier',
+	
 	'menu.client' => 'Clients',
 	'menu.import' => 'Import',
 	'menu.profile' => 'Profile',

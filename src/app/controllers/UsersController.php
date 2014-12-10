@@ -78,7 +78,8 @@ class UsersController extends BaseController {
 		Auth::loginUsingId($userId);
 
 
-		return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
+		return Redirect::to('users/dashboard')
+			->with('message', 'You are now logged in!');
 	}
 
 	public function getDashboard() {
@@ -88,7 +89,8 @@ class UsersController extends BaseController {
 	public function getLogout() {
 		Auth::logout();
 
-		return Redirect::to('users/login')->with('message', 'Your are now logged out!');
+		return Redirect::to('users/login')
+			->with('message', 'Your are now logged out!');
 	}
 }
 
