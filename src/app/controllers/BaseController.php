@@ -15,4 +15,19 @@ class BaseController extends Controller {
 		}
 	}
 
+	protected function HasOriginalUserAdminRole()
+	{
+		return Session::get('user.original')->admin;
+	}
+
+	protected function HasAdminRole()
+	{
+		return Auth::user()->admin;
+	}
+
+	protected function RedirectToLoginPage() {
+		return Redirect::to('users/login')
+			->with('message', 'Access denied.') // TODO : Translate
+			->with('message.type', 'danger');
+	}
 }

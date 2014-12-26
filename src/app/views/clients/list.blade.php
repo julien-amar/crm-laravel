@@ -101,41 +101,41 @@
 					<li>
 						{{ Form::label('birthday', trans('clients.form.advanced-search.fields.birthday')) }}<br />
 						From :
-						{{ Form::text('birthday', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default') )) }}
+						{{ Form::text('birthday-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default') )) }}
 						To :
-						{{ Form::text('birthday', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default') )) }}
+						{{ Form::text('birthday-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default') )) }}
 					</li>
 
 					<li>
 						{{ Form::label('last-call', trans('clients.form.advanced-search.fields.last-call')) }}<br />
 						From :
-						{{ Form::text('last-call', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default') )) }}
+						{{ Form::text('last-call-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default') )) }}
 						To :
-						{{ Form::text('last-call', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default') )) }}
+						{{ Form::text('last-call-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default') )) }}
 					</li>
 
 					<li>
 						{{ Form::label('next-call', trans('clients.form.advanced-search.fields.next-call')) }}<br />
 						From :
-						{{ Form::text('next-call', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default') )) }}
+						{{ Form::text('next-call-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default') )) }}
 						To :
-						{{ Form::text('next-call', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default') )) }}
+						{{ Form::text('next-call-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default') )) }}
 					</li>
 
 					<li>
 						{{ Form::label('creation-date', trans('clients.form.advanced-search.fields.creation-date')) }}<br />
 						From :
-						{{ Form::text('creation-date', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default') )) }}
+						{{ Form::text('creation-date-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default') )) }}
 						To :
-						{{ Form::text('creation-date', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default') )) }}
+						{{ Form::text('creation-date-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default') )) }}
 					</li>
 
 					<li>
 						{{ Form::label('update-date', trans('clients.form.advanced-search.fields.update-date')) }}<br />
 						From :
-						{{ Form::text('update-date', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default') )) }}
+						{{ Form::text('update-date-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default') )) }}
 						To :
-						{{ Form::text('update-date', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default') )) }}
+						{{ Form::text('update-date-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default') )) }}
 					</li>
 
 					<li>
@@ -207,6 +207,7 @@
 			<li class="form-group pull-right">
 				{{ Form::reset(trans('clients.form.advanced-search.reset'), array('class'=>'btn btn-large btn-info'))}}
 				{{ Form::submit(trans('clients.form.advanced-search.submit'), array('class'=>'btn btn-large btn-primary'))}}
+				
 				{{ Form::hidden('_token', csrf_token(), array()) }}
 			</li>
         </ul>

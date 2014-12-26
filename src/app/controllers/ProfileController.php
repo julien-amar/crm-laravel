@@ -4,26 +4,24 @@ class ProfileController extends BaseController {
 	protected $layout = "layouts.main";
 
 	private function getUser() {
-		if (Session::get('user.original')->admin && Input::has('user_id'))
+		if ($this->HasOriginalUserAdminRole() && Input::has('user_id'))
 			$id = Input::get('user_id');
 		else
 			$id = Auth::user()->id;
 		
-		$user = DB::table('users')
-			->where('id', '=', $id)
-			->get();
+		$user = User::find($id);
 
-		return $user[0];
+		return $user;
 	}
 
 	public function __construct() {
 		$this->beforeFilter('csrf', array('on' => 'post'));
 		$this->beforeFilter('auth');
+		$this->beforeFilter('hasOriginalUserAdminRole', array('only' => array('getProfiles')));
 	}
 
-	// TODO : Admin only
 	public function getProfiles() {
-		$users = DB::table('users')->get();
+		$users = User::all();
 
         return View::make('profiles.profiles', array(
         	'users' => $users
@@ -42,21 +40,51 @@ class ProfileController extends BaseController {
     }
 
 	public function postProfile() {
-		// TODO : Vérifier que l'on change les datas du user courant & qu'on a le droit
-		$user = $this->getUser();
+		$validator = Validator::make(Input::all(), User::$rules['profile']);
 
-		return Redirect::to('profile/profile')
-			->with('message', 'User profile updated successfully.')
-			->withInput();
+		if ($validator->passes()) {
+			$user = $this->getUser();
+
+			$user->fullname = Input::get('fullname');
+			$user->email = Input::get('email');
+			$user->phone = Input::get('phone');
+			$user->address = Input::get('address');
+
+			$user->save();
+
+			return Redirect::to('profile/profile')
+				->with('message', 'User profile updated successfully.') // TODO : Translate
+				->with('message-type', 'success');
+		} else {
+			return Redirect::to('profile/profile')
+				->with('message', 'The following errors occurred') // TODO : Translate
+				->with('message-type', 'danger')
+				->withErrors($validator)
+				->withInput();
+		}
     }
 
 	public function postPassword() {
-		// TODO : Vérifier que l'on change les datas du user courant & qu'on a le droit :)
+		$validator = Validator::make(Input::all(), User::$rules['password']);
+
 		$user = $this->getUser();
 
-		return Redirect::to('profile/profile')
-			->with('message', 'User profile updated successfully.')
-			->withInput();
+		if ($validator->passes() && Auth::attempt(array('login' => $user->login, 'password' => Input::get('password_old'))))
+		{
+			$user->password = Hash::make(Input::get('password'));
+
+			$user->save();
+
+			return Redirect::to('profile/profile')
+				->with('message', 'User profile updated successfully.') // TODO : Translate
+				->with('message-type', 'success');
+		} else {
+			return Redirect::to('profile/profile')
+				->with('message', 'The following errors occurred') // TODO : Translate
+				->with('message-type', 'danger')
+				->withErrors($validator)
+				->withInput();
+		}
     }
 }
 

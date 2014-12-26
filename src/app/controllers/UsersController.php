@@ -6,6 +6,10 @@ class UsersController extends BaseController {
 	public function __construct() {
 		$this->beforeFilter('csrf', array('on' => 'post'));
 		$this->beforeFilter('auth', array('only' => array('getDashboard')));
+		$this->beforeFilter('hasOriginalUserAdminRole', array('only' => array(
+			'getAuthentication',
+			'postImpersonate'
+		)));
 	}
 
 	public function getRegister() {
@@ -13,7 +17,7 @@ class UsersController extends BaseController {
 	}
 
 	public function postCreate() {
-		$validator = Validator::make(Input::all(), User::$rules);
+		$validator = Validator::make(Input::all(), User::$rules['register']);
 
 		if ($validator->passes()) {
 			$user = new User;
@@ -30,10 +34,12 @@ class UsersController extends BaseController {
 			$user->save();
 
 			return Redirect::to('users/login')
-				->with('message', 'Thanks for registering!');
+				->with('message', 'Thanks for registering!') // TODO : Translate
+				->with('message-type', 'success');
 		} else {
 			return Redirect::to('users/register')
-				->with('message', 'The following errors occurred')
+				->with('message', 'The following errors occurred') // TODO : Translate
+				->with('message-type', 'danger')
 				->withErrors($validator)
 				->withInput();
 		}
@@ -52,17 +58,19 @@ class UsersController extends BaseController {
 				return Redirect::to('users/authentication');
 			} else {
 				return Redirect::to('users/dashboard')
-					->with('message', 'You are now logged in!');
+					->with('message', 'You are now logged in!') // TODO : Translate
+					->with('message-type', 'success');
 			}
 		} else {
 			return Redirect::to('users/login')
-				->with('message', 'Your username/password combination was incorrect')
+				->with('message', 'Your username/password combination was incorrect') // TODO : Translate
+				->with('message-type', 'danger')
 				->withInput();
 		}
 	}
 
 	public function getAuthentication() {
-		$users = DB::table('users')->get();
+		$users = User::all();
 
 		return View::make('users.authentication', array(
 			'users' => $users,
@@ -71,15 +79,13 @@ class UsersController extends BaseController {
 	}
 
 	public function postImpersonate() {
-		// TODO : Verifier qu'on est logge et admin
 		$userId = Input::get('authenticate_id');
 
-		// TODO : Verifier que le user existe
 		Auth::loginUsingId($userId);
 
-
 		return Redirect::to('users/dashboard')
-			->with('message', 'You are now logged in!');
+			->with('message', 'You are now logged in!') // TODO : Translate
+			->with('message-type', 'success');
 	}
 
 	public function getDashboard() {
@@ -90,7 +96,8 @@ class UsersController extends BaseController {
 		Auth::logout();
 
 		return Redirect::to('users/login')
-			->with('message', 'Your are now logged out!');
+			->with('message', 'Your are now logged out!') // TODO : Translate
+			->with('message-type', 'success');
 	}
 }
 

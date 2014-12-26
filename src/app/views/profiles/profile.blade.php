@@ -14,6 +14,8 @@
         {{ Form::open(array('url' => 'profile/profile', 'class' => 'form-signin', 'role' => 'form')) }}
             {{ Form::hidden('user_id', $user->id) }}
 
+            @include('layouts.errors')
+
             <div class="form-group">
                 {{ Form::label('fullname', trans('profile.form.profile.fields.fullname')) }}
                 {{ Form::text('fullname', $user->fullname, array('class'=>'form-control', 'placeholder' => trans('profile.form.profile.fields.fullname.default'), 'required' => 'required' )) }}

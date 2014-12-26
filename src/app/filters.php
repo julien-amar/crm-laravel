@@ -88,3 +88,42 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+| Custom route filters
+*/
+
+Route::filter('hasOriginalUserAdminRole', function()
+{
+	if (!Session::has('user.original') ||
+		!Session::get('user.original')->admin)
+	{
+		if (Request::ajax())
+		{
+			return Response::make('Unauthorized', 401);
+		}
+		else
+		{
+			return Redirect::to('users/login')
+				->with('message', 'Access denied.') // TODO : Translate
+				->with('message.type', 'danger');
+		}
+	}
+});
+
+
+Route::filter('canUserAccessClient', function()
+{
+	if (Input::has('client_id')) {
+	
+	    $user = DB::table('clients')
+		    ->find(Input::get('client_id'));
+
+	    // User access restrictions
+	    if (!Auth::user()->admin && $user->user_id != Auth::user()->id) {
+	        return Redirect::to('users/login')
+				->with('message', 'Access denied.') // TODO : Translate
+				->with('message.type', 'danger');
+	    }
+	}
+});

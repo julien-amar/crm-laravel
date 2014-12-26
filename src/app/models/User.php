@@ -6,12 +6,24 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public static $rules = array(
-		'login' => 'required|between:2,12',
-		'password' => 'required|alpha_num|between:6,12|confirmed',
-		'password_confirmation' => 'required|alpha_num|between:6,12',
-		'fullname' => 'required|between:2,25',
-		'phone' => 'numeric',
-		'address' => ''
+		'register' => array(
+			'login' => 'required|between:2,12',
+			'password' => 'required|alpha_num|between:6,12|confirmed',
+			'password_confirmation' => 'required|alpha_num|between:6,12',
+			'fullname' => 'required|between:2,25',
+			'phone' => 'numeric',
+			'address' => ''
+		),
+		'profile' => array(
+			'fullname' => 'required|between:2,25',
+			'phone' => 'numeric',
+			'address' => ''
+		),
+		'password' => array(
+			'password_old' => 'required|alpha_num|between:6,12',
+			'password' => 'required|alpha_num|between:6,12|confirmed',
+			'password_confirmation' => 'required|alpha_num|between:6,12',
+		)
 	);
 
 	/**

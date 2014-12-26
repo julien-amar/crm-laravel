@@ -5,7 +5,8 @@ class ImportController extends BaseController {
 
 	public function __construct() {
 		$this->beforeFilter('csrf', array('on' => 'post'));
-		$this->beforeFilter('auth', array('only' => array('getDashboard')));
+		$this->beforeFilter('auth');
+		$this->beforeFilter('hasOriginalUserAdminRole');
 	}
 
 	public function getData() {
@@ -14,7 +15,8 @@ class ImportController extends BaseController {
 
 	public function postData() {
 		return Redirect::to('import/data')
-			->with('message', 'Thanks for registering!');
+			->with('message', '<strong>146 results</strong> had been imported.!') // TODO : Translate
+			->with('message-type', 'success');
 	}
 }
 
