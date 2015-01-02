@@ -13,6 +13,8 @@
 
     <!-- Bootstrap Core CSS -->
     {{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}
+
 
     <!-- MetisMenu CSS -->
     <link href="/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -34,7 +36,7 @@
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+    <![endif]-->
 
 </head>
 
@@ -65,6 +67,11 @@
 
     <!-- Bootstrap Core JavaScript -->
     {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
+
+    <!-- Bootstrap Datepicker -->
+    {{ HTML::script('packages/moment/moment.js') }}
+
+    {{ HTML::script('packages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/js/plugins/metisMenu/metisMenu.min.js"></script>

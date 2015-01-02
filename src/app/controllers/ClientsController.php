@@ -4,14 +4,15 @@ class ClientsController extends BaseController {
 	protected $layout = "layouts.main";
 
         private function getClient($criterias) {
-                $user = Client::all();
-
                 if (isset($criterias['id']))
-                        $user = $user->where('id', '=', $criterias['id']);
+                        $user = Client::where('id', '=', $criterias['id'])->get();
                 if (isset($criterias['user_id']))
-                        $user = $user->where('user_id', '=', $criterias['user_id']);
+                        $user = Client::where('user_id', '=', $criterias['user_id'])->get();
 
-                return $user->get();
+                if (!isset($user))
+                        $user = Client::all();
+
+                return $user;
         }
 
 	public function __construct() {

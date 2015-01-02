@@ -67,7 +67,11 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							{{ Form::label('birthday', trans('clients.form.edit.fields.birthday')) }}
-							{{ Form::text('birthday', $client->birthday, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.birthday.default'))) }}
+							<div class='input-group date' data-datepicker="date">
+								{{ Form::text('birthday', $client->birthday, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.birthday.default'), 'readonly' => 'readonly')) }}
+                			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                			    </span>
+                			</div>
 						</div>
 					</div>
 				</div>
@@ -76,14 +80,22 @@
 					<div class="col-md-3">
 						<div class="form-group">
 							{{ Form::label('last_relance', trans('clients.form.edit.fields.last_relance')) }}
-							{{ Form::text('last_relance', $client->last_relance, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.last_relance.default'))) }}
+							<div class='input-group date' data-datepicker="datetime">
+								{{ Form::text('last_relance', $client->last_relance, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.last_relance.default'), 'readonly' => 'readonly')) }}
+                			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                			    </span>
+                			</div>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							{{ Form::label('next_relance', trans('clients.form.edit.fields.next_relance')) }}
-							{{ Form::text('next_relance', $client->next_relance, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.next_relance.default'))) }}
+							<div class='input-group date' data-datepicker="datetime">
+								{{ Form::text('next_relance', $client->next_relance, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.next_relance.default'), 'readonly' => 'readonly')) }}
+                			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                			    </span>
+                			</div>
 						</div>
 					</div>
 

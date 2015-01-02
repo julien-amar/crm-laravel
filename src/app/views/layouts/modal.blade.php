@@ -14,6 +14,7 @@
 
     <!-- Bootstrap Core CSS -->
     {{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
+    {{ HTML::style('packages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}
 
     <!-- MetisMenu CSS -->
     <link href="/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -45,6 +46,11 @@
 
     <!-- Bootstrap Core JavaScript -->
     {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
+
+    <!-- Bootstrap Datepicker -->
+    {{ HTML::script('packages/moment/moment.js') }}
+
+    {{ HTML::script('packages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/js/plugins/metisMenu/metisMenu.min.js"></script>

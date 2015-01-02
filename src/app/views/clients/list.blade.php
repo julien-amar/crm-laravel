@@ -101,41 +101,102 @@
 					<li>
 						{{ Form::label('birthday', trans('clients.form.advanced-search.fields.birthday')) }}<br />
 						From :
-						{{ Form::text('birthday-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default') )) }}
+						<div class='input-group date' data-datepicker="date">
+							{{ Form::text('birthday-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 						To :
-						{{ Form::text('birthday-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default') )) }}
+						<div class='input-group date' data-datepicker="date">
+							{{ Form::text('birthday-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 					</li>
 
 					<li>
 						{{ Form::label('last-call', trans('clients.form.advanced-search.fields.last-call')) }}<br />
 						From :
-						{{ Form::text('last-call-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('last-call-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 						To :
-						{{ Form::text('last-call-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('last-call-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.last-call.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 					</li>
 
 					<li>
 						{{ Form::label('next-call', trans('clients.form.advanced-search.fields.next-call')) }}<br />
 						From :
-						{{ Form::text('next-call-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('next-call-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 						To :
-						{{ Form::text('next-call-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('next-call-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.next-call.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 					</li>
 
 					<li>
 						{{ Form::label('creation-date', trans('clients.form.advanced-search.fields.creation-date')) }}<br />
 						From :
-						{{ Form::text('creation-date-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('creation-date-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 						To :
-						{{ Form::text('creation-date-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('creation-date-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.creation-date.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 					</li>
 
 					<li>
 						{{ Form::label('update-date', trans('clients.form.advanced-search.fields.update-date')) }}<br />
 						From :
-						{{ Form::text('update-date-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('update-date-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 						To :
-						{{ Form::text('update-date-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default') )) }}
+						<div class='input-group date' data-datepicker="datetime">
+							{{ Form::text('update-date-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.update-date.default'), 'readonly' => 'readonly' )) }}
+            			    <span class="input-group-addon">
+            			    	<span class="glyphicon glyphicon-calendar datepickerbutton"></span>
+            			    </span>
+            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
+							</span>
+            			</div>
 					</li>
 
 					<li>
