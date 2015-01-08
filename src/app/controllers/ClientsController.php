@@ -81,14 +81,28 @@ class ClientsController extends BaseController {
                 ));
 
                 $client = $clients[0];
+                
+                $selection = [
+                        'activities' => array_map(
+                                create_function('$o', 'return $o["id"];'),
+                                $client->activities->toArray()
+                        ),
+                        'sectors' => array_map(
+                                create_function('$o', 'return $o["id"];'),
+                                $client->sectors->toArray()
+                        )
+                ];
 
                 return View::make('clients.edit', array(
                         'clientId' => $id,
                         'client' => $client,
-                        'prices' => array(),
-                        'rents' => array(),
-                        'surfaces' => array(),
-                        'states' => array()
+                        'states' => array(
+                                'Acheteur' => 'Buyer',
+                                'Vendeur' => 'Seller'
+                        ),
+                        'activities' => Activity::all(),
+                        'sectors' => Sector::all(),
+                        'selection' => $selection
                 ));
         }
 

@@ -99,26 +99,6 @@
 					</li>
 
 					<li>
-						{{ Form::label('birthday', trans('clients.form.advanced-search.fields.birthday')) }}<br />
-						From :
-						<div class='input-group date' data-datepicker="date">
-							{{ Form::text('birthday-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default'), 'readonly' => 'readonly' )) }}
-            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
-            			    </span>
-            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
-							</span>
-            			</div>
-						To :
-						<div class='input-group date' data-datepicker="date">
-							{{ Form::text('birthday-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.birthday.default'), 'readonly' => 'readonly' )) }}
-            			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar datepickerbutton"></span>
-            			    </span>
-            			    <span class="input-group-addon"><span class="glyphicon glyphicon-remove datepickerclear"></span>
-							</span>
-            			</div>
-					</li>
-
-					<li>
 						{{ Form::label('last-call', trans('clients.form.advanced-search.fields.last-call')) }}<br />
 						From :
 						<div class='input-group date' data-datepicker="datetime">

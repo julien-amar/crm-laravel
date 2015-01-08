@@ -16,24 +16,29 @@ class CreateClientsTable extends Migration {
                 {
                         $table->increments('id');
                         $table->integer('user_id');
-                        $table->enum('prix', array('0 - 10', '11 - 20'));
-                        $table->enum('loyer', array('10-100', '101 - 200'));
-                        $table->enum('surface', array('0 - 10', '11 - 20'));
+                        
+                        $table->enum('state', array('Buyer', 'Seller'));
+                        $table->integer('prix_from')->nullable();
+                        $table->integer('prix_to')->nullable();
+                        $table->integer('loyer_from')->nullable();
+                        $table->integer('loyer_to')->nullable();
+                        $table->integer('surface_from')->nullable();
+                        $table->integer('surface_to')->nullable();
+                        
                         $table->string('lastname', 64)->nullable();
                         $table->string('firstname', 64)->nullable();
-                        $table->string('company', 64)->nullable();
-                        $table->string('activity', 50)->nullable();
-                        $table->string('phone', 16)->nullable();
+                        $table->string('phone', 24)->nullable();
                         $table->string('mail', 60)->nullable();
-                        $table->dateTime('birthday')->nullable();
                         $table->dateTime('last_relance')->nullable();
                         $table->dateTime('next_relance')->nullable();
-                        $table->enum('state', array('Actif', 'Passif'));
+
+                        $table->string('company', 64)->nullable();
+                        $table->string('mandat', 16)->nullable();
                         $table->string('address_number', 16)->nullable();
                         $table->string('address_street', 128)->nullable();
                         $table->string('address_zipcode', 16)->nullable();
                         $table->string('address_city', 64)->nullable();
-                        $table->text('comment');
+                        
                         $table->timestamps();
                 });
 	}

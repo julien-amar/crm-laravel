@@ -30,6 +30,18 @@ $(document).ready(function() {
 		}
 	});
 
+	//
+	$(".dropdown .dropdown-menu li a[rel=nofollow]").on('click', function(e) {
+		var $target = $(e.target);
+		var $checkbox = $(this).find(':checkbox');
+
+		if ($checkbox && !$target.is(':checkbox')) {
+			$checkbox.prop("checked", !$checkbox.prop("checked"));
+		}
+
+		e.stopPropagation();
+	});
+
 	// Popover on hover
 	$('[data-toggle=popover]').popover({
 		trigger: 'hover'

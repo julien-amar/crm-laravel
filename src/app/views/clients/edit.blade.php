@@ -66,12 +66,6 @@
 
 					<div class="col-md-4">
 						<div class="form-group">
-							{{ Form::label('birthday', trans('clients.form.edit.fields.birthday')) }}
-							<div class='input-group date' data-datepicker="date">
-								{{ Form::text('birthday', $client->birthday, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.birthday.default'), 'readonly' => 'readonly')) }}
-                			    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                			    </span>
-                			</div>
 						</div>
 					</div>
 				</div>
@@ -136,10 +130,24 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-12">
+					<div class="col-md-1">
+						<div class="form-group">
+							{{ Form::label('address_number', trans('clients.form.edit.fields.address_number')) }}
+							{{ Form::text('address_number', $client->address_number, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.address_number.default'))) }}
+						</div>
+					</div>
+
+					<div class="col-md-8">
 						<div class="form-group">
 							{{ Form::label('address_street', trans('clients.form.edit.fields.address_street')) }}
 							{{ Form::text('address_street', $client->address_street, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.address_street.default'))) }}
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							{{ Form::label('mandat', trans('clients.form.edit.fields.mandat')) }}
+							{{ Form::text('mandat', $client->mandat, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.mandat.default'))) }}
 						</div>
 					</div>
 				</div>
@@ -173,10 +181,49 @@
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-md-8">
+
+
+					<div class="col-md-4">
 						<div class="form-group">
-							{{ Form::label('activity', trans('clients.form.edit.fields.activity')) }}
-							{{ Form::text('activity', $client->activity, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.activity.default') )) }}
+							{{ Form::label('activity_dropdown', trans('clients.form.edit.fields.activity')) }}
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown">
+									{{ trans('clients.form.edit.fields.activity.default') }}
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="state_dropdown">
+									@foreach ($activities as $activity)
+									<li>
+										<a tabindex="-1" rel='nofollow'>
+											{{ Form::checkbox('activities[]', $activity->id, in_array($activity->id, $selection['activities']  )) }}
+											{{ $activity->label }}
+										</a>
+									</li>
+									@endforeach
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							{{ Form::label('activity_dropdown', trans('clients.form.edit.fields.sector')) }}
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown">
+									{{ trans('clients.form.edit.fields.sector.default') }}
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="state_dropdown">
+									@foreach ($sectors as $sector)
+									<li>
+										<a tabindex="-1" rel='nofollow'>
+											{{ Form::checkbox('sectors[]', $sector->id, in_array($sector->id, $selection['sectors']  )) }}
+											{{ $sector->label }}
+										</a>
+									</li>
+									@endforeach
+								</ul>
+							</div>
 						</div>
 					</div>
 
@@ -190,10 +237,10 @@
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu" aria-labelledby="state_dropdown">
-									@foreach($states as $state)
-									<li class="pull-left">
-										<a tabindex="-1" href="#" data-value="{{ $state }}">
-											{{ $state }}
+									@foreach($states as $state_label => $state_value)
+									<li>
+										<a tabindex="-1" data-value="{{ $state_value }}">
+											{{ $state_label }}
 										</a>
 									</li>
 									@endforeach
@@ -204,69 +251,45 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<div class="form-group">
-							{{ Form::label('prix_dropdown', trans('clients.form.edit.fields.prix')) }}
-							{{ Form::hidden('prix_id', $client->prix, array('id' => 'prix_id')) }}
-							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="prix_dropdown" data-toggle="dropdown" data-hidden-target="#prix_id">
-									{{ trans('clients.form.edit.fields.prix.default') }}
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="prix_dropdown">
-									@foreach($prices as $price)
-									<li class="pull-left">
-										<a tabindex="-1" href="#" data-value="{{ $price }}">
-											{{ $price }}
-										</a>
-									</li>
-									@endforeach
-								</ul>
-							</div>
+							{{ Form::label('prix_from', trans('clients.form.edit.fields.prix')) }} (min)
+							{{ Form::number('prix_from', $client->prix_from, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.prix.default') )) }}
 						</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<div class="form-group">
-							{{ Form::label('loyer_dropdown', trans('clients.form.edit.fields.loyer')) }}
-							{{ Form::hidden('loyer_id', $client->loyer, array('id' => 'loyer_id')) }}
-							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="loyer_dropdown" data-toggle="dropdown" data-hidden-target="#loyer_id">
-									{{ trans('clients.form.edit.fields.loyer.default') }}
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="loyer_dropdown">
-									@foreach($rents as $rent)
-									<li class="pull-left">
-										<a tabindex="-1" href="#" data-value="{{ $rent }}">
-											{{ $rent }}
-										</a>
-									</li>
-									@endforeach
-								</ul>
-							</div>
+							{{ Form::label('prix_to', trans('clients.form.edit.fields.prix')) }} (max)
+							{{ Form::number('prix_to', $client->prix_to, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.prix.default') )) }}
 						</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<div class="form-group">
-							{{ Form::label('surface_dropdown', trans('clients.form.edit.fields.surface')) }}
-							{{ Form::hidden('surface_id', $client->surface, array('id' => 'surface_id')) }}
-							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="surface_dropdown" data-toggle="dropdown" data-hidden-target="#surface_id">
-									{{ trans('clients.form.edit.fields.surface.default') }}
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" aria-labelledby="surface_dropdown">
-									@foreach($surfaces as $surface)
-									<li class="pull-left">
-										<a tabindex="-1" href="#" data-value="{{ $surface }}">
-											{{ $surface }}
-										</a>
-									</li>
-									@endforeach
-								</ul>
-							</div>
+							{{ Form::label('loyer_from', trans('clients.form.edit.fields.loyer')) }} (min)
+							{{ Form::number('loyer_from', $client->loyer_from, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.loyer.default') )) }}
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							{{ Form::label('loyer_to', trans('clients.form.edit.fields.loyer')) }} (max)
+							{{ Form::number('loyer_to', $client->loyer_to, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.loyer.default') )) }}
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							{{ Form::label('surface_from', trans('clients.form.edit.fields.surface')) }} (min)
+							{{ Form::number('surface_from', $client->surface_from, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.surface.default') )) }}
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							{{ Form::label('surface_to', trans('clients.form.edit.fields.surface')) }} (max)
+							{{ Form::number('surface_to', $client->surface_to, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.surface.default') )) }}
 						</div>
 					</div>
 				</div>

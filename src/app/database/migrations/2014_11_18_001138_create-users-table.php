@@ -14,17 +14,17 @@ class CreateUsersTable extends Migration {
 	{
 		Schema::create('users', function($table)
 		{
-                        $table->increments('id');
-                        $table->string('login', 128)->unique();
-                        $table->string('password', 128);
-                        $table->string('fullname', 255);
-                        $table->string('phone', 15)->nullable();
-                        $table->string('address', 255)->nullable();
-                        $table->boolean('admin');
-                        $table->boolean('lock');
-                        $table->string('email', 128)->nullable();
-                        $table->rememberToken();
-                        $table->timestamps();
+			$table->increments('id');
+			$table->string('login', 128)->unique();
+			$table->string('password', 128);
+			$table->string('fullname', 255);
+			$table->string('phone', 15)->nullable();
+			$table->string('address', 255)->nullable();
+			$table->boolean('admin');
+			$table->boolean('lock');
+			$table->string('email', 128)->nullable();
+			$table->rememberToken();
+			$table->timestamps();
 		});
 	}
 
