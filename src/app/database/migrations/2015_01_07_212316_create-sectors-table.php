@@ -14,7 +14,7 @@ class CreateSectorsTable extends Migration {
 	{
 		Schema::create('sectors', function($table)
 		{
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string('label', 32);
 			$table->timestamps();
 		});

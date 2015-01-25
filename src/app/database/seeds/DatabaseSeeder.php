@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserTableSeeder');
 		$this->call('SectorTableSeeder');
 		$this->call('ActivityTableSeeder');
+		$this->call('MailingTableSeeder');
+		$this->call('HistoryTableSeeder');
 	}
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActivitiesTable extends Migration {
+class CreateMailingsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,12 @@ class CreateActivitiesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('activities', function($table)
+		Schema::create('mailings', function($table)
 		{
 			$table->increments('id')->unsigned();
-			$table->string('label', 32);
+            $table->integer('client_id')->unsigned();
+			$table->text('message');
+			$table->enum('state', array('Todo', 'InProgress', 'Success', 'Error'));
 			$table->timestamps();
 		});
 	}
@@ -27,7 +29,7 @@ class CreateActivitiesTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::drop('activities');
+		Schema::drop('mailings');
 	}
 
 }

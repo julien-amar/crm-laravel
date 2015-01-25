@@ -3,9 +3,11 @@
 class Client extends Eloquent {
 
 	public static $rules = array(
-		'firstname'=>'required|alpha|min:2',
-		'lastname'=>'required|alpha|min:2',
-		'email'=>'required|email|unique:users'
+		'create' => array(
+		),
+
+		'edit' => array(
+		)
 	);
 
 	/**
@@ -14,6 +16,38 @@ class Client extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'clients';
+
+	private function sortCommentPredicate($a, $b)
+	{
+		return $a['created_at'] < $b['created_at'];
+	}
+
+	public function getComments() {
+		$histories = $this->histories()->get();
+		$mailings = $this->mailings()->get();
+
+		foreach ($histories as $index => $value) {
+			$value->type = 'History';
+		}
+
+		foreach ($mailings as $index => $value) {
+			$value->type = 'Mailing';
+		}
+
+		$comments = array_merge($histories->toArray(), $mailings->toArray());
+		
+		usort($comments, array($this, "sortCommentPredicate"));
+
+		return $comments;
+	}
+
+	public function histories() {
+		return $this->hasMany('History');
+	}
+
+	public function mailings() {
+		return $this->hasMany('Mailing');
+	}
 
 	public function sectors() {
 		return $this->belongsToMany('Sector', 'clients_sectors');

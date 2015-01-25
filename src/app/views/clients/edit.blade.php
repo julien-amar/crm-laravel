@@ -9,7 +9,7 @@
 </div>
 <!-- /.row -->
 
-{{ Form::open(array('url' => 'clients/edit', 'class' => 'form-edit')) }}
+{{ Form::open(array('url' => 'clients/edit?client_id=' . $client->id, 'class' => 'form-edit')) }}
 
 {{ Form::hidden('id', $client->id, array()) }}
 
@@ -187,11 +187,11 @@
 						<div class="form-group">
 							{{ Form::label('activity_dropdown', trans('clients.form.edit.fields.activity')) }}
 							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" id="activity_dropdown" data-toggle="dropdown">
 									{{ trans('clients.form.edit.fields.activity.default') }}
 									<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu" aria-labelledby="state_dropdown">
+								<ul class="dropdown-menu" aria-labelledby="activity_dropdown">
 									@foreach ($activities as $activity)
 									<li>
 										<a tabindex="-1" rel='nofollow'>
@@ -207,13 +207,13 @@
 
 					<div class="col-md-4">
 						<div class="form-group">
-							{{ Form::label('activity_dropdown', trans('clients.form.edit.fields.sector')) }}
+							{{ Form::label('sector_dropdown', trans('clients.form.edit.fields.sector')) }}
 							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button" id="sector_dropdown" data-toggle="dropdown">
 									{{ trans('clients.form.edit.fields.sector.default') }}
 									<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu" aria-labelledby="state_dropdown">
+								<ul class="dropdown-menu" aria-labelledby="sector_dropdown">
 									@foreach ($sectors as $sector)
 									<li>
 										<a tabindex="-1" rel='nofollow'>
@@ -230,9 +230,9 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							{{ Form::label('state_dropdown', trans('clients.form.edit.fields.state')) }}
-							{{ Form::hidden('state_id', $client->state, array('id' => 'state_id')) }}
+							{{ Form::hidden('state', $client->state, array('id' => 'state')) }}
 							<div class="dropdown">
-								<button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#state_id">
+								<button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#state">
 									{{ trans('clients.form.edit.fields.state.default') }}
 									<span class="caret"></span>
 								</button>
@@ -309,106 +309,48 @@
 				<div class="row">
 					<div class="col-md-12">
 						<ul class="timeline">
+							@foreach($comments as $index => $comment)
+							
+							@if ($index % 2 == 0)
 							<li>
-								<div class="timeline-badge"><i class="fa fa-check"></i>
+							@else
+							<li class="timeline-inverted">
+							@endif
+							
+
+								@if ($comment['type'] == 'History')
+								<div class="timeline-badge info"><i class="fa fa-save"></i>
 								</div>
+								@elseif ($comment['state'] == 'Todo')
+								<div class="timeline-badge"><i class="fa fa-pause"></i>
+								</div>
+								@elseif ($comment['state'] == 'InProgress')
+								<div class="timeline-badge warning"><i class="fa fa-gear"></i>
+								</div>
+								@elseif ($comment['state'] == 'Success')
+								<div class="timeline-badge success"><i class="fa fa-check"></i>
+								</div>
+								@elseif ($comment['state'] == 'Error')
+								<div class="timeline-badge danger"><i class="fa fa-bomb"></i>
+								</div>
+								@endif
+
 								<div class="timeline-panel">
 									<div class="timeline-heading">
-										<h4 class="timeline-title">Lorem ipsum dolor</h4>
-										<p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
+										<h4 class="timeline-title">{{ trans('clients.form.edit.fields.comment') }}</h4>
+										<p>
+											<small class="text-muted">
+												<i class="fa fa-clock-o"></i>
+												<i class="relative-time">{{ $comment['created_at'] }}</i>
+											</small>
 										</p>
 									</div>
 									<div class="timeline-body">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>
+										<p>{{ $comment['message'] }}</p>
 									</div>
 								</div>
 							</li>
-							<li class="timeline-inverted">
-								<div class="timeline-badge warning"><i class="fa fa-credit-card"></i>
-								</div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h4 class="timeline-title">Lorem ipsum dolor</h4>
-									</div>
-									<div class="timeline-body">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias, officia repellendus.</p>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae minus eaque facere.</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="timeline-badge danger"><i class="fa fa-bomb"></i>
-								</div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h4 class="timeline-title">Lorem ipsum dolor</h4>
-									</div>
-									<div class="timeline-body">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque, tenetur nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat, magni commodi quisquam.</p>
-									</div>
-								</div>
-							</li>
-							<li class="timeline-inverted">
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h4 class="timeline-title">Lorem ipsum dolor</h4>
-									</div>
-									<div class="timeline-body">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est quaerat asperiores sapiente, eligendi, nihil. Itaque quos, alias sapiente rerum quas odit! Aperiam officiis quidem delectus libero, omnis ut debitis!</p>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="timeline-badge info"><i class="fa fa-save"></i>
-								</div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h4 class="timeline-title">Lorem ipsum dolor</h4>
-									</div>
-									<div class="timeline-body">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>
-										<hr>
-										<div class="btn-group">
-											<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-												<i class="fa fa-gear"></i> <span class="caret"></span>
-											</button>
-											<ul class="dropdown-menu" role="menu">
-												<li><a href="#">Action</a>
-												</li>
-												<li><a href="#">Another action</a>
-												</li>
-												<li><a href="#">Something else here</a>
-												</li>
-												<li class="divider"></li>
-												<li><a href="#">Separated link</a>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h4 class="timeline-title">Lorem ipsum dolor</h4>
-									</div>
-									<div class="timeline-body">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur, commodi.</p>
-									</div>
-								</div>
-							</li>
-							<li class="timeline-inverted">
-								<div class="timeline-badge success"><i class="fa fa-graduation-cap"></i>
-								</div>
-								<div class="timeline-panel">
-									<div class="timeline-heading">
-										<h4 class="timeline-title">Lorem ipsum dolor</h4>
-									</div>
-									<div class="timeline-body">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt quisquam maxime neque eaque.</p>
-									</div>
-								</div>
-							</li>
+							@endforeach
 						</ul>
 					</div>
 					<div class="row">
@@ -425,8 +367,11 @@
 	</div>
 </div>
 
-<div class="row pull-right">
-	<div class="col-lg-12">
+<div class="row">
+	<div class="col-lg-4">
+		{{ HTML::link('clients/delete?client_id=' . $client->id, trans('clients.form.edit.delete'), array('class' => 'btn btn-large btn-danger'))}}
+	</div>
+	<div class="col-lg-8 text-right">
 		{{ Form::reset(trans('clients.form.edit.reset'), array('class'=>'btn btn-large btn-info'))}}
 		{{ Form::submit(trans('clients.form.edit.submit'), array('class' => 'btn btn-large btn-primary'))}}
 	</div>

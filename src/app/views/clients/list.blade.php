@@ -32,6 +32,12 @@
 
 <div class="row">
 	<div class="col-lg-12">
+		{{ HTML::link('clients/create', trans('clients.grid.actions.add'), array('class' => 'btn btn-info pull-right')) }}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
@@ -61,6 +67,9 @@
 						<a href="/clients/edit?client_id={{ $result->id }}" class="btn btn-primary" data-toggle="popover" title="{{ trans('clients.grid.actions.edit') }}" data-content="{{ trans('clients.grid.actions.edit.description') }}" data-placement="bottom">
 							<span class="glyphicon glyphicon-cog"></span>
 						</a>
+						<a href="/clients/delete?client_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('clients.grid.actions.delete') }}" data-content="{{ trans('clients.grid.actions.delete.description') }}" data-placement="bottom">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
 					</td>
 				</tr>
 				@endforeach
@@ -79,13 +88,13 @@
                 <a href="#"><i class="fa fa-phone fa-fw"></i> {{ trans('clients.form.advanced-search.category.date') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
 					<li>
-						{{ Form::label('firstname', trans('clients.form.advanced-search.fields.firstname')) }}
-						{{ Form::text('firstname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.firstname.default') )) }}
+						{{ Form::label('lastname', trans('clients.form.advanced-search.fields.lastname')) }}
+						{{ Form::text('lastname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.lastname.default') )) }}
 					</li>
 
 					<li>
-						{{ Form::label('lastname', trans('clients.form.advanced-search.fields.lastname')) }}
-						{{ Form::text('lastname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.lastname.default') )) }}
+						{{ Form::label('firstname', trans('clients.form.advanced-search.fields.firstname')) }}
+						{{ Form::text('firstname', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.firstname.default') )) }}
 					</li>
 
 					<li>
@@ -194,6 +203,11 @@
 					</li>
 
 					<li>
+						{{ Form::label('number', trans('clients.form.advanced-search.fields.number')) }}
+						{{ Form::text('number', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.number.default') )) }}
+					</li>
+
+					<li>
 						{{ Form::label('street', trans('clients.form.advanced-search.fields.street')) }}
 						{{ Form::text('street', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.street.default') )) }}
 					</li>
@@ -207,40 +221,123 @@
 						{{ Form::label('zip-code', trans('clients.form.advanced-search.fields.zip-code')) }}
 						{{ Form::text('zip-code', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.zip-code.default') )) }}
 					</li>
+
+					<li>
+						{{ Form::label('mandat', trans('clients.form.advanced-search.fields.mandat')) }}
+						{{ Form::text('mandat', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.mandat.default') )) }}
+					</li>
 				</ul>
 			</li>
 
 			<li>
                 <a href="#"><i class="fa fa-users fa-fw"></i> {{ trans('clients.form.advanced-search.category.offer') }}<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
+					@if(Auth::user()->admin)
 					<li>
-						{{ Form::label('user', trans('clients.form.advanced-search.fields.user')) }}
-						{{ Form::text('user', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.user.default') )) }}
+						{{ Form::label('user_dropdown', trans('clients.form.advanced-search.fields.user')) }}
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown">
+								{{ trans('clients.form.advanced-search.fields.user.default') }}
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="user_dropdown">
+								@foreach($users as $user)
+								<li>
+									<a tabindex="-1"  rel='nofollow'>
+										{{ Form::checkbox('users[]', $user->id, FALSE) }}
+										{{ $user->fullname }} <i>({{ $user->login }})</i>
+									</a>
+								</li>
+								@endforeach
+							</ul>
+						</div>
+					</li>
+					@endif
+
+					<li>
+						{{ Form::label('activity_dropdown', trans('clients.form.advanced-search.fields.activity')) }}
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="activity_dropdown" data-toggle="dropdown">
+								{{ trans('clients.form.advanced-search.fields.activity.default') }}
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="activity_dropdown">
+								@foreach($activities as $activity)
+								<li>
+									<a tabindex="-1"  rel='nofollow'>
+										{{ Form::checkbox('activities[]', $activity->id, FALSE) }}
+										{{ $activity->label }}
+									</a>
+								</li>
+								@endforeach
+							</ul>
+						</div>
 					</li>
 
 					<li>
-						{{ Form::label('activity', trans('clients.form.advanced-search.fields.activity')) }}
-						{{ Form::text('activity', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.activity.default') )) }}
+						{{ Form::label('sector_dropdown', trans('clients.form.advanced-search.fields.sector')) }}
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="sector_dropdown" data-toggle="dropdown">
+								{{ trans('clients.form.advanced-search.fields.sector.default') }}
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="sector_dropdown">
+								@foreach($sectors as $sector)
+								<li>
+									<a tabindex="-1"  rel='nofollow'>
+										{{ Form::checkbox('sectors[]', $sector->id, FALSE) }}
+										{{ $sector->label }}
+									</a>
+								</li>
+								@endforeach
+							</ul>
+						</div>
 					</li>
 
 					<li>
-						{{ Form::label('price', trans('clients.form.advanced-search.fields.price')) }}
-						{{ Form::text('price', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.price.default') )) }}
+						{{ Form::label('price', trans('clients.form.advanced-search.fields.price')) }}<br />
+						From :
+						{{ Form::number('price_from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.price.default') )) }}
+						To :
+						{{ Form::number('price_to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.price.default') )) }}
 					</li>
 
 					<li>
-						{{ Form::label('rent', trans('clients.form.advanced-search.fields.rent')) }}
-						{{ Form::text('rent', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.rent.default') )) }}
+						{{ Form::label('rent', trans('clients.form.advanced-search.fields.rent')) }}<br />
+						From :
+						{{ Form::number('rent_from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.rent.default') )) }}
+						To :
+						{{ Form::number('rent_to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.rent.default') )) }}
 					</li>
 
 					<li>
-						{{ Form::label('surface', trans('clients.form.advanced-search.fields.surface')) }}
-						{{ Form::text('surface', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
+						{{ Form::label('surface', trans('clients.form.advanced-search.fields.surface')) }}<br />
+						From :
+						{{ Form::number('surface_from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
+						To :
+						{{ Form::number('surface_to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
 					</li>
+							
 
 					<li>
 						{{ Form::label('state', trans('clients.form.advanced-search.fields.state')) }}
-						{{ Form::text('state', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.state.default') )) }}
+						{{ Form::hidden('state', null, array('id' => 'state')) }}
+
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#state">
+								{{ trans('clients.form.edit.fields.state.default') }}
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="state_dropdown">
+								@foreach($states as $state_label => $state_value)
+								<li>
+									<a tabindex="-1" data-value="{{ $state_value }}">
+										{{ $state_label }}
+									</a>
+								</li>
+								@endforeach
+							</ul>
+						</div>
 					</li>
 				</ul>
 			</li>

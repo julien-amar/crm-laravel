@@ -75,4 +75,9 @@ $(document).ready(function() {
 
 	$(datePickerSelector + ' .datepickerclear').click(clearDatepicker);
 	$(dateTimePickerSelector + ' .datepickerclear').click(clearDatepicker);
+
+	// Relative time
+	$('.relative-time').each(function (i) {
+		$(this).html(moment($(this).html(), "YYYY-MM-DD HH:mm:ss").fromNow());
+	});
 });
