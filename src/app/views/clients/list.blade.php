@@ -11,7 +11,7 @@
 
 <div class="row">
 	<div class="col-lg-12">
-		{{ Form::open(array('url' => 'client/search', 'class' => 'form-search', 'role' => 'form')) }}
+		{{ Form::open(array('url' => 'clients/search', 'id' => 'client-quick-search', 'class' => 'form-search', 'role' => 'form')) }}
 		<div class="form-group">
 			{{ Form::label('search', trans('clients.form.search.fields.search')) }}
 
@@ -36,53 +36,14 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-lg-12">
-		<table class="table table-striped table-hover">
-			<thead>
-				<tr>
-					<th>{{ trans('clients.grid.columns.lastname') }}</th>
-					<th>{{ trans('clients.grid.columns.firstname') }}</th>
-					<th>{{ trans('clients.grid.columns.company') }}</th>
-					<th>{{ trans('clients.grid.columns.activity') }}</th>
-					<th>{{ trans('clients.grid.columns.comment') }}</th>
-					<th>{{ trans('clients.grid.columns.action') }}</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($results as $result)
-				<tr>
-					<td>{{{ $result->lastname }}}</td>
-					<td>{{{ $result->firstname }}}</td>
-					<td>
-						{{{ $result->company }}}
-						{{{ $result->prix }}}
-						{{{ $result->loyer }}}
-						{{{ $result->surface }}}
-					</td>
-					<td>{{{ $result->activity }}}</td>
-					<td>{{{ $result->comment }}}</td>
-
-					<td>
-						<a href="/clients/edit?client_id={{ $result->id }}" class="btn btn-primary" data-toggle="popover" title="{{ trans('clients.grid.actions.edit') }}" data-content="{{ trans('clients.grid.actions.edit.description') }}" data-placement="bottom">
-							<span class="glyphicon glyphicon-cog"></span>
-						</a>
-						<a href="/clients/delete?client_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('clients.grid.actions.delete') }}" data-content="{{ trans('clients.grid.actions.delete.description') }}" data-placement="bottom">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>
-					</td>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
-	</div>
+<div id="client-result">
 </div>
 @stop
 
 @section('sidebar')
 <div class="navbar-default sidebar" role="navigation">
     <div class="sidebar-nav navbar-collapse">
-		{{ Form::open(array('url' => 'client/search', 'class' => 'form-search', 'role' => 'form')) }}
+		{{ Form::open(array('url' => 'clients/search', 'id' => 'client-search', 'class' => 'form-search', 'role' => 'form')) }}
         <ul class="nav" id="side-menu">
             <li>
                 <a href="#"><i class="fa fa-phone fa-fw"></i> {{ trans('clients.form.advanced-search.category.date') }}<span class="fa arrow"></span></a>
@@ -297,25 +258,25 @@
 					<li>
 						{{ Form::label('price', trans('clients.form.advanced-search.fields.price')) }}<br />
 						From :
-						{{ Form::number('price_from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.price.default') )) }}
+						{{ Form::number('price-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.price.default') )) }}
 						To :
-						{{ Form::number('price_to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.price.default') )) }}
+						{{ Form::number('price-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.price.default') )) }}
 					</li>
 
 					<li>
 						{{ Form::label('rent', trans('clients.form.advanced-search.fields.rent')) }}<br />
 						From :
-						{{ Form::number('rent_from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.rent.default') )) }}
+						{{ Form::number('rent-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.rent.default') )) }}
 						To :
-						{{ Form::number('rent_to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.rent.default') )) }}
+						{{ Form::number('rent-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.rent.default') )) }}
 					</li>
 
 					<li>
 						{{ Form::label('surface', trans('clients.form.advanced-search.fields.surface')) }}<br />
 						From :
-						{{ Form::number('surface_from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
+						{{ Form::number('surface-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
 						To :
-						{{ Form::number('surface_to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
+						{{ Form::number('surface-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
 					</li>
 							
 
@@ -354,4 +315,47 @@
     <!-- /.sidebar-collapse -->
 </div>
 <!-- /.navbar-static-side -->
+@stop
+
+@section('script')
+<script type="text/javascript">
+
+$(document).ready(function() {
+	var lastSubmitedForm = undefined;
+	var searchUrl = $('#client-search').attr('action');
+
+	function onSubmitSearch(event) {
+		processSubmitSearch(event, event.target, searchUrl);
+
+		lastSubmitedForm = event.target;
+	}
+
+	function processSubmitSearch(event, form, url) {
+		
+		event.preventDefault();
+
+		dataString = $(form).serialize();
+
+        $.ajax({
+	        type: "GET",
+	        url: url,
+	        data: dataString
+        })
+        .done(function(data) {
+                $("#client-result").html(data);
+		})
+		.fail(function(request, error) {
+                $("#client-result").html(data);
+		});
+	}
+
+	$('#client-search').submit(onSubmitSearch);
+	$('#client-quick-search').submit(onSubmitSearch);
+
+	$('#client-result').on('click', '.pagination li a', function (event) {
+		processSubmitSearch(event, lastSubmitedForm, this.href);
+	});
+});
+
+</script>
 @stop

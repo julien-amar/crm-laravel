@@ -3,16 +3,133 @@
 class ClientsController extends BaseController {
 	protected $layout = "layouts.main";
 
-        private function getClient($criterias) {
-                if (isset($criterias['id']))
-                        $user = Client::where('id', '=', $criterias['id'])->get();
-                if (isset($criterias['user_id']))
-                        $user = Client::where('user_id', '=', $criterias['user_id'])->get();
+        private $criterias = array(
+                'id' => array('id', 'equalityPredicate'),
+                'email' => array('mail', 'equalityPredicate'),
+                'phone' => array('phone', 'equalityPredicate'),
+                'company' => array('company', 'equalityPredicate'),
+                'number' => array('address_number', 'equalityPredicate'),
+                'city' => array('address_city', 'equalityPredicate'),
+                'zip-code' => array('address_zipcode', 'equalityPredicate'),
+                'mandat' => array('mandat', 'equalityPredicate'),
+                'user' => array('user_id', 'equalityPredicate'),
+                'state' => array('state', 'equalityPredicate'),
 
-                if (!isset($user))
-                        $user = Client::all();
+                'users' => array('user_id', 'mutipleValuePredicate'),
 
-                return $user;
+                'last-call-from' => array('last_relance_from', 'dateRangeEqualityPredicate'),
+                'last-call-to' => array('last_relance_to', 'dateRangeEqualityPredicate'),
+                'next-call-from' => array('next_relance_from', 'dateRangeEqualityPredicate'),
+                'next-call-to' => array('next_relance_to', 'dateRangeEqualityPredicate'),
+                'creation-date-from' => array('created_at_from', 'dateRangeEqualityPredicate'),
+                'creation-date-to' => array('created_at_to', 'dateRangeEqualityPredicate'),
+                'update-date-from' => array('updated_at_from', 'dateRangeEqualityPredicate'),
+                'update-date-to' => array('updated_at_to', 'dateRangeEqualityPredicate'),
+
+                'price-from' => array('prix_from', 'rangeEqualityPredicate'),
+                'price-to' => array('prix_to', 'rangeEqualityPredicate'),
+                'rent-from' => array('loyer_from', 'rangeEqualityPredicate'),
+                'rent-to' => array('loyer_to', 'rangeEqualityPredicate'),
+                'surface-from' => array('surface_from', 'rangeEqualityPredicate'),
+                'surface-to' => array('surface_to', 'rangeEqualityPredicate'),
+
+                'activities' => array('activity_id', 'mutipleValueJoinPredicate', 'clients_activities', 'clients.id', 'clients_activities.client_id'),
+                'sectors' => array('sector_id', 'mutipleValueJoinPredicate', 'clients_sectors', 'clients.id', 'clients_sectors.client_id'),
+                
+                'comment' => array('message', 'mutipleValueContainsJoinPredicate', 'histories', 'clients.id', 'histories.client_id'),
+
+                'lastname' => array('lastname', 'containsPredicate'),
+                'firstname' => array('firstname', 'containsPredicate'),
+                'street' => array('address_street', 'containsPredicate')
+        );
+
+        private static function equalityPredicate($collection, $criteria, $value)
+        {
+                //echo $criteria . ' = ' . ($value) . "\n";
+                return $collection->where($criteria, '=', $value);
+        }
+
+        private static function containsPredicate($collection, $criteria, $value)
+        {
+                //echo $criteria . ' like %' . ($value) . "%\n";
+                return $collection->where($criteria, 'like', '%' . $value . '%');
+        }
+
+        private static function rangeEqualityPredicate($collection, $criteria, $value)
+        {
+                if (strstr($criteria, '_from') === FALSE) {
+                        //echo $criteria . ' <= ' . ($value) . "\n";
+                        return $collection->where($criteria, '<=', $value);
+                }
+                else {
+                        //echo $criteria . ' >= ' . ($value) . "\n";
+                        return $collection->where($criteria, '>=', $value);
+                }
+        }
+
+        private static function dateRangeEqualityPredicate($collection, $criteria, $value)
+        {
+                $criteriaShort = str_replace('_to', '', $criteria);
+                $criteriaShort = str_replace('_from', '', $criteriaShort);
+
+                if (strstr($criteria, '_from') === FALSE) {
+                        //echo $criteriaShort . ' <= ' . ($value) . "\n";
+                        return $collection->where($criteriaShort, '<=', $value);
+                }
+                else {
+                        //echo $criteriaShort . ' >= ' . ($value) . "\n";
+                        return $collection->where($criteriaShort, '>=', $value);
+                }
+        }
+
+        private static function mutipleValuePredicate($collection, $criteria, $value)
+        {
+                //echo $criteria . ' IN (' . var_dump($value) . ')' . "\n";
+                return $collection->whereIn($criteria, $value);
+        }
+
+        private static function mutipleValueJoinPredicate($collection, $table, $col1, $col2, $criteria, $value)
+        {
+                return $collection->join($table, $col1, '=', $col2)
+                        ->whereIn($criteria, $value);
+        }
+        
+        private static function mutipleValueContainsJoinPredicate($collection, $table, $col1, $col2, $criteria, $value)
+        {
+                return $collection->join($table, $col1, '=', $col2)
+                        ->where($criteria, 'like', '%' . $value . '%');
+        }
+
+        private function getClient($queryFilters) {
+                $clients = DB::table('clients')
+                        ->select('clients.*');
+
+                foreach ($queryFilters as $queryFilter => $queryFilterValue) {
+                        if (empty($queryFilterValue)) {
+                                continue;
+                        }
+
+                        if (array_key_exists($queryFilter, $this->criterias)) {
+                                $criteriaInfo = $this->criterias[$queryFilter];
+                                
+                                $criteria = $criteriaInfo[0];
+                                $criteriaPredicate = $criteriaInfo[1];
+
+                                if (count($criteriaInfo) == 5) {
+                                        $table = $criteriaInfo[2];
+                                        $col1 = $criteriaInfo[3];
+                                        $col2 = $criteriaInfo[4];
+
+                                        $clients = $this->$criteriaPredicate($clients, $table, $col1, $col2, $criteria, $queryFilterValue);
+                                } else  {
+                                        $clients = $this->$criteriaPredicate($clients, $criteria, $queryFilterValue);
+                                }
+                        }
+                }
+
+                return $clients
+                        ->distinct()
+                        ->paginate(1);
         }
 
 	public function __construct() {
@@ -44,38 +161,20 @@ class ClientsController extends BaseController {
                 ));
         }
 
+        public function getSearch() {
+                $results = $this->getClient(Input::all());
+
+                return View::make('clients.results', array(
+                        'results' => $results
+                ));
+        }
+
         public function postSearch() {
-                // TODO
+                $results = $this->getClient(Input::all());
 
-                // search
-
-                //firstname
-                // lastname
-                // email
-                // phone
-                // birthday-from
-                // birthday-to
-                // last-call-from
-                // last-call-to
-                // next-call-from
-                // next-call-to
-                // creation-date-from
-                // creation-date-to
-                // update-date-from
-                // update-date-to
-                // comment
-                
-                // company
-                // street
-                // city
-                // zip-code
-
-                // user
-                // activity
-                // price
-                // rent
-                // surface
-                // state
+                return View::make('clients.results', array(
+                        'results' => $results
+                ));
         }
 
 	public function getCreate() {
@@ -166,17 +265,13 @@ class ClientsController extends BaseController {
         }
 
 	public function getEdit() {
-                $id = Session::get('client_id');
+                $client_id = Session::get('client_id');
 
-                if (!isset($id)) {
-                        $id = Input::get('client_id');
+                if (!isset($client_id)) {
+                        $client_id = Input::get('client_id');
                 }
 
-                $clients = $this->getClient(array(
-                        'id' => $id
-                ));
-
-                $client = $clients[0];
+                $client = Client::find($client_id);
                 
                 $selection = [
                         'activities' => array_map(
@@ -190,7 +285,7 @@ class ClientsController extends BaseController {
                 ];
 
                 return View::make('clients.edit', array(
-                        'clientId' => $id,
+                        'clientId' => $client_id,
                         'client' => $client,
                         'states' => array(
                                 'Acheteur' => 'Buyer',
@@ -250,12 +345,6 @@ class ClientsController extends BaseController {
         }
 
 	public function getRelance() {
-                $clients = $this->getClient(array(
-                        'id' => Input::get('client_id')
-                ));
-
-                $client = $clients[0];
-
                 return View::make('clients.relance');
         }
 }
