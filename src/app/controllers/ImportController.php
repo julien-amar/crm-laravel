@@ -18,7 +18,22 @@ class ImportController extends BaseController {
 
 		/** Load $inputFileName to a PHPExcel Object  **/
 		$objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
-		
+		$objWorksheet = $objPHPExcel->getActiveSheet();
+
+		$row = 0;
+		while (TRUE) {
+			$row_data = array();
+
+			for ($col = 0; $col < 12; $col++) {
+				$row_data[] = $objWorksheet->getCellByColumnAndRow($col, $row)->getValue();
+			}
+
+			$row++;
+		}
+		echo $objWorksheet->getCellByColumnAndRow(3, 5)->getValue();
+		$cell->getCalculatedValue();
+
+
 		return Redirect::to('import/data')
 			->with('message', '<strong>146 results</strong> had been imported.!') // TODO : Translate
 			->with('message-type', 'success');
