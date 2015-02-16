@@ -367,7 +367,7 @@
 	</div>
 </div>
 
-<div class="row">
+<div class="row row-footer">
 	<div class="col-lg-4">
 		{{ HTML::link('clients/delete?client_id=' . $client->id, trans('clients.form.edit.delete'), array('class' => 'btn btn-large btn-danger'))}}
 	</div>

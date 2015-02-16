@@ -1,0 +1,18 @@
+#loader {
+	position: absolute;
+	left: 50%;
+	margin-left: -16px;
+}
+
+.margin-10 {
+	margin: 10px;
+}
+
+.row-footer {
+	margin: 0px 5px 25px 5px;
+}
+
+.import.fa-download {
+	color: #337ab7;
+	margin: 10px 5px 0px 0px;
+}

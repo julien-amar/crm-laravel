@@ -16,7 +16,7 @@
 			{{ Form::label('file', trans('import.form.import.fields.file')) }}
 			{{ Form::file('file') }}
 			
-			{{ HTML::link('templates/template.xlsx', trans('import.form.import.fields.template')) }}
+			<i class="fa fa-download import"></i> {{ HTML::link('templates/template.xlsx', trans('import.form.import.fields.template')) }}
 		</div>
 
 		{{ Form::submit(trans('import.form.import.submit'), array('class'=>'btn btn-large btn-primary btn-block'))}}

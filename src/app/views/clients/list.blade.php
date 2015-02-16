@@ -303,7 +303,7 @@
 				</ul>
 			</li>
 
-			<li class="form-group pull-right">
+			<li class="form-group pull-right margin-10">
 				{{ Form::reset(trans('clients.form.advanced-search.reset'), array('class'=>'btn btn-large btn-info'))}}
 				{{ Form::submit(trans('clients.form.advanced-search.submit'), array('class'=>'btn btn-large btn-primary'))}}
 				
@@ -336,6 +336,8 @@ $(document).ready(function() {
 
 		dataString = $(form).serialize();
 
+		$("#client-result").loader();
+
         $.ajax({
 	        type: "GET",
 	        url: url,
@@ -355,6 +357,8 @@ $(document).ready(function() {
 	$('#client-result').on('click', '.pagination li a', function (event) {
 		processSubmitSearch(event, lastSubmitedForm, this.href);
 	});
+
+	$('#client-search').submit();
 });
 
 </script>

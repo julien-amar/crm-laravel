@@ -129,7 +129,7 @@ class ClientsController extends BaseController {
 
                 return $clients
                         ->distinct()
-                        ->paginate(1);
+                        ->paginate(10);
         }
 
 	public function __construct() {

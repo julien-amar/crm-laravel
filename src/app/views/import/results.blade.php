@@ -17,7 +17,10 @@
 					<th>{{ trans('import.grid.columns.firstname') }}</th>
 					<th>{{ trans('import.grid.columns.lastname') }}</th>
 					<th>{{ trans('import.grid.columns.company') }}</th>
+
+					@if($state == 'error')
 					<th>{{ trans('import.grid.columns.errors') }}</th>
+					@endif
 				</tr>
 			</thead>
 			<tbody>
@@ -34,6 +37,8 @@
 						{{{ $result['client']->surface_from }}}
 						{{{ $result['client']->surface_to }}}
 					</td>
+
+					@if($state == 'error')
 					<td>
 						@if (count($result['errors']) > 0)
 						<ul class="bs-callout bs-callout-danger">
@@ -43,10 +48,13 @@
 						</ul>
 						@endif
 					</td>
+					@endif
 				</tr>
 			@endforeach
 			</tbody>
 		</table>
 	</div>
 </div>
+
+
 @stop

@@ -57,7 +57,8 @@
     </div>
     <!-- /#wrapper -->
     <!-- jQuery -->
-    {{ HTML::script('packages/jquery/js/jquery.min.js') }}
+    {{ HTML::script('packages/jquery/jquery.min.js') }}
+    {{ HTML::script('packages/jquery-loader/jquery-loader.js') }}
 
     <!-- Bootstrap Core JavaScript -->
     {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
