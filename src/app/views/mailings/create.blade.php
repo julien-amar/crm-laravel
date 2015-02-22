@@ -23,6 +23,15 @@
 </div>
 @endif
 
+
+il faut :
+- clients (ids)
+- subject (du mail)
+- object (pour archivge)
+- message (with tinyMCE)
+- reference du mailing
+- add files
+
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-info">

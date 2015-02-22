@@ -23,8 +23,12 @@
 
 					<td>
 						@if ($result->state == 'Error')
-						<a href="/mailings/retry?mailing_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('mailings.grid.actions.retry') }}" data-content="{{ trans('clients.grid.actions.edit.description') }}" data-placement="bottom">
-							<span class="glyphicon glyphicon-retry"></span>
+						<a href="/mailings/retry?mailing_id={{ $result->id }}" class="btn btn-info" data-toggle="popover" title="{{ trans('mailings.grid.actions.retry') }}" data-content="{{ trans('mailings.grid.actions.retry.description') }}" data-placement="bottom">
+							<span class="glyphicon glyphicon-refresh"></span>
+						</a>
+
+						<a href="/mailings/delete?mailing_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('mailings.grid.actions.delete') }}" data-content="{{ trans('mailings.grid.actions.delete.description') }}" data-placement="bottom">
+							<span class="glyphicon glyphicon-close"></span>
 						</a>
 						@else
 							&nbsp;
