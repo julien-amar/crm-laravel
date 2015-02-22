@@ -3,6 +3,7 @@
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
+					<th width="24">&nbsp;</th>
 					<th>{{ trans('clients.grid.columns.lastname') }}</th>
 					<th>{{ trans('clients.grid.columns.firstname') }}</th>
 					<th>{{ trans('clients.grid.columns.company') }}</th>
@@ -12,6 +13,9 @@
 			<tbody>
 				@foreach($results as $result)
 				<tr>
+					<td>
+						{{ Form::checkbox('clients[]', $result->id, FALSE ) }}
+					</td>
 					<td>{{{ $result->lastname }}}</td>
 					<td>{{{ $result->firstname }}}</td>
 					<td>

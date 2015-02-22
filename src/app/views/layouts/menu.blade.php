@@ -15,6 +15,10 @@
 
                 <li>{{ HTML::link('import/data', trans('main.menu.import')) }}</li>
 
+                @if(Session::get('user.original')->admin)
+                <li>{{ HTML::link('mailings/list', trans('main.menu.mailing')) }}</li>
+                @endif
+
                 @endif
             </ul>
 

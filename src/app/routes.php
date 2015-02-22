@@ -13,5 +13,6 @@
 
 Route::controller('users', 'UsersController');
 Route::controller('clients', 'ClientsController');
+Route::controller('mailings', 'MailingsController');
 Route::controller('profile', 'ProfileController');
 Route::controller('import', 'ImportController');

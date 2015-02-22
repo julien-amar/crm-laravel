@@ -15,6 +15,7 @@ class CreateMailingsTable extends Migration {
 		Schema::create('mailings', function($table)
 		{
 			$table->increments('id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->integer('client_id')->unsigned();
 			$table->text('message');
 			$table->enum('state', array('Todo', 'InProgress', 'Success', 'Error'));

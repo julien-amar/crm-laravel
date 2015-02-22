@@ -7,6 +7,7 @@ class MailingTableSeeder extends Seeder {
         DB::table('mailings')->delete();
 
 		Mailing::create(array(
+			'user_id' => '1',
 			'client_id' => '1',
 			'message' => 'Petit message',
 			'state' => 'Todo'

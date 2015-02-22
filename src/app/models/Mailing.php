@@ -7,4 +7,9 @@ class Mailing extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'mailings';
+
+    public function Client()
+    {
+        return $this->hasOne('clients', 'id', 'client_id');
+    }
 }

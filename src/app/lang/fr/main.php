@@ -5,6 +5,7 @@ return array(
 	
 	'menu.client' => 'Clients',
 	'menu.import' => 'Import',
+	'menu.mailing' => 'Mailing',
 	'menu.profile' => 'Profile',
 	'menu.register' => 'Inscription',
 	'menu.login' => 'Connexion',

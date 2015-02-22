@@ -7,7 +7,6 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"twitter/bootstrap": "*",
-		"components/jquery": "*",
 		"phpoffice/phpexcel": "*"
 	},
 	"autoload": {

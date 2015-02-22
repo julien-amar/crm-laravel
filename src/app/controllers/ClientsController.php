@@ -343,10 +343,6 @@ class ClientsController extends BaseController {
                         ->with('message', 'Client deleted successfully') // TODO : Translate
                         ->with('message-type', 'success');
         }
-
-	public function getRelance() {
-                return View::make('clients.relance');
-        }
 }
 
 ?>
