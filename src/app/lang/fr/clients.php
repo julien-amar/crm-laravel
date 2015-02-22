@@ -69,6 +69,12 @@ return array(
 	'grid.columns.comment' => 'Commentaire',
 	'grid.columns.action' => 'Action',
 
+	'grid.columns.company.tooltip' => 'Société',
+	'grid.columns.prix.tooltip' => 'Prix',
+	'grid.columns.loyer.tooltip' => 'Loyer',
+	'grid.columns.surface.tooltip' => 'Surface',
+
+
 	'grid.actions.edit' => 'Editer',
 	'grid.actions.edit.description' => 'Editer les informations du client.',
 	'grid.actions.delete' => 'Supprimer',

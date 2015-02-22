@@ -19,13 +19,14 @@
 					<td>{{{ $result->lastname }}}</td>
 					<td>{{{ $result->firstname }}}</td>
 					<td>
-						{{{ $result->company }}}
-						{{{ $result->prix_from }}}
-						{{{ $result->prix_to }}}
-						{{{ $result->loyer_from }}}
-						{{{ $result->loyer_to }}}
-						{{{ $result->surface_from }}}
-						{{{ $result->surface_to }}}
+						<img src="{{ asset('images/Company.png') }}" alt="{{ trans('clients.grid.columns.company.tooltip') }}" title="{{ trans('clients.grid.columns.company.tooltip') }}" />
+						{{{ $result->company }}}<br />
+						<img src="{{ asset('images/Prix.png') }}" alt="{{ trans('clients.grid.columns.prix.tooltip') }}" title="{{ trans('clients.grid.columns.prix.tooltip') }}" />
+						{{{ $result->prix_from }}} - {{{ $result->prix_to }}}<br />
+						<img src="{{ asset('images/Loyer.png') }}" alt="{{ trans('clients.grid.columns.loyer.tooltip') }}" title="{{ trans('clients.grid.columns.loyer.tooltip') }}" />
+						{{{ $result->loyer_from }}} - {{{ $result->loyer_to }}}<br />
+						<img src="{{ asset('images/Surface.png') }}" alt="{{ trans('clients.grid.columns.surface.tooltip') }}" title="{{ trans('clients.grid.columns.surface.tooltip') }}" />
+						{{{ $result->surface_from }}} - {{{ $result->surface_to }}}
 					</td>
 
 					<td>
@@ -49,3 +50,4 @@
 		</table>
 	</div>
 </div>
+ 
