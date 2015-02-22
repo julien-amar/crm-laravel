@@ -15,43 +15,8 @@
 
 @section('script')
 <script type="text/javascript">
-
-$(document).ready(function() {
-	var lastSubmitedForm = undefined;
 	var resultUrl = "{{ URL::to('mailings/results') }}";
-
-	function loadResult(url, dataString)
-	{
-		$("#mailing-result").loader();
-
-        $.ajax({
-	        type: "GET",
-	        url: url,
-	        data: dataString
-        })
-        .done(function(data) {
-                $("#mailing-result").html(data);
-		})
-		.fail(function(request, error) {
-                $("#mailing-result").html(data);
-		});
-	}
-
-	function processSubmitSearch(event, form, url) {
-		
-		event.preventDefault();
-
-		dataString = $(form).serialize();
-
-		loadResult(url, dataString);
-	}
-
-	$('#mailing-result').on('click', '.pagination li a', function (event) {
-		processSubmitSearch(event, lastSubmitedForm, this.href);
-	});
-
-	loadResult(resultUrl);
-});
-
 </script>
+
+	{{ HTML::script('js/mailings/list.js') }}
 @stop

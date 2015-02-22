@@ -61,7 +61,9 @@ return array(
 	'form.advanced-search.reset' => 'Reset',
 	'form.advanced-search.submit' => 'Filter',
 
+	'grid.actions.mailing' => 'Créer un mailing',
 	'grid.actions.add' => 'Ajouter un client',
+	
 	'grid.columns.lastname' => 'Nom',
 	'grid.columns.firstname' => 'Prénom',
 	'grid.columns.company' => 'Société',

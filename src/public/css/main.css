@@ -1,7 +1,15 @@
+.table-hover-selection tbody tr {
+	cursor: pointer;
+}
+
 #loader {
 	position: absolute;
 	left: 50%;
 	margin-left: -16px;
+}
+
+.margin-right-10 {
+	margin-right: 10px;
 }
 
 .margin-10 {

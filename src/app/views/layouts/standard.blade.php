@@ -15,6 +15,9 @@
     {{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
     {{ HTML::style('packages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}
 
+    <!-- Custom Fonts -->
+    {{ HTML::style('packages/font-awesome/css/font-awesome.min.css') }}
+
     <!-- MetisMenu CSS -->
     <link href="/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
@@ -26,9 +29,6 @@
 
     <!-- Morris Charts CSS -->
     <link href="/css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

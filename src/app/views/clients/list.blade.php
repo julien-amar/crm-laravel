@@ -33,6 +33,11 @@
 <div class="row">
 	<div class="col-lg-12">
 		{{ HTML::link('clients/create', trans('clients.grid.actions.add'), array('class' => 'btn btn-info pull-right')) }}
+
+		{{ Form::open(array('url' => 'mailings/create', 'id' => 'client-quick-search', 'class' => 'form-search', 'role' => 'form')) }}
+			{{ Form::hidden('clients', NULL, array('id' => 'clients')) }}
+			{{ Form::submit(trans('clients.grid.actions.mailing'), array('class' => 'btn btn-primary pull-right margin-right-10')) }}
+		{{ Form::close() }}
 	</div>
 </div>
 
@@ -318,48 +323,5 @@
 @stop
 
 @section('script')
-<script type="text/javascript">
-
-$(document).ready(function() {
-	var lastSubmitedForm = undefined;
-	var searchUrl = $('#client-search').attr('action');
-
-	function onSubmitSearch(event) {
-		processSubmitSearch(event, event.target, searchUrl);
-
-		lastSubmitedForm = event.target;
-	}
-
-	function processSubmitSearch(event, form, url) {
-		
-		event.preventDefault();
-
-		dataString = $(form).serialize();
-
-		$("#client-result").loader();
-
-        $.ajax({
-	        type: "GET",
-	        url: url,
-	        data: dataString
-        })
-        .done(function(data) {
-                $("#client-result").html(data);
-		})
-		.fail(function(request, error) {
-                $("#client-result").html(data);
-		});
-	}
-
-	$('#client-search').submit(onSubmitSearch);
-	$('#client-quick-search').submit(onSubmitSearch);
-
-	$('#client-result').on('click', '.pagination li a', function (event) {
-		processSubmitSearch(event, lastSubmitedForm, this.href);
-	});
-
-	$('#client-search').submit();
-});
-
-</script>
+	{{ HTML::script('js/clients/list.js') }}
 @stop

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<table class="table table-striped table-hover">
+		<table class="table table-striped table-hover table-hover-selection">
 			<thead>
 				<tr>
 					<th width="24">&nbsp;</th>
@@ -14,7 +14,7 @@
 				@foreach($results as $result)
 				<tr>
 					<td>
-						{{ Form::checkbox('clients[]', $result->id, FALSE ) }}
+						{{ Form::checkbox('clients[]', $result->id, FALSE, array('data-click' => 'hidden') ) }}
 					</td>
 					<td>{{{ $result->lastname }}}</td>
 					<td>{{{ $result->firstname }}}</td>
