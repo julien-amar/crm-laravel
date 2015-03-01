@@ -13,13 +13,13 @@
 
 App::before(function($request)
 {
-	//
+    //
 });
 
 
 App::after(function($request, $response)
 {
-	//
+    //
 });
 
 /*
@@ -35,23 +35,23 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest())
-	{
-		if (Request::ajax())
-		{
-			return Response::make('Unauthorized', 401);
-		}
-		else
-		{
-			return Redirect::guest('users/login');
-		}
-	}
+    if (Auth::guest())
+    {
+        if (Request::ajax())
+        {
+            return Response::make('Unauthorized', 401);
+        }
+        else
+        {
+            return Redirect::guest('users/login');
+        }
+    }
 });
 
 
 Route::filter('auth.basic', function()
 {
-	return Auth::basic();
+    return Auth::basic();
 });
 
 /*
@@ -67,7 +67,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+    if (Auth::check()) return Redirect::to('/');
 });
 
 /*
@@ -83,10 +83,10 @@ Route::filter('guest', function()
 
 Route::filter('csrf', function()
 {
-	if (Session::token() !== Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+    if (Session::token() !== Input::get('_token'))
+    {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
 });
 
 /*
@@ -95,35 +95,35 @@ Route::filter('csrf', function()
 
 Route::filter('hasOriginalUserAdminRole', function()
 {
-	if (!Session::has('user.original') ||
-		!Session::get('user.original')->admin)
-	{
-		if (Request::ajax())
-		{
-			return Response::make('Unauthorized', 401);
-		}
-		else
-		{
-			return Redirect::to('users/login')
-				->with('message', trans('general.permission.access.denied'))
-				->with('message.type', 'danger');
-		}
-	}
+    if (!Session::has('user.original') ||
+        !Session::get('user.original')->admin)
+    {
+        if (Request::ajax())
+        {
+            return Response::make('Unauthorized', 401);
+        }
+        else
+        {
+            return Redirect::to('users/login')
+                ->with('message', trans('general.permission.access.denied'))
+                ->with('message.type', 'danger');
+        }
+    }
 });
 
 
 Route::filter('canUserAccessClient', function()
 {
-	if (Input::has('client_id')) {
-	
-	    $user = DB::table('clients')
-		    ->find(Input::get('client_id'));
+    if (Input::has('client_id')) {
 
-	    // User access restrictions
-	    if (!Auth::user()->admin && $user->user_id != Auth::user()->id) {
-	        return Redirect::to('users/login')
-				->with('message', trans('general.permission.access.denied'))
-				->with('message.type', 'danger');
-	    }
-	}
+        $user = DB::table('clients')
+            ->find(Input::get('client_id'));
+
+        // User access restrictions
+        if (!Auth::user()->admin && $user->user_id != Auth::user()->id) {
+            return Redirect::to('users/login')
+                ->with('message', trans('general.permission.access.denied'))
+                ->with('message.type', 'danger');
+        }
+    }
 });

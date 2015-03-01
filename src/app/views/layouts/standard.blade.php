@@ -33,52 +33,52 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
 <body>
 
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            @include('layouts.menu')
-        </nav>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        @include('layouts.menu')
+    </nav>
 
-        <div>
-            @include('layouts.alerts')
+    <div>
+        @include('layouts.alerts')
 
-            @yield('content')
-        </div>
-
+        @yield('content')
     </div>
-    <!-- /#wrapper -->
-    <!-- jQuery -->
-    {{ HTML::script('packages/jquery/jquery.min.js') }}
-    {{ HTML::script('packages/jquery-loader/jquery-loader.js') }}
 
-    <!-- Bootstrap Core JavaScript -->
-    {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
+</div>
+<!-- /#wrapper -->
+<!-- jQuery -->
+{{ HTML::script('packages/jquery/jquery.min.js') }}
+{{ HTML::script('packages/jquery-loader/jquery-loader.js') }}
 
-    <!-- Bootstrap Datepicker -->
-    {{ HTML::script('packages/moment/moment.js') }}
+<!-- Bootstrap Core JavaScript -->
+{{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
 
-    {{ HTML::script('packages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}
+<!-- Bootstrap Datepicker -->
+{{ HTML::script('packages/moment/moment.js') }}
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/js/plugins/metisMenu/metisMenu.min.js"></script>
+{{ HTML::script('packages/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}
 
-    <!-- Tiny MCE -->
-    {{ HTML::script('packages/tinymce/js/tinymce/tinymce.min.js') }}
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/js/plugins/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    {{ HTML::script('js/bootstrap.ext.js') }}
-    {{ HTML::script('js/sb-admin-2.js') }}
+<!-- Tiny MCE -->
+{{ HTML::script('packages/tinymce/js/tinymce/tinymce.min.js') }}
 
-    @yield('script')
+<!-- Custom Theme JavaScript -->
+{{ HTML::script('js/bootstrap.ext.js') }}
+{{ HTML::script('js/sb-admin-2.js') }}
+
+@yield('script')
 </body>
 
 </html>

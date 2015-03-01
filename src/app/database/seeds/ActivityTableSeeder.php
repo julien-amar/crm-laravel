@@ -6,7 +6,7 @@ class ActivityTableSeeder extends Seeder {
     {
         DB::table('activities')->delete();
 
-		Activity::create(array('label' => 'Bar'));
-		Activity::create(array('label' => 'Hotel'));
+        Activity::create(array('label' => 'Bar'));
+        Activity::create(array('label' => 'Hotel'));
     }
 }
