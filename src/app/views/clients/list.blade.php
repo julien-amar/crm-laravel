@@ -1,6 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+
+@include('layouts.errors')
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">{{ trans('clients.form.search.title') }}</h1>
@@ -34,15 +37,19 @@
 	<div class="col-lg-12">
 		{{ HTML::link('clients/create', trans('clients.grid.actions.add'), array('class' => 'btn btn-info pull-right')) }}
 
-		{{ Form::open(array('url' => 'mailings/create', 'id' => 'client-quick-search', 'class' => 'form-search', 'role' => 'form')) }}
-			{{ Form::hidden('clients', NULL, array('id' => 'clients')) }}
-			{{ Form::submit(trans('clients.grid.actions.mailing'), array('class' => 'btn btn-primary pull-right margin-right-10')) }}
-		{{ Form::close() }}
+		{{ Form::button(trans('clients.grid.actions.mailing'), array('id' => 'btn-mailing', 'class' => 'btn btn-primary pull-right margin-right-10', 'data-toggle' => 'modal', 'data-target' => '#exampleModal', 'disabled' => 'disabled')) }}
 	</div>
 </div>
 
 <div id="client-result">
 </div>
+
+@stop
+
+@section('modals')
+
+	@include('mailings.create')
+
 @stop
 
 @section('sidebar')
@@ -308,6 +315,21 @@
 				</ul>
 			</li>
 
+			<li>
+                <a href="#"><i class="fa fa-envelope-o fa-fw"></i> {{ trans('clients.form.advanced-search.category.mailing') }}<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+					<li>
+						{{ Form::label('subject', trans('clients.form.advanced-search.fields.subject')) }}
+						{{ Form::text('subject', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.subject.default') )) }}
+					</li>
+
+					<li>
+						{{ Form::label('reference', trans('clients.form.advanced-search.fields.reference')) }}
+						{{ Form::text('reference', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.reference.default') )) }}
+					</li>
+				</ul>
+			</li>
+
 			<li class="form-group pull-right margin-10">
 				{{ Form::reset(trans('clients.form.advanced-search.reset'), array('class'=>'btn btn-large btn-info'))}}
 				{{ Form::submit(trans('clients.form.advanced-search.submit'), array('class'=>'btn btn-large btn-primary'))}}
@@ -324,4 +346,11 @@
 
 @section('script')
 	{{ HTML::script('js/clients/list.js') }}
+
+$(document).ready(function() {
+	tinymce.init({
+	    selector: "textarea"
+	 });
+});
+
 @stop

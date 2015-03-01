@@ -31,17 +31,25 @@
 
 					<td>
 					@if($user->admin)
-						<button type="button" class="btn btn-success btn-xs">True</button>
+						<a href="/profile/admin?user_id={{ $user->id }}&value=False" class="btn btn-success btn-xs">
+							True
+						</a>
 					@else
-						<button type="button" class="btn btn-danger btn-xs">False</button>
+						<a href="/profile/admin?user_id={{ $user->id }}&value=True" class="btn btn-danger btn-xs">
+							False
+						</a>
 					@endif
 					</td>
 
 					<td>
 					@if($user->lock)
-						<button type="button" class="btn btn-success btn-xs">True</button>
+						<a href="/profile/lock?user_id={{ $user->id }}&value=False" class="btn btn-success btn-xs">
+							True
+						</a>
 					@else
-						<button type="button" class="btn btn-danger btn-xs">False</button>
+						<a href="/profile/lock?user_id={{ $user->id }}&value=True" class="btn btn-danger btn-xs">
+							False
+						</a>
 					@endif
 					</td>
 

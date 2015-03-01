@@ -20,7 +20,7 @@
 										</button>
 										<ul class="dropdown-menu" aria-labelledby="authenticate_dropdown">
 											@foreach($users as $user)
-											<li class="pull-left">
+											<li>
 												<a tabindex="-1" href="#" data-value="{{ $user->id }}">
 													{{ $user->fullname }} <i>({{ $user->login }})</i>
 												</a>

@@ -36,33 +36,32 @@ class ClientsController extends BaseController {
                 'activities' => array('activity_id', 'mutipleValueJoinPredicate', 'clients_activities', 'clients.id', 'clients_activities.client_id'),
                 'sectors' => array('sector_id', 'mutipleValueJoinPredicate', 'clients_sectors', 'clients.id', 'clients_sectors.client_id'),
                 
-                'comment' => array('message', 'mutipleValueContainsJoinPredicate', 'histories', 'clients.id', 'histories.client_id'),
+                'comment' => array('message', 'valueContainsJoinPredicate', 'histories', 'clients.id', 'histories.client_id'),
 
                 'lastname' => array('lastname', 'containsPredicate'),
                 'firstname' => array('firstname', 'containsPredicate'),
-                'street' => array('address_street', 'containsPredicate')
+                'street' => array('address_street', 'containsPredicate'),
+
+                'subject' => array('m1.subject', 'valueContainsJoinPredicate', 'mailings as m1', 'clients.id', 'm1.client_id'),
+                'reference' => array('m2.reference', 'valueContainsJoinPredicate', 'mailings as m2', 'clients.id', 'm2.client_id'),
         );
 
         private static function equalityPredicate($collection, $criteria, $value)
         {
-                //echo $criteria . ' = ' . ($value) . "\n";
                 return $collection->where($criteria, '=', $value);
         }
 
         private static function containsPredicate($collection, $criteria, $value)
         {
-                //echo $criteria . ' like %' . ($value) . "%\n";
                 return $collection->where($criteria, 'like', '%' . $value . '%');
         }
 
         private static function rangeEqualityPredicate($collection, $criteria, $value)
         {
                 if (strstr($criteria, '_from') === FALSE) {
-                        //echo $criteria . ' <= ' . ($value) . "\n";
                         return $collection->where($criteria, '<=', $value);
                 }
                 else {
-                        //echo $criteria . ' >= ' . ($value) . "\n";
                         return $collection->where($criteria, '>=', $value);
                 }
         }
@@ -73,18 +72,15 @@ class ClientsController extends BaseController {
                 $criteriaShort = str_replace('_from', '', $criteriaShort);
 
                 if (strstr($criteria, '_from') === FALSE) {
-                        //echo $criteriaShort . ' <= ' . ($value) . "\n";
                         return $collection->where($criteriaShort, '<=', $value);
                 }
                 else {
-                        //echo $criteriaShort . ' >= ' . ($value) . "\n";
                         return $collection->where($criteriaShort, '>=', $value);
                 }
         }
 
         private static function mutipleValuePredicate($collection, $criteria, $value)
         {
-                //echo $criteria . ' IN (' . var_dump($value) . ')' . "\n";
                 return $collection->whereIn($criteria, $value);
         }
 
@@ -94,7 +90,7 @@ class ClientsController extends BaseController {
                         ->whereIn($criteria, $value);
         }
         
-        private static function mutipleValueContainsJoinPredicate($collection, $table, $col1, $col2, $criteria, $value)
+        private static function valueContainsJoinPredicate($collection, $table, $col1, $col2, $criteria, $value)
         {
                 return $collection->join($table, $col1, '=', $col2)
                         ->where($criteria, 'like', '%' . $value . '%');
@@ -155,6 +151,11 @@ class ClientsController extends BaseController {
                         'states' => array(
                                 'Acheteur' => 'Buyer',
                                 'Vendeur' => 'Seller'
+                        ),
+                        'operations' => array(
+                                'BaissePrix',
+                                'NouveauBilan',
+                                'Autre'
                         ),
                         'activities' => Activity::all(),
                         'sectors' => Sector::all()
@@ -253,11 +254,11 @@ class ClientsController extends BaseController {
                         $this->SaveOrUpdateClient($client);
                         
                         return Redirect::to('clients/edit?client_id=' . $client->id)
-                                ->with('message', 'Client added successfully') // TODO : Translate
+                                ->with('message', trans('clients.validation.create.success'))
                                 ->with('message-type', 'success');
                 } else {
                         return Redirect::to('clients/create')
-                                ->with('message', 'The following errors occurred') // TODO : Translate
+                                ->with('message', trans('general.errors.occured'))
                                 ->with('message-type', 'danger')
                                 ->withErrors($validator)
                                 ->withInput();
@@ -311,11 +312,11 @@ class ClientsController extends BaseController {
                         $this->SaveOrUpdateClient($client);
 
                         return Redirect::to('clients/edit?client_id=' . $client->id)
-                                ->with('message', 'Client added successfully') // TODO : Translate
+                                ->with('message', trans('clients.validation.edit.success'))
                                 ->with('message-type', 'success');
                 } else {
                         return Redirect::to('clients/edit?client_id=' . $client->id)
-                                ->with('message', 'The following errors occurred') // TODO : Translate
+                                ->with('message', trans('general.errors.occured'))
                                 ->with('message-type', 'danger')
                                 ->withErrors($validator)
                                 ->withInput();
@@ -340,7 +341,7 @@ class ClientsController extends BaseController {
                 $client->delete();
 
                 return Redirect::to('clients/list')
-                        ->with('message', 'Client deleted successfully') // TODO : Translate
+                        ->with('message', trans('clients.validation.delete.success'))
                         ->with('message-type', 'success');
         }
 }

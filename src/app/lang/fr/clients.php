@@ -58,6 +58,13 @@ return array(
 	'form.advanced-search.fields.state' => 'Etat',
 	'form.advanced-search.fields.state.default' => 'Etat',
 
+	'form.advanced-search.category.mailing' => 'Mailing',
+
+	'form.advanced-search.fields.subject' => 'Sujet',
+	'form.advanced-search.fields.subject.default' => 'Sujet',
+	'form.advanced-search.fields.reference' => 'Reference',
+	'form.advanced-search.fields.reference.default' => 'Reference',
+
 	'form.advanced-search.reset' => 'Reset',
 	'form.advanced-search.submit' => 'Filter',
 
@@ -197,5 +204,9 @@ return array(
 
 	'form.delete.title' => 'Suppression',
 	'form.delete.label' => 'Êtes-vous certain de vouloir supprimer ce client ?',
-	'form.delete.submit' => 'Supprimer'
+	'form.delete.submit' => 'Supprimer',
+
+	'validation.create.success' => 'Client had been added successfully.',
+	'validation.edit.success' => 'Client had been updated successfully.',
+	'validation.delete.success' => 'Client had been removed successfully.'
 );

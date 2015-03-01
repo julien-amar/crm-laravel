@@ -27,7 +27,7 @@ class BaseController extends Controller {
 
 	protected function RedirectToLoginPage() {
 		return Redirect::to('users/login')
-			->with('message', 'Access denied.') // TODO : Translate
+			->with('message', trans('general.permission.access.denied'))
 			->with('message.type', 'danger');
 	}
 }

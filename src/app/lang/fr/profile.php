@@ -30,5 +30,7 @@ return array(
 	'grid.columns.lock' => 'Bloqué',
 	'grid.columns.action' => 'Action',
 	'grid.actions.edit' => 'Editer',
-	'grid.actions.edit.description' => "Editer les informations de l'utilisateur."
+	'grid.actions.edit.description' => "Editer les informations de l'utilisateur.",
+
+	'validation.edit.success' => 'User profile had been updated successfully.'
 );

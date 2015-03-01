@@ -61,6 +61,9 @@
 
     </div>
     <!-- /#wrapper -->
+
+    @yield('modals')
+
     <!-- jQuery -->
     {{ HTML::script('packages/jquery/jquery.min.js') }}
     {{ HTML::script('packages/jquery-loader/jquery-loader.js') }}
@@ -75,6 +78,9 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/js/plugins/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Tiny MCE -->
+    {{ HTML::script('packages/tinymce/js/tinymce/tinymce.min.js') }}
 
     <!-- Custom Theme JavaScript -->
     {{ HTML::script('js/bootstrap.ext.js') }} {{ HTML::script('js/sb-admin-2.js') }}

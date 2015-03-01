@@ -17,7 +17,7 @@ class ProfileController extends BaseController {
 	public function __construct() {
 		$this->beforeFilter('csrf', array('on' => 'post'));
 		$this->beforeFilter('auth');
-		$this->beforeFilter('hasOriginalUserAdminRole', array('only' => array('getProfiles')));
+		$this->beforeFilter('hasOriginalUserAdminRole', array('only' => array('getProfiles', 'getAdmin', 'getLock')));
 	}
 
 	public function getProfiles() {
@@ -53,11 +53,11 @@ class ProfileController extends BaseController {
 			$user->save();
 
 			return Redirect::to('profile/profile')
-				->with('message', 'User profile updated successfully.') // TODO : Translate
+				->with('message', trans('profile.validation.edit.success'))
 				->with('message-type', 'success');
 		} else {
 			return Redirect::to('profile/profile')
-				->with('message', 'The following errors occurred') // TODO : Translate
+				->with('message', trans('general.errors.occured'))
 				->with('message-type', 'danger')
 				->withErrors($validator)
 				->withInput();
@@ -76,15 +76,39 @@ class ProfileController extends BaseController {
 			$user->save();
 
 			return Redirect::to('profile/profile')
-				->with('message', 'User profile updated successfully.') // TODO : Translate
+				->with('message', trans('profile.validation.edit.success'))
 				->with('message-type', 'success');
 		} else {
 			return Redirect::to('profile/profile')
-				->with('message', 'The following errors occurred') // TODO : Translate
+				->with('message', trans('general.errors.occured'))
 				->with('message-type', 'danger')
 				->withErrors($validator)
 				->withInput();
 		}
+    }
+
+	public function getAdmin() {
+		$user = $this->getUser();
+
+		$user->admin = Input::get('value') == "True" ? 1 : 0;
+
+		$user->save();
+
+        return Redirect::to('profile/profiles')
+				->with('message', trans('profile.validation.edit.success'))
+				->with('message-type', 'success');
+    }
+
+	public function getLock() {
+		$user = $this->getUser();
+
+		$user->lock = Input::get('value') == "True" ? 1 : 0;
+
+		$user->save();
+
+        return Redirect::to('profile/profiles')
+				->with('message', trans('profile.validation.edit.success'))
+				->with('message-type', 'success');
     }
 }
 

@@ -165,7 +165,7 @@ class ImportController extends BaseController {
 				}
 			} catch (Exception $e) {
 					return Redirect::to('import/results')
-						->with('message', 'An error occured while processing Excel !') // TODO : Translate
+						->with('message', trans('general.errors.occured.excel'))
 						->with('message-type', 'danger')
 						->with('import-data', array())
 						->with('state', 'error');

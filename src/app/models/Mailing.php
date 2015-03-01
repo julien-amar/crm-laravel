@@ -8,6 +8,14 @@ class Mailing extends Eloquent {
 	 */
 	protected $table = 'mailings';
 
+	public static $rules = array(
+		'create' => array(
+			'subject' => 'required|max:1024',
+			'reference' => 'required|max:32',
+			'message' => 'required',
+		),
+	);
+
     public function Client()
     {
         return $this->hasOne('clients', 'id', 'client_id');

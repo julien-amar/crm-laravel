@@ -34,11 +34,11 @@ class UsersController extends BaseController {
 			$user->save();
 
 			return Redirect::to('users/login')
-				->with('message', 'Thanks for registering!') // TODO : Translate
+				->with('message', trans('users.registration.success'))
 				->with('message-type', 'success');
 		} else {
 			return Redirect::to('users/register')
-				->with('message', 'The following errors occurred') // TODO : Translate
+				->with('message', trans('general.errors.occured'))
 				->with('message-type', 'danger')
 				->withErrors($validator)
 				->withInput();
@@ -58,12 +58,12 @@ class UsersController extends BaseController {
 				return Redirect::to('users/authentication');
 			} else {
 				return Redirect::to('users/dashboard')
-					->with('message', 'You are now logged in!') // TODO : Translate
+					->with('message', trans('users.login.success'))
 					->with('message-type', 'success');
 			}
 		} else {
 			return Redirect::to('users/login')
-				->with('message', 'Your username/password combination was incorrect') // TODO : Translate
+				->with('message', trans('users.login.fail'))
 				->with('message-type', 'danger')
 				->withInput();
 		}
@@ -84,7 +84,7 @@ class UsersController extends BaseController {
 		Auth::loginUsingId($userId);
 
 		return Redirect::to('users/dashboard')
-			->with('message', 'You are now logged in!') // TODO : Translate
+			->with('message', trans('users.login.success'))
 			->with('message-type', 'success');
 	}
 
@@ -96,7 +96,7 @@ class UsersController extends BaseController {
 		Auth::logout();
 
 		return Redirect::to('users/login')
-			->with('message', 'Your are now logged out!') // TODO : Translate
+			->with('message', trans('users.logout.success'))
 			->with('message-type', 'success');
 	}
 }

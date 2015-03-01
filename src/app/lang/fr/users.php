@@ -26,5 +26,13 @@ return array(
 	'form.authenticate.title' => 'Authentification',
 	'form.authenticate.fields.user' => "S'authentifier en tant que...",
 	'form.authenticate.fields.user.default' => 'Séléctionner un identifiant',
-	'form.authenticate.submit' => 'Connexion'
+	'form.authenticate.submit' => 'Connexion',
+
+	'registration.success' => 'Thanks for registering !',
+	
+	'login.success' => 'You are now logged in !',
+	'login.fail' => 'Your username/password combination was incorrect',
+
+	'logout.success' => 'You are now logged out !',
+
 );

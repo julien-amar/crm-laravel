@@ -54,18 +54,30 @@ $(document).ready(function() {
 			});
 		}
 
-		$('#clients').val(values.join(','));
+		values = values.filter(function (x) {
+			return x != '';
+		});
+
+		var clients = values.join(',');
+
+		$('#clients').val(clients);
+
+		if (clients)
+			$('#btn-mailing').removeAttr('disabled');
+		else
+			$('#btn-mailing').attr('disabled', 'disabled');
 	}
 
 	$('#client-result').on('click', 'tr', function(event) {
         if (event.target.type !== 'checkbox') {
-        	console.log('checkbox had been checked.');
             $(':checkbox', this).trigger('click');
-        	console.log('checkbox had been checked fired.');
         } else {
-        	console.log('checkbox had been checked handle.');
             handleSelection(event, $(event.target));
-        	console.log('checkbox had been checked handled.');
         }
     });
+
+    tinymce.init({
+	    selector: '#message',
+		height : 400
+	 });
 });

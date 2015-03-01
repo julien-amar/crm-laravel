@@ -54,26 +54,33 @@ class MailingsController extends BaseController {
                         $clients = Input::get('clients');
 
                         if (isset($clients)) {
+                                $clients = explode(',', $clients);
+
                                 foreach ($clients as $client) {
-                                        $mailing = new Mailing();
+                                        if (!empty($client)) {
+                                                $mailing = new Mailing();
 
-                                        $mailing->user_id = Auth::user()->id;
+                                                $mailing->user_id = Auth::user()->id;
 
-                                        $mailing->client_id = $client;
-                                        
-                                        $mailing->message = Input::get('message');
-                                        $mailing->state = Input::get('state');
-                                        
-                                        $mailing->save();
+                                                $mailing->client_id = $client;
+                                                
+                                                $mailing->message = Input::get('message');
+                                                $mailing->operation = Input::get('operation');
+                                                $mailing->subject = Input::get('subject');
+                                                $mailing->reference = Input::get('reference');
+                                                $mailing->state = 'Todo';
+
+                                                $mailing->save();
+                                        }
                                 }
                         }                        
 
-                        return Redirect::to('mailing/list')
-                                ->with('message', 'Mailing added successfully') // TODO : Translate
+                        return Redirect::to('clients/list')
+                                ->with('message', trans('mailings.validation.send.success'))
                                 ->with('message-type', 'success');
                 } else {
-                        return Redirect::to('mailing/create')
-                                ->with('message', 'The following errors occurred') // TODO : Translate
+                        return Redirect::to('clients/list')
+                                ->with('message', trans('general.errors.occured'))
                                 ->with('message-type', 'danger')
                                 ->withErrors($validator)
                                 ->withInput();
