@@ -86,7 +86,27 @@ if ($row)
 	$mail->AltBody = $message;
 	
 	//Attach an image file
-	//$mail->addAttachment('images/phpmailer_mini.png');
+	$query = $pdo->prepare("
+		SELECT
+			uploads.*
+		FROM
+			mailings_uploads
+		JOIN
+			uploads ON mailings_uploads.upload_id = uploads.id
+		WHERE
+			mailings_uploads.mailing_id = :mailing");
+
+	$query->execute(array(
+		'mailing' => $id
+	));
+
+	$uploads = $query->fetchAll();
+
+	foreach ($uploads as $upload) {
+		echo ">> Adding attachment " . $upload["path"] . "\r\n";
+		
+		$mail->addAttachment($upload['path']);
+	}
 
 	echo ">> Sending mail\r\n";
 

@@ -20,4 +20,8 @@ class Mailing extends Eloquent {
     {
         return $this->hasOne('clients', 'id', 'client_id');
     }
+
+    public function Uploads() {
+        return $this->belongsToMany('Upload', 'mailings_uploads');
+    }
 }

@@ -1,4 +1,4 @@
-{{ Form::open(array('url' => 'mailings/create', 'class' => 'form-create', 'role' => 'form')) }}
+{{ Form::open(array('url' => 'mailings/create', 'class' => 'form-create', 'role' => 'form', 'files' => true)) }}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="mailingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -44,6 +44,24 @@
                     {{ Form::textarea('message', NULL, array('class'=>'form-control', 'placeholder' => trans('mailings.form.create.fields.message.default') )) }}
                 </div>
 
+                <div class="form-group">
+                    {{ Form::label('file[]', trans('mailings.form.create.fields.file')) }}
+
+                    <a href="#" id="add-mailing" data-template="mailing" data-target="#add-mailing-template">
+                        <i class="fa fa-plus"></i>
+                    </a>
+
+                    <ul id="add-mailing-template">
+                    </ul>
+
+                    <div id="template-mailing" style="display: none;">
+                        <li>
+                            {{ Form::file('file[]') }}
+                        </li>
+                    </div>
+                </div>
+
+
             </div>
             <div class="modal-footer">
                 {{ Form::button(trans('mailings.form.create.action.close'), array('class'=>'btn btn-default', 'data-dismiss' => 'modal'))}}
@@ -54,3 +72,7 @@
 </div>
 {{ Form::hidden('_token', csrf_token(), array()) }}
 {{ Form::close() }}
+
+<div class⁼"template-mailing">
+    {{ Form::file('file[]') }}
+</div>

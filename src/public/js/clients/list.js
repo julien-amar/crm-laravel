@@ -80,4 +80,13 @@ $(document).ready(function() {
 	    selector: '#message',
 		height : 400
 	 });
+
+    // Add mailing file
+    $('#add-mailing').on('click', function () {
+    	var target = $(this).attr('data-target');
+    	var templateName = $(this).attr('data-template');
+    	var template = $('#template-' + templateName + ' li');
+
+    	$(template).clone().appendTo($(target));
+    });
 });

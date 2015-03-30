@@ -55,6 +55,23 @@ class MailingsController extends BaseController {
 
             if (isset($clients)) {
                 $clients = explode(',', $clients);
+                $files = Input::file('file');
+
+                $uploads = array();
+
+                foreach($files as $file) {
+                    $upload = new Upload();
+
+                    $filename = $file->getClientOriginalName();
+                    $targetFolder = 'Upload';
+                    $targetPath = $targetFolder . '/' . $filename;
+
+                    $upload_success = $file->move($$targetFolder, $filename);
+
+                    $upload->path = $targetPath;
+
+                    $uploads[] = $upload;
+                }
 
                 foreach ($clients as $client) {
                     if (!empty($client)) {
@@ -71,6 +88,8 @@ class MailingsController extends BaseController {
                         $mailing->state = 'Todo';
 
                         $mailing->save();
+
+                        $mailing->Uploads()->sync($uploads);
                     }
                 }
             }
