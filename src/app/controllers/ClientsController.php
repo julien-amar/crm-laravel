@@ -108,13 +108,10 @@ class ClientsController extends BaseController {
             if (array_key_exists($queryFilter, $this->criterias)) {
                 $criteriaInfo = $this->criterias[$queryFilter];
 
-                $criteria = $criteriaInfo[0];
-                $criteriaPredicate = $criteriaInfo[1];
+                list($criteria, $criteriaPredicate) = $criteriaInfo;
 
                 if (count($criteriaInfo) == 5) {
-                    $table = $criteriaInfo[2];
-                    $col1 = $criteriaInfo[3];
-                    $col2 = $criteriaInfo[4];
+                    list($criteria, $criteriaPredicate, $table, $col1, $col2) = $criteriaInfo;
 
                     $clients = $this->$criteriaPredicate($clients, $table, $col1, $col2, $criteria, $queryFilterValue);
                 } else  {
@@ -128,8 +125,19 @@ class ClientsController extends BaseController {
             ->paginate(10);
     }
 
+
+    private function getOperations() {
+        $currentPath = dirname(__FILE__) . '/../../templates/';
+        $operations = scandir($currentPath);
+
+        $operations = array_filter($operations, function($v) {
+            return $v != '.' && $v != '..';
+        });
+
+        return $operations;
+    }
+
     public function __construct() {
-        //$this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth');
         $this->beforeFilter('canUserAccessClient', array('only' => array('getEdit', 'postEdit', 'getDelete', 'postDelete')));
     }
@@ -145,6 +153,7 @@ class ClientsController extends BaseController {
 
         $results = $this->getClient($criterias);
 
+
         return View::make('clients.list', array(
             'results' => $results,
             'users' => $users,
@@ -152,11 +161,7 @@ class ClientsController extends BaseController {
                 'Acheteur' => 'Buyer',
                 'Vendeur' => 'Seller'
             ),
-            'operations' => array(
-                'BaissePrix',
-                'NouveauBilan',
-                'Autre'
-            ),
+            'operations' => $this->getOperations(),
             'activities' => Activity::all(),
             'sectors' => Sector::all()
         ));
@@ -236,6 +241,7 @@ class ClientsController extends BaseController {
         if (!empty(Input::get('comment'))) {
             $history = new History;
 
+            $history->user_id = Auth::user()->id;
             $history->client_id = $client->id;
             $history->message = Input::get('comment');
 

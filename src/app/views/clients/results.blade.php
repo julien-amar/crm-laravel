@@ -12,7 +12,11 @@
             </thead>
             <tbody>
             @foreach($results as $result)
-                <tr>
+                @if ($result->state == 'Buyer')
+                <tr class="info">
+                @else
+                <tr class="warning">
+                @endif
                     <td>
                         {{ Form::checkbox('clients[]', $result->id, FALSE, array('data-click' => 'hidden') ) }}
                     </td>
@@ -33,9 +37,12 @@
                         <a href="/clients/edit?client_id={{ $result->id }}" class="btn btn-primary" data-toggle="popover" title="{{ trans('clients.grid.actions.edit') }}" data-content="{{ trans('clients.grid.actions.edit.description') }}" data-placement="bottom">
                             <span class="glyphicon glyphicon-cog"></span>
                         </a>
+
+                        @if (Auth::user()->admin)
                         <a href="/clients/delete?client_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('clients.grid.actions.delete') }}" data-content="{{ trans('clients.grid.actions.delete.description') }}" data-placement="bottom">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

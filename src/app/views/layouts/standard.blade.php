@@ -73,6 +73,7 @@
 
 <!-- Tiny MCE -->
 {{ HTML::script('packages/tinymce/js/tinymce/tinymce.min.js') }}
+{{ HTML::script('packages/tinymce/js/tinymce/langs/fr_FR.js') }}
 
 <!-- Custom Theme JavaScript -->
 {{ HTML::script('js/bootstrap.ext.js') }}

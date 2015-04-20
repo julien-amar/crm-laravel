@@ -28,10 +28,12 @@ class Client extends Eloquent {
 
         foreach ($histories as $index => $value) {
             $value->type = 'History';
+            $value->user_fullname = $value->user()->get()[0]->fullname;
         }
 
         foreach ($mailings as $index => $value) {
             $value->type = 'Mailing';
+            $value->user_fullname = $value->user()->get()[0]->fullname;
         }
 
         $comments = array_merge($histories->toArray(), $mailings->toArray());
@@ -55,5 +57,15 @@ class Client extends Eloquent {
 
     public function activities() {
         return $this->belongsToMany('Activity', 'clients_activities');
+    }
+
+    public static function getClientById($id) {
+        $clientCollection = DB::table('clients');
+ 
+        if (!Auth::user()->admin) {
+            $clientCollection = $clientCollection->where('user_id', '=', Auth::user()->id);
+        }
+
+        return $clientCollection->where('id', '=', $id)->first();
     }
 }

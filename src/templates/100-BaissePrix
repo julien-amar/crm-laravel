@@ -1,0 +1,7 @@
+Bonjour %firstname% %lastname%,
+
+Sujet : BaissePrix - %subject%
+
+%message%
+
+%user fullname%

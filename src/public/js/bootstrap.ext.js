@@ -15,11 +15,14 @@ $(document).ready(function() {
 		var valueSelector = $dropdown.attr('data-hidden-target');
 
 		$(valueSelector).val(selValue).change();
+
+		$dropdown.attr('data-selection', selValue);
 	});
 
 	// Restore selected value as default dropdown text.
 	$('.dropdown').each(function (index, element) {
 		var $dropdown = $(element).find('.dropdown-toggle');
+
 		var valueSelector = $dropdown.attr('data-hidden-target');
 		var selValue = $(valueSelector).val();
 		
@@ -27,10 +30,12 @@ $(document).ready(function() {
 			var $selItem = $(element).find('a[data-value="' + selValue + '"]');
 			
 			$dropdown.html($selItem.html() + ' <span class="caret"></span>');
+
+			$dropdown.attr('data-selection', selValue);
 		}
 	});
 
-	//
+	// Multi selection dropdown component
 	$(".dropdown .dropdown-menu li a[rel=nofollow]").on('click', function(e) {
 		var $target = $(e.target);
 		var $checkbox = $(this).find(':checkbox');

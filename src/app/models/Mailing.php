@@ -16,6 +16,11 @@ class Mailing extends Eloquent {
         ),
     );
 
+    public function user()
+    {
+        return $this->hasOne('user', 'id', 'user_id');
+    }
+
     public function Client()
     {
         return $this->hasOne('clients', 'id', 'client_id');

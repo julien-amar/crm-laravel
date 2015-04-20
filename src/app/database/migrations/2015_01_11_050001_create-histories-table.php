@@ -15,6 +15,7 @@ class CreateHistoriesTable extends Migration {
         Schema::create('histories', function($table)
         {
             $table->increments('id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->integer('client_id')->unsigned();
             $table->string('message', 4096);
             $table->timestamps();

@@ -17,7 +17,7 @@ class CreateMailingsTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('client_id')->unsigned();
-            $table->enum('operation', array('BaissePrix', 'NouveauBilan', 'Autre'));
+            $table->string('operation', 64);
             $table->string('subject', 1024);
             $table->text('message');
             $table->enum('state', array('Todo', 'InProgress', 'Success', 'Error'));

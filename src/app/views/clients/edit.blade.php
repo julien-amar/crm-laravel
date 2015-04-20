@@ -232,7 +232,7 @@
                                 {{ Form::label('state_dropdown', trans('clients.form.edit.fields.state')) }}
                                 {{ Form::hidden('state', $client->state, array('id' => 'state')) }}
                                 <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#state">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#state" data-colorize="true">
                                         {{ trans('clients.form.edit.fields.state.default') }}
                                         <span class="caret"></span>
                                     </button>
@@ -342,6 +342,8 @@
                                                         <small class="text-muted">
                                                             <i class="fa fa-clock-o"></i>
                                                             <i class="relative-time">{{ $comment['created_at'] }}</i>
+                                                            <i> by </i>
+                                                            <i>{{ $comment['user_fullname'] }}</i>
                                                         </small>
                                                     </p>
                                                 </div>
@@ -381,4 +383,8 @@
 
     {{ Form::close() }}
 
+@stop
+
+@section('script')
+    {{ HTML::script('js/clients/edit.js') }}
 @stop

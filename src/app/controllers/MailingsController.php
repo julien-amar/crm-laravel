@@ -24,6 +24,29 @@ class MailingsController extends BaseController {
             ->paginate(50);
     }
 
+    private function getMessage($client) {
+        $operation = Input::get('operation');
+        $currentPath = dirname(__FILE__) . '/../../templates/';
+
+        $pattern = '/^[0-9a-zA-Z\-]+$/';
+
+        if (preg_match($pattern, $operation) === 1)
+        {
+            $message = file_get_contents($currentPath . $operation);
+
+            $message = str_replace('%firstname%', $client->firstname, $message);
+            $message = str_replace('%lastname%', $client->lastname, $message);
+            $message = str_replace('%subject%', Input::get('subject'), $message);
+            $message = str_replace('%message%', Input::get('message'), $message);
+            $message = str_replace('%user fullname%', Auth::user()->fullname, $message);
+            $message = str_replace('%reference%', Input::get('reference'), $message);
+
+            return $message;
+        }
+
+        throw new Exception('[SECURITY] $operation does not match security pattern.');
+    }
+
     public function __construct() {
         $this->beforeFilter('auth');
     }
@@ -59,37 +82,48 @@ class MailingsController extends BaseController {
 
                 $uploads = array();
 
-                foreach($files as $file) {
-                    $upload = new Upload();
+                if (!empty($files)) {
+                    foreach($files as $file) {
+                        
+                        if (empty($file)) {
+                            continue;
+                        }
 
-                    $filename = $file->getClientOriginalName();
-                    $targetFolder = 'Upload';
-                    $targetPath = $targetFolder . '/' . $filename;
+                        $upload = new Upload();
 
-                    $upload_success = $file->move($$targetFolder, $filename);
+                        $filename = $file->getClientOriginalName();
+                        $targetFolder = 'Upload';
+                        $targetPath = $targetFolder . '/' . $filename;
 
-                    $upload->path = $targetPath;
+                        $upload_success = $file->move($$targetFolder, $filename);
 
-                    $uploads[] = $upload;
+                        $upload->path = $targetPath;
+
+                        $uploads[] = $upload;
+                    }
                 }
 
                 foreach ($clients as $client) {
                     if (!empty($client)) {
-                        $mailing = new Mailing();
+                        $clientObject = Client::getClientById($client);
 
-                        $mailing->user_id = Auth::user()->id;
+                        if ($clientObject) {
+                            $mailing = new Mailing();
 
-                        $mailing->client_id = $client;
+                            $mailing->user_id = Auth::user()->id;
 
-                        $mailing->message = Input::get('message');
-                        $mailing->operation = Input::get('operation');
-                        $mailing->subject = Input::get('subject');
-                        $mailing->reference = Input::get('reference');
-                        $mailing->state = 'Todo';
+                            $mailing->client_id = $client;
 
-                        $mailing->save();
+                            $mailing->message = $this->getMessage($clientObject);
+                            $mailing->operation = Input::get('operation');
+                            $mailing->subject = Input::get('subject');
+                            $mailing->reference = Input::get('reference');
+                            $mailing->state = 'Todo';
 
-                        $mailing->Uploads()->sync($uploads);
+                            $mailing->save();
+
+                            $mailing->Uploads()->sync($uploads);
+                        }
                     }
                 }
             }

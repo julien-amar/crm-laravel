@@ -23,9 +23,11 @@ return array(
     'form.create.fields.message' => 'Message',
     'form.create.fields.message.default' => 'Message',
 
-    'form.create.fields.operations.BaissePrix' => 'Baisse de prix',
-    'form.create.fields.operations.NouveauBilan' => 'Nouveau bilan',
-    'form.create.fields.operations.Autre' => 'Autre...',
+    'form.create.fields.operations.100-BaissePrix' => 'Baisse de prix',
+    'form.create.fields.operations.100-NouveauBilan' => 'Nouveau bilan',
+    'form.create.fields.operations.200-Autre' => 'Autre...',
+
+    'form.create.fields.file' => 'Ajouter un fichier',
 
     'form.create.action.close' => 'Annuler',
     'form.create.action.send' => 'Envoyer',

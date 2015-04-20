@@ -1,6 +1,6 @@
 <?php
 
-class Uplload extends Eloquent {
+class Upload extends Eloquent {
     /**
      * The database table used by the model.
      *

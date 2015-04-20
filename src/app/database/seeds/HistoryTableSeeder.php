@@ -7,6 +7,7 @@ class HistoryTableSeeder extends Seeder {
         DB::table('histories')->delete();
 
         History::create(array(
+            'user_id' => '1',
             'client_id' => '1',
             'message' => 'Petit message'
         ));

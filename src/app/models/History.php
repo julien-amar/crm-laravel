@@ -7,4 +7,9 @@ class History extends Eloquent {
      * @var string
      */
     protected $table = 'histories';
+
+    public function user()
+    {
+        return $this->hasOne('user', 'id', 'user_id');
+    }
 }

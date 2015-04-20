@@ -348,9 +348,11 @@
     {{ HTML::script('js/clients/list.js') }}
 
     $(document).ready(function() {
-    tinymce.init({
-    selector: "textarea"
-    });
+        tinymce.init({
+            selector: "textarea",
+            language: 'fr_FR',
+            statusbar: false
+        });
     });
 
 @stop

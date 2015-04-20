@@ -299,3 +299,7 @@
     {{ Form::close() }}
 
 @stop
+
+@section('script')
+    {{ HTML::script('js/clients/edit.js') }}
+@stop
