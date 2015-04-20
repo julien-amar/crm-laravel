@@ -293,6 +293,60 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                {{ Form::label('informations', trans('clients.form.edit.fields.informations')) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                {{ Form::checkbox('terrace', '1', $client->terrace) }}
+                                {{ trans('clients.form.edit.fields.informations.terrace') }}
+                                <br/>
+                                {{ Form::checkbox('extraction', '1', $client->extraction) }}
+                                {{ trans('clients.form.edit.fields.informations.extraction') }}
+                                <br/>
+                                {{ Form::checkbox('apartment', '1', $client->apartment) }}
+                                {{ trans('clients.form.edit.fields.informations.apartment') }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                {{ Form::label('license', trans('clients.form.edit.fields.license')) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                {{ Form::checkbox('licenseII', '1', $client->licenseII) }}
+                                {{ trans('clients.form.edit.fields.license.licenseII') }}
+                                <br/>
+                                {{ Form::checkbox('licenseIII', '1', $client->licenseIII) }}
+                                {{ trans('clients.form.edit.fields.license.licenseIII') }}
+                                <br/>
+                                {{ Form::checkbox('licenseIV', '1', $client->licenseIV) }}
+                                {{ trans('clients.form.edit.fields.license.licenseIV') }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                {{ Form::label('surface_sell_from', trans('clients.form.edit.fields.surface_sell')) }} (min)
+                                {{ Form::number('surface_sell_from', $client->surface_sell_from, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.surface_sell.default') )) }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                {{ Form::label('surface_sell_to', trans('clients.form.edit.fields.surface_sell')) }} (max)
+                                {{ Form::number('surface_sell_to', $client->surface_sell_to, array('class'=>'form-control', 'placeholder' => trans('clients.form.edit.fields.surface_sell.default') )) }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

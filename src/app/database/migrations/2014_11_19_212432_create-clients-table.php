@@ -25,6 +25,17 @@ class CreateClientsTable extends Migration {
             $table->integer('surface_from')->nullable();
             $table->integer('surface_to')->nullable();
 
+            $table->boolean('terrace');
+            $table->boolean('extraction');
+            $table->boolean('apartment');
+            
+            $table->boolean('licenseII');
+            $table->boolean('licenseIII');
+            $table->boolean('licenseIV');
+            
+            $table->integer('surface_sell_from')->nullable();
+            $table->integer('surface_sell_to')->nullable();
+
             $table->string('lastname', 64)->nullable();
             $table->string('firstname', 64)->nullable();
             $table->string('phone', 24)->nullable();

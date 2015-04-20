@@ -4,6 +4,8 @@ class ClientsController extends BaseController {
     protected $layout = "layouts.main";
 
     private $criterias = array(
+        'search' => array('-', 'agregatePredicate'),
+
         'id' => array('id', 'equalityPredicate'),
         'email' => array('mail', 'equalityPredicate'),
         'phone' => array('phone', 'equalityPredicate'),
@@ -14,6 +16,12 @@ class ClientsController extends BaseController {
         'mandat' => array('mandat', 'equalityPredicate'),
         'user' => array('user_id', 'equalityPredicate'),
         'state' => array('state', 'equalityPredicate'),
+        'terrace' => array('terrace', 'equalityPredicate'),
+        'extraction' => array('extraction', 'equalityPredicate'),
+        'apartment' => array('apartment', 'equalityPredicate'),
+        'licenseII' => array('licenseII', 'equalityPredicate'),
+        'licenseIII' => array('licenseIII', 'equalityPredicate'),
+        'licenseIV' => array('licenseIV', 'equalityPredicate'),
 
         'users' => array('user_id', 'mutipleValuePredicate'),
 
@@ -32,6 +40,8 @@ class ClientsController extends BaseController {
         'rent-to' => array('loyer_to', 'rangeEqualityPredicate'),
         'surface-from' => array('surface_from', 'rangeEqualityPredicate'),
         'surface-to' => array('surface_to', 'rangeEqualityPredicate'),
+        'surface-sell-from' => array('surface_sell_from', 'rangeEqualityPredicate'),
+        'surface-sell-to' => array('surface_sell_to', 'rangeEqualityPredicate'),
 
         'activities' => array('activity_id', 'mutipleValueJoinPredicate', 'clients_activities', 'clients.id', 'clients_activities.client_id'),
         'sectors' => array('sector_id', 'mutipleValueJoinPredicate', 'clients_sectors', 'clients.id', 'clients_sectors.client_id'),
@@ -45,6 +55,15 @@ class ClientsController extends BaseController {
         'subject' => array('m1.subject', 'valueContainsJoinPredicate', 'mailings as m1', 'clients.id', 'm1.client_id'),
         'reference' => array('m2.reference', 'valueContainsJoinPredicate', 'mailings as m2', 'clients.id', 'm2.client_id'),
     );
+
+    private static function agregatePredicate($collection, $criteria, $value)
+    {
+        return $collection
+            ->where('lastname', 'like', '%' . $value . '%')
+            ->orWhere('phone', 'like', '%' . $value . '%')
+            ->orWhere('mail', 'like', '%' . $value . '%')
+            ->orWhere('company', 'like', '%' . $value . '%');
+    }
 
     private static function equalityPredicate($collection, $criteria, $value)
     {
@@ -221,6 +240,14 @@ class ClientsController extends BaseController {
         $client->loyer_to = Input::get('loyer_to');
         $client->surface_from = Input::get('surface_from');
         $client->surface_to = Input::get('surface_to');
+        $client->terrace = Input::get('terrace') ? '0' : '1';
+        $client->extraction = Input::get('extraction') ? '0' : '1';
+        $client->apartment = Input::get('apartment') ? '0' : '1';
+        $client->licenseII = Input::get('licenseII') ? '0' : '1';
+        $client->licenseIII = Input::get('licenseIII') ? '0' : '1';
+        $client->licenseIV = Input::get('licenseIV') ? '0' : '1';
+        $client->surface_sell_from = Input::get('surface_sell_from');
+        $client->surface_sell_to = Input::get('surface_sell_to');
 
         $client->save();
 

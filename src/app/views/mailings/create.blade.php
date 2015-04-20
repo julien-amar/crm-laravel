@@ -73,6 +73,6 @@
 {{ Form::hidden('_token', csrf_token(), array()) }}
 {{ Form::close() }}
 
-<div class⁼"template-mailing">
+<div class="template template-mailing">
     {{ Form::file('file[]') }}
 </div>

@@ -291,6 +291,119 @@
                             {{ Form::number('surface-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface.default') )) }}
                         </li>
 
+                        <li>
+                            {{ Form::label('surface-sell', trans('clients.form.advanced-search.fields.surface-sell')) }}<br />
+                            From :
+                            {{ Form::number('surface-sell-from', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface-sell.default') )) }}
+                            To :
+                            {{ Form::number('surface-sell-to', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.surface-sell.default') )) }}
+                        </li>
+
+                        <li>
+                            {{ Form::label('state', trans('clients.form.advanced-search.fields.informations.terrace')) }}<br />
+                            {{ Form::hidden('terrace', null, array('id' => 'terrace')) }}
+
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="terrace_dropdown" data-toggle="dropdown" data-hidden-target="#terrace">
+                                    {{ trans('clients.form.advanced-search.fields.informations.terrace') }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="terrace_dropdown">
+                                    <li>
+                                        <a tabindex="-1" data-value="">
+                                            {{ trans('clients.form.advanced-search.fields.informations.terrace.all') }}
+                                        </a>
+                                        <a tabindex="-1" data-value="1">
+                                            {{ trans('clients.form.advanced-search.fields.informations.terrace.with') }}
+                                        </a>
+                                        <a tabindex="-1" data-value="0">
+                                            {{ trans('clients.form.advanced-search.fields.informations.terrace.without') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br />
+
+
+                            {{ Form::label('state', trans('clients.form.advanced-search.fields.informations.extraction')) }}<br />
+                            {{ Form::hidden('extraction', null, array('id' => 'extraction')) }}
+
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="extraction_dropdown" data-toggle="dropdown" data-hidden-target="#extraction">
+                                    {{ trans('clients.form.advanced-search.fields.informations.extraction') }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="extraction_dropdown">
+                                    <li>
+                                        <a tabindex="-1" data-value="">
+                                            {{ trans('clients.form.advanced-search.fields.informations.extraction.all') }}
+                                        </a>
+                                        <a tabindex="-1" data-value="1">
+                                            {{ trans('clients.form.advanced-search.fields.informations.extraction.with') }}
+                                        </a>
+                                        <a tabindex="-1" data-value="0">
+                                            {{ trans('clients.form.advanced-search.fields.informations.extraction.without') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br />
+
+                            {{ Form::label('state', trans('clients.form.advanced-search.fields.informations.apartment')) }}<br />
+                            {{ Form::hidden('apartment', null, array('id' => 'apartment')) }}
+
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="apartment_dropdown" data-toggle="dropdown" data-hidden-target="#apartment">
+                                    {{ trans('clients.form.advanced-search.fields.informations.apartment') }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="apartment_dropdown">
+                                    <li>
+                                        <a tabindex="-1" data-value="">
+                                            {{ trans('clients.form.advanced-search.fields.informations.apartment.all') }}
+                                        </a>
+                                        <a tabindex="-1" data-value="1">
+                                            {{ trans('clients.form.advanced-search.fields.informations.apartment.with') }}
+                                        </a>
+                                        <a tabindex="-1" data-value="0">
+                                            {{ trans('clients.form.advanced-search.fields.informations.apartment.without') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <br />
+                        </li>
+
+                        <li>
+                            {{ Form::label('license', trans('clients.form.advanced-search.fields.license')) }}<br />
+                            
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="sector_dropdown" data-toggle="dropdown">
+                                    {{ trans('clients.form.advanced-search.fields.license.default') }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="sector_dropdown">
+                                    <li>
+                                        <a tabindex="-1"  rel='nofollow'>
+                                            {{ Form::checkbox('licenseII', '1', FALSE) }}
+                                            {{ trans('clients.form.advanced-search.fields.license.licenseII') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1"  rel='nofollow'>
+                                            {{ Form::checkbox('licenseIII', '1', FALSE) }}
+                                            {{ trans('clients.form.advanced-search.fields.license.licenseIII') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1"  rel='nofollow'>
+                                            {{ Form::checkbox('licenseIV', '1', FALSE) }}
+                                            {{ trans('clients.form.advanced-search.fields.license.licenseIV') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
                         <li>
                             {{ Form::label('state', trans('clients.form.advanced-search.fields.state')) }}
@@ -298,10 +411,15 @@
 
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#state">
-                                    {{ trans('clients.form.edit.fields.state.default') }}
+                                    {{ trans('clients.form.advanced-search.fields.state.default') }}
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="state_dropdown">
+                                        <li>
+                                            <a tabindex="-1" data-value="">
+                                                {{ trans('clients.form.advanced-search.fields.state.all') }}
+                                            </a>
+                                        </li>
                                     @foreach($states as $state_label => $state_value)
                                         <li>
                                             <a tabindex="-1" data-value="{{ $state_value }}">
@@ -346,13 +464,14 @@
 
 @section('script')
     {{ HTML::script('js/clients/list.js') }}
-
+    
+    <script>
     $(document).ready(function() {
         tinymce.init({
-            selector: "textarea",
+            selector: "#message",
             language: 'fr_FR',
             statusbar: false
         });
     });
-
+    </script>
 @stop
