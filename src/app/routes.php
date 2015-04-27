@@ -16,3 +16,7 @@ Route::controller('clients', 'ClientsController');
 Route::controller('mailings', 'MailingsController');
 Route::controller('profile', 'ProfileController');
 Route::controller('import', 'ImportController');
+
+Route::get('/', function () {
+    return Redirect::to('users/dashboard');
+});

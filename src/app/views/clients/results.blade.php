@@ -7,6 +7,8 @@
                 <th>{{ trans('clients.grid.columns.lastname') }}</th>
                 <th>{{ trans('clients.grid.columns.firstname') }}</th>
                 <th>{{ trans('clients.grid.columns.company') }}</th>
+                <th>{{ trans('clients.grid.columns.first_comment') }}</th>
+                <th>{{ trans('clients.grid.columns.last_comment') }}</th>
                 <th>{{ trans('clients.grid.columns.action') }}</th>
             </tr>
             </thead>
@@ -32,6 +34,8 @@
                         <img src="{{ asset('images/Surface.png') }}" alt="{{ trans('clients.grid.columns.surface.tooltip') }}" title="{{ trans('clients.grid.columns.surface.tooltip') }}" />
                         {{{ $result->surface_from }}} - {{{ $result->surface_to }}}
                     </td>
+                    <td>{{{ $result->first_comment }}}</td>
+                    <td>{{{ $result->last_comment }}}</td>
 
                     <td>
                         <a href="/clients/edit?client_id={{ $result->id }}" class="btn btn-primary" data-toggle="popover" title="{{ trans('clients.grid.actions.edit') }}" data-content="{{ trans('clients.grid.actions.edit.description') }}" data-placement="bottom">

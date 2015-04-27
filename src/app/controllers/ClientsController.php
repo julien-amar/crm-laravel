@@ -115,6 +115,55 @@ class ClientsController extends BaseController {
             ->where($criteria, 'like', '%' . $value . '%');
     }
 
+    private function getExportableClient($queryFilters) {
+        $clients = DB::table('clients')
+            ->select(
+                'clients.id',
+                'clients.firstname',
+                'clients.lastname',
+                'clients.company'
+            );
+
+        foreach ($queryFilters as $queryFilter => $queryFilterValue) {
+            if (empty($queryFilterValue)) {
+                continue;
+            }
+
+            if (array_key_exists($queryFilter, $this->criterias)) {
+                $criteriaInfo = $this->criterias[$queryFilter];
+
+                list($criteria, $criteriaPredicate) = $criteriaInfo;
+
+                if (count($criteriaInfo) == 5) {
+                    list($criteria, $criteriaPredicate, $table, $col1, $col2) = $criteriaInfo;
+
+                    $clients = $this->$criteriaPredicate($clients, $table, $col1, $col2, $criteria, $queryFilterValue);
+                } else  {
+                    $clients = $this->$criteriaPredicate($clients, $criteria, $queryFilterValue);
+                }
+            }
+        }
+
+        $results = $clients->distinct()->get();
+
+        foreach ($results as $result) {
+            $id = $result->id;
+
+            $result->mailings = DB::table('mailings')
+                ->where('client_id', '=', $id)
+                ->select('reference')
+                ->get();
+
+            $result->activities = DB::table('clients_activities')
+                ->join('activities', 'activities.id', '=', 'clients_activities.activity_id')
+                ->where('client_id', '=', $id)
+                ->select('label')
+                ->get();
+        }
+
+        return $results;
+    }
+
     private function getClient($queryFilters) {
         $clients = DB::table('clients')
             ->select('clients.*');
@@ -139,11 +188,38 @@ class ClientsController extends BaseController {
             }
         }
 
-        return $clients
+        $results = $clients
             ->distinct()
             ->paginate(10);
-    }
 
+        foreach ($results as $result) {
+            $id = $result->id;
+
+            $first_comment = DB::table('histories')
+                ->where('client_id', '=', $id)
+                ->orderBy('created_at', 'asc')
+                ->first();
+
+            $last_comment = DB::table('histories')
+                ->where('client_id', '=', $id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            if ($first_comment) {
+                $result->first_comment = $first_comment->message;
+            } else {
+                $result->first_comment = '';
+            }
+
+            if ($last_comment) {
+                $result->last_comment = $last_comment->message;
+            } else {
+                $result->last_comment = '';
+            }
+        }
+
+        return $results;
+    }
 
     private function getOperations() {
         $currentPath = dirname(__FILE__) . '/../../templates/';
@@ -161,6 +237,43 @@ class ClientsController extends BaseController {
         $this->beforeFilter('canUserAccessClient', array('only' => array('getEdit', 'postEdit', 'getDelete', 'postDelete')));
     }
 
+    private function flattenExportableField($collection, $property) {
+        $array = array();
+
+        foreach ($collection as $item) {
+            $array[] =  $item->$property;
+        }
+
+        return join(",", $array);
+    }
+
+    public function getExport() {
+        $criterias = Input::all();
+        
+        if (!$this->HasAdminRole()) {
+            $criterias['user_id'] = Auth::user()->id;
+        }
+
+        $results = $this->getExportableClient($criterias);
+
+        $filename = tempnam('/tmp', 'export-');
+        $fp = fopen ($filename, 'w+');
+
+        foreach ($results as $result) {
+            fputcsv($fp, array(
+                $result->firstname,
+                $result->lastname,
+                $result->company,
+                $this->flattenExportableField($result->activities, 'label'),
+                $this->flattenExportableField($result->mailings, 'reference')
+            ), ';');
+        }
+
+        fclose($fp);
+
+        return Response::download($filename, 'export.csv', array());
+    }
+
     public function getList() {
         $criterias = array();
 
@@ -171,7 +284,6 @@ class ClientsController extends BaseController {
         $users = User::all();
 
         $results = $this->getClient($criterias);
-
 
         return View::make('clients.list', array(
             'results' => $results,
@@ -187,7 +299,13 @@ class ClientsController extends BaseController {
     }
 
     public function getSearch() {
-        $results = $this->getClient(Input::all());
+        $criterias = Input::all();
+
+        if (!$this->HasAdminRole()) {
+            $criterias['user_id'] = Auth::user()->id;
+        }
+
+        $results = $this->getClient($criterias);
 
         return View::make('clients.results', array(
             'results' => $results
@@ -195,7 +313,13 @@ class ClientsController extends BaseController {
     }
 
     public function postSearch() {
-        $results = $this->getClient(Input::all());
+        $criterias = Input::all();
+        
+        if (!$this->HasAdminRole()) {
+            $criterias['user_id'] = Auth::user()->id;
+        }
+
+        $results = $this->getClient($criterias);
 
         return View::make('clients.results', array(
             'results' => $results

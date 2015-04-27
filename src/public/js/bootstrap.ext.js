@@ -50,7 +50,7 @@ $(document).ready(function() {
 	// Popover on hover
 	$('[data-toggle=popover]').popover({
 		trigger: 'hover'
-	})
+	});
 
 	// Datepicker (formats)
 	var datePickerSelector = '.input-group.date[data-datepicker=date]';
@@ -84,5 +84,43 @@ $(document).ready(function() {
 	// Relative time
 	$('.relative-time').each(function (i) {
 		$(this).html(moment($(this).html(), "YYYY-MM-DD HH:mm:ss").fromNow());
+	});
+
+	// Default ajax behavior on DOM elements
+	$('[data-toggle=ajax]').each(function (i) {
+		var target = $(this);
+		var targetEvent = $(this).attr('data-event');
+		var targetData = $(this).attr('data-data');
+		var targetMethod = $(this).attr('data-method');
+		var targetTarget = $(this).attr('data-target');
+
+		target.on(targetEvent, function (e) {
+			$.ajax({
+				url: targetTarget,
+				method: targetMethod,
+				data: $(targetData).serialize(),
+				dataType: "jsonp"
+			});
+
+			e.stopPropagation();
+		});
+	});
+
+	// Default redirection behavior on DOM elements
+	$('[data-toggle=redirect]').each(function (i) {
+		var target = $(this);
+		var targetEvent = $(this).attr('data-event');
+		var targetData = $(this).attr('data-data');
+		var targetMethod = $(this).attr('data-method');
+		var targetTarget = $(this).attr('data-target');
+
+		target.on(targetEvent, function (e) {
+			var data = $(targetData).serialize();
+			var uri = targetTarget + '?' + data;
+
+			window.location.href = uri;
+
+			e.stopPropagation();
+		});
 	});
 });

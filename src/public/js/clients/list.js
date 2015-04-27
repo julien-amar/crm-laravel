@@ -33,6 +33,7 @@ $(document).ready(function() {
 	$('#client-search').submit(onSubmitSearch);
 	$('#client-quick-search').submit(onSubmitSearch);
 
+    // Paggination
 	$('#client-result').on('click', '.pagination li a', function (event) {
 		processSubmitSearch(event, lastSubmitedForm, this.href);
 	});
@@ -76,6 +77,7 @@ $(document).ready(function() {
         }
     });
 
+    // Mailing edition
     tinymce.init({
 	    selector: '#message',
 		height : 400

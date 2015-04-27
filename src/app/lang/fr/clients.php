@@ -91,14 +91,17 @@ return array(
     'form.advanced-search.reset' => 'Reset',
     'form.advanced-search.submit' => 'Filter',
 
-    'grid.actions.mailing' => 'Créer un mailing',
-    'grid.actions.add' => 'Ajouter un client',
+    'grid.actions.mailing' => '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Créer un mailing',
+    'grid.actions.add' => '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un client',
+    'grid.actions.export' => '<span class="glyphicon glyphicon-download" aria-hidden="true"></span> Exporter',
 
     'grid.columns.lastname' => 'Nom',
     'grid.columns.firstname' => 'Prénom',
     'grid.columns.company' => 'Société',
     'grid.columns.activity' => 'Activité',
     'grid.columns.comment' => 'Commentaire',
+    'grid.columns.first_comment' => 'Premier commentaire',
+    'grid.columns.last_comment' => 'Dernier commentaire',
     'grid.columns.action' => 'Action',
 
     'grid.columns.company.tooltip' => 'Société',
