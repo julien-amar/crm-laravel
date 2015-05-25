@@ -203,10 +203,10 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="state_dropdown">
-                                        @foreach($states as $state_label => $state_value)
+                                        @foreach($states as $state_value)
                                             <li>
                                                 <a tabindex="-1" data-value="{{ $state_value }}">
-                                                    {{ $state_label }}
+                                                {{ trans('clients.form.create.fields.state.' . $state_value) }}
                                                 </a>
                                             </li>
                                         @endforeach

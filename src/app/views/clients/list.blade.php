@@ -39,7 +39,7 @@
                 {{ trans('clients.grid.actions.add') }}
             </a>
 
-            {{ Form::button(trans('clients.grid.actions.mailing'), array('id' => 'btn-mailing', 'class' => 'btn btn-primary pull-right margin-right-10', 'data-toggle' => 'modal', 'data-target' => '#exampleModal', 'disabled' => 'disabled')) }}
+            {{ Form::button(trans('clients.grid.actions.mailing'), array('id' => 'btn-mailing', 'class' => 'btn btn-primary pull-right margin-right-10', 'data-toggle' => 'modal', 'data-target' => '#exampleModal')) }}
 
             <button data-toggle="redirect" data-event="click" data-data="#client-search" data-method="POST" data-target="{{ URL::to('clients/export') }}" class="btn btn-default pull-left">
                 {{ trans('clients.grid.actions.export') }}
@@ -413,23 +413,18 @@
 
                         <li>
                             {{ Form::label('state', trans('clients.form.advanced-search.fields.state')) }}
-                            {{ Form::hidden('state', null, array('id' => 'state')) }}
 
                             <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#state">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown">
                                     {{ trans('clients.form.advanced-search.fields.state.default') }}
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="state_dropdown">
+                                    @foreach($states as $state_value)
                                         <li>
-                                            <a tabindex="-1" data-value="">
-                                                {{ trans('clients.form.advanced-search.fields.state.all') }}
-                                            </a>
-                                        </li>
-                                    @foreach($states as $state_label => $state_value)
-                                        <li>
-                                            <a tabindex="-1" data-value="{{ $state_value }}">
-                                                {{ $state_label }}
+                                            <a tabindex="-1"  rel='nofollow'>
+                                                {{ Form::checkbox('state[]', $state_value, FALSE) }}
+                                                {{ trans('clients.form.advanced-search.fields.state.' . $state_value) }}
                                             </a>
                                         </li>
                                     @endforeach

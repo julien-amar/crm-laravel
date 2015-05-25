@@ -4,6 +4,7 @@
             <thead>
             <tr>
                 <th width="24">&nbsp;</th>
+                <th>{{ trans('clients.grid.columns.state') }}</th>
                 <th>{{ trans('clients.grid.columns.lastname') }}</th>
                 <th>{{ trans('clients.grid.columns.firstname') }}</th>
                 <th>{{ trans('clients.grid.columns.company') }}</th>
@@ -14,13 +15,12 @@
             </thead>
             <tbody>
             @foreach($results as $result)
-                @if ($result->state == 'Buyer')
-                <tr class="info">
-                @else
-                <tr class="warning">
-                @endif
+                <tr>
                     <td>
                         {{ Form::checkbox('clients[]', $result->id, FALSE, array('data-click' => 'hidden') ) }}
+                    </td>
+                    <td class="state-{{{ $result->state }}}">
+                        {{{ trans('clients.grid.columns.state.' . $result->state) }}}
                     </td>
                     <td>{{{ $result->lastname }}}</td>
                     <td>{{{ $result->firstname }}}</td>

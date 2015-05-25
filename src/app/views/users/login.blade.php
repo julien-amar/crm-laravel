@@ -22,6 +22,8 @@
 
                         {{ Form::submit(trans('users.form.login.submit'), array('class'=>'btn btn-lg btn-success btn-block'))}}
 
+                        {{ HTML::link('users/register', trans('users.form.login.register')) }}
+
                         {{ Form::hidden('_token', csrf_token(), array()) }}
                     </fieldset>
                     {{ Form::close() }}

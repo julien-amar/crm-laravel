@@ -62,11 +62,6 @@ $(document).ready(function() {
 		var clients = values.join(',');
 
 		$('#clients').val(clients);
-
-		if (clients)
-			$('#btn-mailing').removeAttr('disabled');
-		else
-			$('#btn-mailing').attr('disabled', 'disabled');
 	}
 
 	$('#client-result').on('click', 'tr', function(event) {

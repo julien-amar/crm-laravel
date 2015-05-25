@@ -89,7 +89,19 @@ class UsersController extends BaseController {
     }
 
     public function getDashboard() {
-        return View::make('users.dashboard');
+        // Nombre & liste des clients sans commentaires depuis 3 mois (pour acheteur vendeur actifs)
+        $clientWithoutComments = DB::table('clients')
+            ->where('state', '=', 'ActiveSeller')
+            ->orWhere('state', '=', 'ActiveBuyer')
+            ->leftJoin('histories', 'clients.id', '=', 'histories.client_id')
+            ->groupBy('clients.id')
+            ->having('last_comment', '>', 'DATE_SUB(NOW(),INTERVAL 3 MONTH)')
+            ->select('clients.id', DB::raw('MAX(histories.created_at) as last_comment'))
+            ->get();
+
+        return View::make('users.dashboard',array(
+            'clientWithoutComments' => $clientWithoutComments
+        ));
     }
 
     public function getLogout() {

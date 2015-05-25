@@ -15,7 +15,6 @@ class ClientsController extends BaseController {
         'zip-code' => array('address_zipcode', 'equalityPredicate'),
         'mandat' => array('mandat', 'equalityPredicate'),
         'user' => array('user_id', 'equalityPredicate'),
-        'state' => array('state', 'equalityPredicate'),
         'terrace' => array('terrace', 'equalityPredicate'),
         'extraction' => array('extraction', 'equalityPredicate'),
         'apartment' => array('apartment', 'equalityPredicate'),
@@ -23,6 +22,7 @@ class ClientsController extends BaseController {
         'licenseIII' => array('licenseIII', 'equalityPredicate'),
         'licenseIV' => array('licenseIV', 'equalityPredicate'),
 
+        'state' => array('state', 'mutipleValuePredicate'),
         'users' => array('user_id', 'mutipleValuePredicate'),
 
         'last-call-from' => array('last_relance_from', 'dateRangeEqualityPredicate'),
@@ -289,8 +289,10 @@ class ClientsController extends BaseController {
             'results' => $results,
             'users' => $users,
             'states' => array(
-                'Acheteur' => 'Buyer',
-                'Vendeur' => 'Seller'
+                'ActiveBuyer',
+                'PassiveBuyer',
+                'ActiveSeller',
+                'PassiveSeller'
             ),
             'operations' => $this->getOperations(),
             'activities' => Activity::all(),
@@ -335,8 +337,10 @@ class ClientsController extends BaseController {
         return View::make('clients.create', array(
             'client' => new Client(),
             'states' => array(
-                'Acheteur' => 'Buyer',
-                'Vendeur' => 'Seller'
+                'ActiveBuyer',
+                'PassiveBuyer',
+                'ActiveSeller',
+                'PassiveSeller'
             ),
             'activities' => Activity::all(),
             'sectors' => Sector::all(),
@@ -446,8 +450,10 @@ class ClientsController extends BaseController {
             'clientId' => $client_id,
             'client' => $client,
             'states' => array(
-                'Acheteur' => 'Buyer',
-                'Vendeur' => 'Seller'
+                'ActiveBuyer',
+                'PassiveBuyer',
+                'ActiveSeller',
+                'PassiveSeller'
             ),
             'activities' => Activity::all(),
             'sectors' => Sector::all(),

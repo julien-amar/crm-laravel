@@ -17,7 +17,8 @@ class CreateClientsTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
 
-            $table->enum('state', array('Buyer', 'Seller'));
+            $table->enum('state', array('ActiveBuyer','PassiveBuyer', 'ActiveSeller', 'PassiveSeller'));
+
             $table->integer('prix_from')->nullable();
             $table->integer('prix_to')->nullable();
             $table->integer('loyer_from')->nullable();

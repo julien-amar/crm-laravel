@@ -28,7 +28,7 @@ class ClientTableSeeder extends Seeder {
             'mail' => 'xxx@xxx.xxx',
             'last_relance' => '2014-10-10 10:10:10',
             'next_relance' => '2015-10-10 10:10:10',
-            'state' => 'Buyer',
+            'state' => 'ActiveBuyer',
             'company' => 'IBM',
             'mandat'  => '2C574FR256CN',
             'address_number' => '10',

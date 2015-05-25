@@ -7,6 +7,7 @@ return array(
     'form.login.fields.password' => 'Mot de passe',
     'form.login.fields.password.default' => 'Mot de passe',
     'form.login.submit' => 'Connexion',
+    'form.login.register' => 'Créer un compte',
 
     'form.register.title' => 'Inscription',
     'form.register.fields.login' => 'Identifiant',
@@ -35,4 +36,6 @@ return array(
 
     'logout.success' => 'You are now logged out !',
 
+    'dashboard.title' => 'Dashboard',
+    'dashboard.alerts.clientWithoutComments' => 'Clients sans commentaires (3 mois)',
 );

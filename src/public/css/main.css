@@ -28,3 +28,20 @@
 .template {
     display: none;
 }
+
+/* Clients */
+.state-ActiveBuyer, .state-ActiveSeller {
+	font-weight: bold;
+}
+
+.state-PassiveBuyer, .state-PassiveSeller {
+	font-style: italic;
+}
+
+.state-ActiveBuyer, .state-PassiveBuyer {
+	color: red;
+}
+
+.state-ActiveSeller, .state-PassiveSeller {
+	color: green;
+}
