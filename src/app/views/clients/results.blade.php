@@ -38,12 +38,12 @@
                     <td>{{{ $result->last_comment }}}</td>
 
                     <td>
-                        <a href="/clients/edit?client_id={{ $result->id }}" class="btn btn-primary" data-toggle="popover" title="{{ trans('clients.grid.actions.edit') }}" data-content="{{ trans('clients.grid.actions.edit.description') }}" data-placement="bottom">
+                        <a href="{{ URL::to('clients/edit') }}?client_id={{ $result->id }}" class="btn btn-primary" data-toggle="popover" title="{{ trans('clients.grid.actions.edit') }}" data-content="{{ trans('clients.grid.actions.edit.description') }}" data-placement="bottom">
                             <span class="glyphicon glyphicon-cog"></span>
                         </a>
 
                         @if (Auth::user()->admin)
-                        <a href="/clients/delete?client_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('clients.grid.actions.delete') }}" data-content="{{ trans('clients.grid.actions.delete.description') }}" data-placement="bottom">
+                        <a href="{{ URL::to('clients/delete') }}?client_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('clients.grid.actions.delete') }}" data-content="{{ trans('clients.grid.actions.delete.description') }}" data-placement="bottom">
                             <span class="glyphicon glyphicon-trash"></span>
                         </a>
                         @endif

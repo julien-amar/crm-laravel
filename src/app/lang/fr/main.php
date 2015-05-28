@@ -2,6 +2,7 @@
 
 return array(
     'menu.brand' => 'Cross Immobilier',
+    'menu.brand.tooltip' => 'Gestion de la relation client',
 
     'menu.client' => 'Clients',
     'menu.import' => 'Import',

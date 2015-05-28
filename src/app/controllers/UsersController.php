@@ -91,16 +91,47 @@ class UsersController extends BaseController {
     public function getDashboard() {
         // Nombre & liste des clients sans commentaires depuis 3 mois (pour acheteur vendeur actifs)
         $clientWithoutComments = DB::table('clients')
+            ->where('clients.user_id', '=', Auth::user()->id)
             ->where('state', '=', 'ActiveSeller')
             ->orWhere('state', '=', 'ActiveBuyer')
             ->leftJoin('histories', 'clients.id', '=', 'histories.client_id')
-            ->groupBy('clients.id')
+            ->groupBy('clients.id', 'clients.firstname', 'clients.lastname')
             ->having('last_comment', '>', 'DATE_SUB(NOW(),INTERVAL 3 MONTH)')
-            ->select('clients.id', DB::raw('MAX(histories.created_at) as last_comment'))
+            ->select('clients.id', 'clients.firstname', 'clients.lastname', DB::raw('MAX(histories.created_at) as last_comment'))
+            ->remember(10)
+            ->get();
+
+        // Nombre & liste de clients sans envoi mails depuis 1 mois (pour acheteur actifs)
+        $clientWithoutMailings = DB::table('clients')
+            ->where('clients.user_id', '=', Auth::user()->id)
+            ->where('clients.state', '=', 'ActiveBuyer')
+            ->where('mailings.state', '=', 'Success')
+            ->leftJoin('mailings', 'clients.id', '=', 'mailings.client_id')
+            ->groupBy('clients.id', 'clients.firstname', 'clients.lastname')
+            ->having('last_comment', '>', 'DATE_SUB(NOW(),INTERVAL 1 MONTH)')
+            ->select('clients.id', 'clients.firstname', 'clients.lastname', DB::raw('MAX(mailings.created_at) as last_comment'))
+            ->remember(10)
+            ->get();
+
+        // Nombre de clients acheteurs de la session (acheteur actifs)
+        $activeBuyers = DB::table('clients')
+            ->where('state', '=', 'ActiveBuyer')
+            ->where('user_id', '=', Auth::user()->id)
+            ->remember(10)
+            ->get();
+
+        // Nombre de clients vendeurs de la session (vendeur actifs)
+        $activeSellers = DB::table('clients')
+            ->where('state', '=', 'ActiveSeller')
+            ->where('user_id', '=', Auth::user()->id)
+            ->remember(10)
             ->get();
 
         return View::make('users.dashboard',array(
-            'clientWithoutComments' => $clientWithoutComments
+            'clientWithoutComments' => $clientWithoutComments,
+            'clientWithoutMailings' => $clientWithoutMailings,
+            'activeBuyers' => $activeBuyers,
+            'activeSellers' => $activeSellers
         ));
     }
 

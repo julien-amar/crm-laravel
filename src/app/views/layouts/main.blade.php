@@ -48,8 +48,8 @@
         @include('layouts.menu')
 
         @section('sidebar')
-            @show
-                    <!-- /.navbar-static-side -->
+        @show
+        <!-- /.navbar-static-side -->
     </nav>
 
     <div id="page-wrapper">

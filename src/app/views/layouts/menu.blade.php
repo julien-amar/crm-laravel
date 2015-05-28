@@ -5,7 +5,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#" title="Gestion de la relation client">{{ trans('main.menu.brand') }}</a>
+    <a class="navbar-brand" href="{{ URL::to('users/dashboard') }}" title="{{ trans('main.menu.brand.tooltip') }}">{{ trans('main.menu.brand') }}</a>
 </div>
 <!-- /.navbar-header -->
 

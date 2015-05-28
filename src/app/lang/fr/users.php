@@ -37,5 +37,18 @@ return array(
     'logout.success' => 'You are now logged out !',
 
     'dashboard.title' => 'Dashboard',
-    'dashboard.alerts.clientWithoutComments' => 'Clients sans commentaires (3 mois)',
+
+    'dashboard.alerts.client-without-comments' => 'Clients sans commentaires (3 mois)',
+    'dashboard.alerts.client-without-mailing' => 'Clients sans mailing (1 mois)',
+    'dashboard.alerts.active-buyers' => 'Acheteur actifs',
+    'dashboard.alerts.active-sellers' => 'Vendeur actifs',
+    
+    'dashboard.alerts.view-more' => 'Visualiser le détail',
+
+    'dashboard.modal.client-without-comments.title' => 'Clients sans commentaires (3 mois)',
+    'dashboard.modal.client-without-mailing.title' => 'Clients sans mailing (1 mois)',
+    'dashboard.modal.active-buyers.title' => 'Acheteur actifs',
+    'dashboard.modal.active-sellers.title' => 'Vendeur actifs',
+
+    'dashboard.modal.no-result' => 'Aucun résultat.'
 );

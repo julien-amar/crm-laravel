@@ -56,6 +56,9 @@
 
 </div>
 <!-- /#wrapper -->
+
+@yield('modals')
+
 <!-- jQuery -->
 {{ HTML::script('packages/jquery/jquery.min.js') }}
 {{ HTML::script('packages/jquery-loader/jquery-loader.js') }}
