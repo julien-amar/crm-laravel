@@ -205,6 +205,30 @@
                             {{ Form::label('mandat', trans('clients.form.advanced-search.fields.mandat')) }}
                             {{ Form::text('mandat', null, array('class'=>'form-control', 'placeholder' => trans('clients.form.advanced-search.fields.mandat.default') )) }}
                         </li>
+
+                        <li>
+                            {{ Form::label('with-mandat', trans('clients.form.advanced-search.fields.with-mandat')) }}
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="with-mandat_dropdown" data-toggle="dropdown">
+                                    {{ trans('clients.form.advanced-search.fields.with-mandat.default') }}
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="activity_dropdown">
+                                    <li>
+                                        <a tabindex="-1"  rel='nofollow'>
+                                            {{ Form::checkbox('with-mandat[]', '1', FALSE) }}
+                                            {{ trans('clients.form.advanced-search.fields.with-mandat.yes') }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1"  rel='nofollow'>
+                                            {{ Form::checkbox('with-mandat[]', '0', FALSE) }}
+                                            {{ trans('clients.form.advanced-search.fields.with-mandat.no') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                 </li>
 

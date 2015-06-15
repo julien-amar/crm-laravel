@@ -56,6 +56,11 @@
                 {{ Form::text('created_at', $user->created_at, array('class'=>'form-control', 'readonly' => 'readonly' )) }}
             </div>
 
+            <div class="form-group">
+                {{ Form::label('last_authentication', trans('profile.form.profile.fields.last_authentication')) }}
+                {{ Form::text('last_authentication', $user->last_authentication, array('class'=>'form-control', 'readonly' => 'readonly' )) }}
+            </div>
+
             {{ Form::submit(trans('profile.form.profile.submit'), array('class'=>'btn btn-large btn-primary btn-block'))}}
 
             {{ Form::hidden('_token', csrf_token(), array()) }}

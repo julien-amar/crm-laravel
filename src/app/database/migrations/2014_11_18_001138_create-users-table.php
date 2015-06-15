@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration {
             $table->boolean('admin');
             $table->boolean('lock');
             $table->string('email', 128)->nullable();
-            $table->rememberToken();
+            $table->dateTime('last_authentication')->nullable();
             $table->timestamps();
         });
     }

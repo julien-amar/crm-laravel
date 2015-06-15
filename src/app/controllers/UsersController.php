@@ -49,10 +49,21 @@ class UsersController extends BaseController {
         return View::make('users.login');
     }
 
+    private function updateLastConnectionDate()
+    {
+        $user = Auth::user();
+
+        $user->last_authentication = DB::raw('NOW()');
+
+        $user->save();
+    }
+
     public function postSignin() {
 
         if (Auth::attempt(array('login' => Input::get('login'), 'password' => Input::get('password'), 'lock' => 0))) {
             Session::put('user.original', Auth::user());
+
+            $this->updateLastConnectionDate();
 
             if (Auth::user()->admin) {
                 return Redirect::to('users/authentication');

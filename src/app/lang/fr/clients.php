@@ -40,6 +40,10 @@ return array(
     'form.advanced-search.fields.zip-code.default' => 'Code postale',
     'form.advanced-search.fields.mandat' => 'Mandat',
     'form.advanced-search.fields.mandat.default' => 'Mandat',
+    'form.advanced-search.fields.with-mandat' => 'Présence de mandat',
+    'form.advanced-search.fields.with-mandat.default' => 'Présence de mandat',
+    'form.advanced-search.fields.with-mandat.yes' => 'Avec mandat',
+    'form.advanced-search.fields.with-mandat.no' => 'Sans mandat',
 
     'form.advanced-search.category.offer' => 'Fiche client',
 

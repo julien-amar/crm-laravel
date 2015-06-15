@@ -17,6 +17,7 @@
                     <th>{{ trans('profile.grid.columns.login') }}</th>
                     <th>{{ trans('profile.grid.columns.fullname') }}</th>
                     <th>{{ trans('profile.grid.columns.email') }}</th>
+                    <th>{{ trans('profile.grid.columns.last_authentication') }}</th>
                     <th>{{ trans('profile.grid.columns.admin') }}</th>
                     <th>{{ trans('profile.grid.columns.lock') }}</th>
                     <th>{{ trans('profile.grid.columns.action') }}</th>
@@ -28,6 +29,7 @@
                         <td>{{{ $user->login }}}</td>
                         <td>{{{ $user->fullname }}}</td>
                         <td>{{{ $user->email }}}</td>
+                        <td>{{{ $user->last_authentication }}}</td>
 
                         <td>
                             @if($user->admin)

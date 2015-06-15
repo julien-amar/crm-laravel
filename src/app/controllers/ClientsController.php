@@ -22,6 +22,8 @@ class ClientsController extends BaseController {
         'licenseIII' => array('licenseIII', 'equalityPredicate'),
         'licenseIV' => array('licenseIV', 'equalityPredicate'),
 
+        'with-mandat' => array('mandat', 'isNullOrEmptyPredicate'),
+
         'state' => array('state', 'mutipleValuePredicate'),
         'users' => array('user_id', 'mutipleValuePredicate'),
 
@@ -65,6 +67,25 @@ class ClientsController extends BaseController {
             ->orWhere('company', 'like', '%' . $value . '%');
     }
 
+
+    private static function isNullOrEmptyPredicate($collection, $criteria, $value)
+    {
+        if (in_array('1', $value)) {
+            $collection = $collection
+                ->whereNull($criteria)
+                ->orWhere($criteria, '=', '');
+
+            if (in_array('0', $value)) {
+                $collection = $collection
+                    ->orWhere($criteria, '!=', '');
+            }
+        } else {
+            $collection = $collection
+                ->where($criteria, '!=', '');
+        }
+
+        return $collection;
+    }
     private static function equalityPredicate($collection, $criteria, $value)
     {
         return $collection->where($criteria, '=', $value);

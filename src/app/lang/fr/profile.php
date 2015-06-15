@@ -11,6 +11,7 @@ return array(
     'form.profile.fields.address' => 'Addresse',
     'form.profile.fields.address.default' => 'Addresse',
     'form.profile.fields.created_at' => 'Date de création',
+    'form.profile.fields.last_authentication' => 'Date de dernière connexion',
     'form.profile.submit' => 'Enregistrer',
 
     'form.password.title' => 'Changer de mot de passe',
@@ -26,6 +27,7 @@ return array(
     'grid.columns.login' => 'Identifiant',
     'grid.columns.fullname' => 'Nom & Prénom',
     'grid.columns.email' => 'Email',
+    'grid.columns.last_authentication' => 'Dernière connexion',
     'grid.columns.admin' => 'Administrateur',
     'grid.columns.lock' => 'Bloqué',
     'grid.columns.action' => 'Action',
