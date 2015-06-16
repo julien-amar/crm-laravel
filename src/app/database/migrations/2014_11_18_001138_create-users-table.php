@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration {
             $table->boolean('lock');
             $table->string('email', 128)->nullable();
             $table->dateTime('last_authentication')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ class ClientsController extends BaseController {
         'search' => array('-', 'agregatePredicate'),
 
         'id' => array('id', 'equalityPredicate'),
+        'user_id' => array('user_id', 'equalityPredicate'),
         'email' => array('mail', 'equalityPredicate'),
         'phone' => array('phone', 'equalityPredicate'),
         'company' => array('company', 'equalityPredicate'),
@@ -86,6 +87,7 @@ class ClientsController extends BaseController {
 
         return $collection;
     }
+
     private static function equalityPredicate($collection, $criteria, $value)
     {
         return $collection->where($criteria, '=', $value);
@@ -371,6 +373,10 @@ class ClientsController extends BaseController {
 
     private function SaveOrUpdateClient($client)
     {
+        if (Input::has('user_id') && $this->HasOriginalUserAdminRole()) {
+            $client->user_id = Input::get('user_id');
+        }
+
         $client->lastname = Input::get('lastname');
         $client->firstname = Input::get('firstname');
         $client->mail = Input::get('email');
@@ -454,6 +460,7 @@ class ClientsController extends BaseController {
             $client_id = Input::get('client_id');
         }
 
+        $users = User::all();
         $client = Client::find($client_id);
 
         $selection = [
@@ -479,7 +486,8 @@ class ClientsController extends BaseController {
             'activities' => Activity::all(),
             'sectors' => Sector::all(),
             'selection' => $selection,
-            'comments' => $client->getComments()
+            'comments' => $client->getComments(),
+            'users' => $users
         ));
     }
 

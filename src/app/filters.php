@@ -104,9 +104,9 @@ Route::filter('hasOriginalUserAdminRole', function()
         }
         else
         {
-            return Redirect::to('users/login')
+            return Redirect::to('users/dashboard')
                 ->with('message', trans('general.permission.access.denied'))
-                ->with('message.type', 'danger');
+                ->with('message-type', 'danger');
         }
     }
 });
@@ -121,9 +121,9 @@ Route::filter('canUserAccessClient', function()
 
         // User access restrictions
         if (!Auth::user()->admin && $user->user_id != Auth::user()->id) {
-            return Redirect::to('users/login')
+            return Redirect::to('users/dashboard')
                 ->with('message', trans('general.permission.access.denied'))
-                ->with('message.type', 'danger');
+                ->with('message-type', 'danger');
         }
     }
 });

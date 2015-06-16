@@ -25,6 +25,45 @@
         </div>
     @endif
 
+    @if(Session::get('user.original')->admin)
+    <!-- Administration -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> {{ trans('clients.form.edit.category.admin') }}
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {{ Form::label('user_dropdown', trans('clients.form.edit.fields.user')) }}
+                                {{ Form::hidden('user_id', $client->user_id, array('id' => 'user_id')) }}
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="user_dropdown" data-toggle="dropdown" data-hidden-target="#user_id">
+                                        {{ trans('clients.form.edit.fields.user.default') }}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="user_dropdown">
+                                        @foreach($users as $user)
+                                            <li>
+                                                <a tabindex="-1" data-value="{{ $user->id }}">
+                                                    {{ $user->fullname }} <i>({{ $user->login }})</i>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
+
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">

@@ -133,6 +133,11 @@ return array(
 
     'form.edit.title' => 'Client',
 
+    'form.edit.category.admin' => 'Administration',
+
+    'form.edit.fields.user' => 'Négociateur',
+    'form.edit.fields.user.default' => 'Négociateur',
+
     'form.edit.category.date' => 'Relance',
 
     'form.edit.fields.lastname' => 'Nom',
