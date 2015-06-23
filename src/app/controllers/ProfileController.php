@@ -17,7 +17,7 @@ class ProfileController extends BaseController {
     public function __construct() {
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth');
-        $this->beforeFilter('hasOriginalUserAdminRole', array('only' => array('getProfiles', 'getAdmin', 'getLock')));
+        $this->beforeFilter('hasOriginalUserAdminRole', array('only' => array('getProfiles', 'getAdmin', 'getLock', 'getDelete')));
     }
 
     public function getProfiles() {
@@ -109,6 +109,23 @@ class ProfileController extends BaseController {
         return Redirect::to('profile/profiles')
             ->with('message', trans('profile.validation.edit.success'))
             ->with('message-type', 'success');
+    }
+
+    public function getDelete() {
+        $userId = Input::get('user_id');
+        $user = User::find($userId);
+
+        if ($user && !$user->clients()->count()) {
+            $user->delete();
+
+            return Redirect::to('profile/profiles')
+                ->with('message', trans('profile.validation.delete.success'))
+                ->with('message-type', 'success');
+        }
+
+        return Redirect::to('profile/profiles')
+            ->with('message', trans('general.permission.access.denied'))
+            ->with('message-type', 'danger');
     }
 }
 

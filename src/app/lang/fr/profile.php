@@ -33,6 +33,9 @@ return array(
     'grid.columns.action' => 'Action',
     'grid.actions.edit' => 'Editer',
     'grid.actions.edit.description' => "Editer les informations de l'utilisateur.",
+    'grid.actions.delete' => 'Supprimer',
+    'grid.actions.delete.description' => "Supprimer cet utilisateur.",
 
-    'validation.edit.success' => 'User profile had been updated successfully.'
+    'validation.edit.success' => 'User profile had been updated successfully.',
+    'validation.delete.success' => 'User profile had been removed successfully.'
 );

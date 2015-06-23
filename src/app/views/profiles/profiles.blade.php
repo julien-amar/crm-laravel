@@ -59,6 +59,12 @@
                             <a href="/profile/profile?user_id={{ $user->id }}" class="btn btn-primary" data-toggle="popover" title="{{ trans('profile.grid.actions.edit') }}" data-content="{{ trans('profile.grid.actions.edit.description') }}" data-placement="bottom">
                                 <span class="glyphicon glyphicon-cog"></span>
                             </a>
+
+                            @if (!$user->clients()->count())
+                            <a href="/profile/delete?user_id={{ $user->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('profile.grid.actions.delete') }}" data-content="{{ trans('profile.grid.actions.delete.description') }}" data-placement="bottom">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
