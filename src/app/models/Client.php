@@ -27,13 +27,27 @@ class Client extends Eloquent {
         $mailings = $this->mailings()->get();
 
         foreach ($histories as $index => $value) {
+            $user = $value->user()->get();
+            
             $value->type = 'History';
-            $value->user_fullname = $value->user()->get()[0]->fullname;
+
+            if ($user->count()) {
+                $value->user_fullname = $value->user()->get()[0]->fullname;
+            } else {
+                $value->user_fullname = trans('clients.comment.unknown');
+            }
         }
 
         foreach ($mailings as $index => $value) {
+            $user = $value->user()->get();
+            
             $value->type = 'Mailing';
-            $value->user_fullname = $value->user()->get()[0]->fullname;
+
+            if ($user->count()) {
+                $value->user_fullname = $value->user()->get()[0]->fullname;
+            } else {
+                $value->user_fullname = trans('clients.comment.unknown');
+            }
         }
 
         $comments = array_merge($histories->toArray(), $mailings->toArray());

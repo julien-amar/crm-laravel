@@ -106,6 +106,7 @@ return array(
 
     'grid.columns.state' => 'Etat',
 
+    'grid.columns.state.' => '',
     'grid.columns.state.ActiveBuyer' => 'Acheteur',
     'grid.columns.state.PassiveBuyer' => '',
     'grid.columns.state.ActiveSeller' => 'Vendeur',
@@ -283,5 +284,7 @@ return array(
 
     'validation.create.success' => 'Client had been added successfully.',
     'validation.edit.success' => 'Client had been updated successfully.',
-    'validation.delete.success' => 'Client had been removed successfully.'
+    'validation.delete.success' => 'Client had been removed successfully.',
+
+    'comment.unknown' => 'Inconnu'
 );
