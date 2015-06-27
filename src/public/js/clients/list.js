@@ -40,6 +40,27 @@ $(document).ready(function() {
 
 	$('#client-search').submit();
 
+    // Mailing clients retrieval
+    $('#client-result').on('click', '#btn-mailing', function (event) {
+        var currentSelection = $('#clients').val();
+
+        if (!currentSelection) {
+            var url = $('#btn-mailing').attr('data-check');
+            var data = $('#client-search').serialize();
+
+            $.post(url, data)
+                .done(function (data) {
+                    var values = $.map(data, function (x) {
+                        return x.id;
+                    });
+
+                    var clients = values.join(',');
+
+                    $('#clients').val(clients);
+                });
+        }
+    });
+
 	// Mailing selection
 	function handleSelection(event, $checkbox) {
 

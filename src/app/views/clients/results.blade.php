@@ -1,5 +1,21 @@
 <div class="row">
     <div class="col-lg-12">
+        <a href="{{ URL::to('clients/create') }}" class="btn btn-info pull-right">
+            {{ trans('clients.grid.actions.add') }}
+        </a>
+
+        @if ($canExport)
+        {{ Form::button(trans('clients.grid.actions.mailing'), array('id' => 'btn-mailing', 'class' => 'btn btn-primary pull-right margin-right-10', 'data-toggle' => 'modal', 'data-target' => '#exampleModal', 'data-check' => URL::to('clients/selection'))) }}
+
+        <button data-toggle="redirect" data-event="click" data-data="#client-search" data-method="POST" data-target="{{ URL::to('clients/export') }}" class="btn btn-default pull-left">
+            {{ trans('clients.grid.actions.export') }}
+        </button>
+        @endif
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
         <table class="table table-striped table-hover table-hover-selection">
             <thead>
             <tr>

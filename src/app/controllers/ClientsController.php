@@ -138,7 +138,8 @@ class ClientsController extends BaseController {
             ->where($criteria, 'like', '%' . $value . '%');
     }
 
-    private function getExportableClient($queryFilters) {
+
+    private function getSelectableClient($queryFilters) {
         $clients = DB::table('clients')
             ->select(
                 'clients.id',
@@ -168,6 +169,12 @@ class ClientsController extends BaseController {
         }
 
         $results = $clients->distinct()->get();
+
+        return $results;
+    }
+
+    private function getExportableClient($queryFilters) {
+        $results = $this->getSelectableClient($queryFilters);
 
         foreach ($results as $result) {
             $id = $result->id;
@@ -297,6 +304,18 @@ class ClientsController extends BaseController {
         return Response::download($filename, 'export.csv', array());
     }
 
+    public function postSelection() {
+        $criterias = Input::all();
+        
+        if (!$this->HasAdminRole()) {
+            $criterias['user_id'] = Auth::user()->id;
+        }
+
+        $results = $this->getSelectableClient($criterias);
+
+        return Response::json($results);
+    }
+
     public function getList() {
         $criterias = array();
 
@@ -333,7 +352,8 @@ class ClientsController extends BaseController {
         $results = $this->getClient($criterias);
 
         return View::make('clients.results', array(
-            'results' => $results
+            'results' => $results,
+            'canExport' => !Input::has('search')
         ));
     }
 
@@ -347,7 +367,8 @@ class ClientsController extends BaseController {
         $results = $this->getClient($criterias);
 
         return View::make('clients.results', array(
-            'results' => $results
+            'results' => $results,
+            'canExport' => !Input::has('search')
         ));
     }
 
