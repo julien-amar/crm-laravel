@@ -38,12 +38,12 @@ class ImportController extends BaseController {
                 while (TRUE) {
                     $row_data = array();
 
-                    for ($col = 0; $col < 22; $col++) {
+                    for ($col = 0; $col < 30; $col++) {
                         $row_data[] = $objWorksheet->getCellByColumnAndRow($col, $row)->getValue();
                     }
                     $emptyArray = array_filter($row_data, create_function('$x','return empty($x);'));
 
-                    if (count($emptyArray) == 22)
+                    if (count($emptyArray) == 30)
                         break;
 
                     $client = new Client;
@@ -63,17 +63,55 @@ class ImportController extends BaseController {
                     $client->loyer_to = $row_data[10];
                     $client->surface_from = $row_data[11];
                     $client->surface_to = $row_data[12];
+                    $client->surface_sell_from = $row_data[13];
+                    $client->surface_sell_to = $row_data[14];
 
-                    $client->company = $row_data[13];
-                    $client->mandat = $row_data[14];
-                    $client->address_number = $row_data[15];
-                    $client->address_street = $row_data[16];
-                    $client->address_zipcode = $row_data[17];
-                    $client->address_city = $row_data[18];
+                    if ($row_data[15] == 'Oui') {
+                        $client->terrace = TRUE;
+                    } else {
+                        $client->terrace = FALSE;
+                    }
 
-                    $activities = preg_split ("/;/", $row_data[19]);
-                    $sectors = preg_split ("/;/", $row_data[20]);
-                    $comment = $row_data[21];
+                    if ($row_data[16] == 'Oui') {
+                        $client->extraction = TRUE;
+                    } else {
+                        $client->extraction = FALSE;
+                    }
+
+                    if ($row_data[17] == 'Oui') {
+                        $client->apartment = TRUE;
+                    } else {
+                        $client->apartment = FALSE;
+                    }
+
+                    if ($row_data[18] == 'Oui') {
+                        $client->licenseII = TRUE;
+                    } else {
+                        $client->licenseII = FALSE;
+                    }
+
+                    if ($row_data[19] == 'Oui') {
+                        $client->licenseIII = TRUE;
+                    } else {
+                        $client->licenseIII = FALSE;
+                    }
+
+                    if ($row_data[20] == 'Oui') {
+                        $client->licenseIV = TRUE;
+                    } else {
+                        $client->licenseIV = FALSE;
+                    }
+                    
+                    $client->company = $row_data[21];
+                    $client->mandat = $row_data[22];
+                    $client->address_number = $row_data[23];
+                    $client->address_street = $row_data[24];
+                    $client->address_zipcode = $row_data[25];
+                    $client->address_city = $row_data[26];
+
+                    $activities = preg_split ("/;/", $row_data[27]);
+                    $sectors = preg_split ("/;/", $row_data[28]);
+                    $comment = $row_data[29];
 
                     $validator = Validator::make($client->toArray(), Client::$rules['create']);
 
