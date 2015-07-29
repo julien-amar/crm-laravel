@@ -26,7 +26,7 @@
                 <th>{{ trans('clients.grid.columns.company') }}</th>
                 <th>{{ trans('clients.grid.columns.first_comment') }}</th>
                 <th>{{ trans('clients.grid.columns.last_comment') }}</th>
-                <th>{{ trans('clients.grid.columns.action') }}</th>
+                <th width="100">{{ trans('clients.grid.columns.action') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -69,7 +69,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="4">
+                <td colspan="12">
                     {{ $results->links() }}
                 </td>
             </tr>

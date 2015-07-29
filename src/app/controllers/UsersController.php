@@ -81,7 +81,9 @@ class UsersController extends BaseController {
     }
 
     public function getAuthentication() {
-        $users = User::all();
+        $users = DB::table('users')
+            ->orderBy('fullname', 'desc')
+            ->get();
 
         return View::make('users.authentication', array(
             'users' => $users,
