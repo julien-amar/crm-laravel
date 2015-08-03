@@ -15,7 +15,7 @@ class CreateActivitiesTable extends Migration {
         Schema::create('activities', function($table)
         {
             $table->increments('id')->unsigned();
-            $table->string('label', 32);
+            $table->string('label', 64);
             $table->timestamps();
         });
     }
