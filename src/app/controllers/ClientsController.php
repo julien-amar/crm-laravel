@@ -259,7 +259,13 @@ class ClientsController extends BaseController {
             return $v != '.' && $v != '..';
         });
 
-        return $operations;
+        $map = array();
+
+        foreach ($operations as $operation) {
+            $map[$operation] = file_get_contents($currentPath . $operation);
+        }
+
+        return $map;
     }
 
     public function __construct() {

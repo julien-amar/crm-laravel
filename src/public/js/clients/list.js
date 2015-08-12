@@ -150,12 +150,6 @@ $(document).ready(function() {
         $(this).hide();
     });
 
-    // Mailing edition
-    tinymce.init({
-	    selector: '#message',
-		height : 400
-	 });
-
     // Add mailing file
     $('#add-mailing').on('click', function () {
     	var target = $(this).attr('data-target');
@@ -165,5 +159,14 @@ $(document).ready(function() {
     	$(template).clone().appendTo($(target));
     });
 
+    // Set mailing operation
+    $('.operation_dropdown_entry a').on('click', function () {
+        var target = $(this).attr('data-value');
+        var template = $('#' + target).html();
+
+        tinyMCE.get('message').setContent(template);
+    });
+
+    // Trigger client search on page loading
     $('#client-search input[type=submit]').click();
 });

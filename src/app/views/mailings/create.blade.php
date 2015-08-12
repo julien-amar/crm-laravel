@@ -18,13 +18,13 @@
                     {{ Form::label('operation_dropdown', trans('mailings.form.create.fields.operation')) }}
                     {{ Form::hidden('operation', NULL, array('id' => 'operation')) }}
                     <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="state_dropdown" data-toggle="dropdown" data-hidden-target="#operation">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="operation_dropdown" data-toggle="dropdown" data-hidden-target="#operation">
                             {{ trans('mailings.form.create.fields.operation.default') }}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="soperation_dropdown">
-                            @foreach($operations as $operation)
-                                <li>
+                            @foreach($operations as $operation => $content)
+                                <li class="operation_dropdown_entry">
                                     <a tabindex="-1" data-value="{{ $operation }}">
                                         {{ trans('mailings.form.create.fields.operations.' . $operation) }}
                                     </a>
@@ -60,8 +60,6 @@
                         </li>
                     </div>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 {{ Form::button(trans('mailings.form.create.action.close'), array('class'=>'btn btn-default', 'data-dismiss' => 'modal'))}}
@@ -76,3 +74,9 @@
 <div class="template template-mailing">
     {{ Form::file('file[]') }}
 </div>
+
+@foreach($operations as $operation => $content)
+    <div id="{{ $operation }}" style="display: none;">
+        {{ $content }}
+    </div>
+@endforeach

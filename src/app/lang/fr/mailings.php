@@ -32,5 +32,11 @@ return array(
     'form.create.action.close' => 'Annuler',
     'form.create.action.send' => 'Envoyer',
 
+    'form.delete.title' => 'Suppression',
+    'form.delete.label' => 'Êtes-vous certain de vouloir supprimer cet envoi ?',
+    'form.delete.submit' => 'Supprimer',
+
     'validation.send.success' => 'Mailing had been created successfully.',
+    'validation.retry.success' => "L'envoi a été mis à jour avec succès.",
+    'validation.delete.success' => "L'envoi a supprimé avec succès.",
 );

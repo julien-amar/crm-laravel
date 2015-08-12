@@ -1,7 +1,7 @@
-Bonjour %firstname% %lastname%,
-
-Sujet : BaissePrix - %subject%
-
-%message%
-
-%user fullname%
+Bonjour %firstname% %lastname%,<br />
+<br />
+Sujet : BaissePrix - %subject%<br />
+<br />
+%message%<br />
+<br />
+%user fullname%<br />

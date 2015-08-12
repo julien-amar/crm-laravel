@@ -48,7 +48,51 @@ class MailingsController extends BaseController {
     }
 
     public function __construct() {
+        $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth');
+        $this->beforeFilter('hasOriginalUserAdminRole');
+    }
+
+    public function getRetry() {
+        $mailing_id = Input::get('mailing_id');
+
+        $mailing = Mailing::find($mailing_id);
+
+        if ($mailing) {
+            $mailing->state = 'Todo';
+
+            $mailing->save();
+
+            return Redirect::to('mailings/list')
+                ->with('message', trans('mailings.validation.retry.success'))
+                ->with('message-type', 'success');
+        }
+
+        return Redirect::to('mailings/list')
+            ->with('message', trans('errors.occured'))
+            ->with('message-type', 'danger');
+    }
+
+    public function getDelete() {
+        $mailing_id = Input::get('mailing_id');
+
+        $mailing = Mailing::find($mailing_id);
+
+        return View::make('mailings.delete', array(
+            'mailing' => $mailing
+        ));
+    }
+
+    public function postDelete() {
+        $mailing_id = Input::get('mailing_id');
+
+        $mailing = Mailing::find($mailing_id);
+
+        $mailing->delete();
+
+        return Redirect::to('mailings/list')
+            ->with('message', trans('mailings.validation.delete.success'))
+            ->with('message-type', 'success');
     }
 
     public function getResults() {

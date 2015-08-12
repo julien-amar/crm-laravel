@@ -23,12 +23,12 @@
 
                     <td>
                         @if ($result->state == 'Error')
-                            <a href="/mailings/retry?mailing_id={{ $result->id }}" class="btn btn-info" data-toggle="popover" title="{{ trans('mailings.grid.actions.retry') }}" data-content="{{ trans('mailings.grid.actions.retry.description') }}" data-placement="bottom">
+                            <a href="{{ URL::to('mailings/retry') }}?mailing_id={{ $result->id }}" class="btn btn-info" data-toggle="popover" title="{{ trans('mailings.grid.actions.retry') }}" data-content="{{ trans('mailings.grid.actions.retry.description') }}" data-placement="bottom">
                                 <span class="glyphicon glyphicon-refresh"></span>
                             </a>
 
-                            <a href="/mailings/delete?mailing_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('mailings.grid.actions.delete') }}" data-content="{{ trans('mailings.grid.actions.delete.description') }}" data-placement="bottom">
-                                <span class="glyphicon glyphicon-close"></span>
+                            <a href="{{ URL::to('mailings/delete') }}?mailing_id={{ $result->id }}" class="btn btn-danger" data-toggle="popover" title="{{ trans('mailings.grid.actions.delete') }}" data-content="{{ trans('mailings.grid.actions.delete.description') }}" data-placement="bottom">
+                                <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         @else
                             &nbsp;
@@ -39,7 +39,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     {{ $results->links() }}
                 </td>
             </tr>

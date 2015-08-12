@@ -481,6 +481,7 @@
         tinymce.init({
             selector: "#message",
             language: 'fr_FR',
+            height: 400,
             statusbar: false
         });
     });
