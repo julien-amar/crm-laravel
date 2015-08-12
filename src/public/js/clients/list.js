@@ -168,5 +168,7 @@ $(document).ready(function() {
     });
 
     // Trigger client search on page loading
-    $('#client-search input[type=submit]').click();
+    retrieveSelection(function() {
+        $('#client-search').submit();
+    });
 });

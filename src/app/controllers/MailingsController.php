@@ -25,26 +25,15 @@ class MailingsController extends BaseController {
     }
 
     private function getMessage($client) {
-        $operation = Input::get('operation');
-        $currentPath = dirname(__FILE__) . '/../../templates/';
+        $message = Input::get('message');
 
-        $pattern = '/^[0-9a-zA-Z\-]+$/';
+        $message = str_replace('%firstname%', $client->firstname, $message);
+        $message = str_replace('%lastname%', $client->lastname, $message);
+        $message = str_replace('%subject%', Input::get('subject'), $message);
+        $message = str_replace('%user fullname%', Auth::user()->fullname, $message);
+        $message = str_replace('%reference%', Input::get('reference'), $message);
 
-        if (preg_match($pattern, $operation) === 1)
-        {
-            $message = file_get_contents($currentPath . $operation);
-
-            $message = str_replace('%firstname%', $client->firstname, $message);
-            $message = str_replace('%lastname%', $client->lastname, $message);
-            $message = str_replace('%subject%', Input::get('subject'), $message);
-            $message = str_replace('%message%', Input::get('message'), $message);
-            $message = str_replace('%user fullname%', Auth::user()->fullname, $message);
-            $message = str_replace('%reference%', Input::get('reference'), $message);
-
-            return $message;
-        }
-
-        throw new Exception('[SECURITY] $operation does not match security pattern.');
+        return $message;
     }
 
     public function __construct() {
