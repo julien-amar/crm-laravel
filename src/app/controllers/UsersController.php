@@ -101,10 +101,17 @@ class UsersController extends BaseController {
             ->with('message-type', 'success');
     }
 
+    private function getClientByUserRole() {
+        $table = DB::table('clients');
+
+        if (!$this->HasAdminRole())
+            return $table->where('clients.user_id', '=', Auth::user()->id);
+        return $table;
+    }
+
     public function getDashboard() {
         // Nombre & liste des clients sans commentaires depuis 3 mois (pour acheteur vendeur actifs)
-        $clientWithoutComments = DB::table('clients')
-            ->where('clients.user_id', '=', Auth::user()->id)
+        $clientWithoutComments = $this->getClientByUserRole()
             ->where('state', '=', 'ActiveSeller')
             ->orWhere('state', '=', 'ActiveBuyer')
             ->leftJoin('histories', 'clients.id', '=', 'histories.client_id')
@@ -115,8 +122,7 @@ class UsersController extends BaseController {
             ->get();
 
         // Nombre & liste de clients sans envoi mails depuis 1 mois (pour acheteur actifs)
-        $clientWithoutMailings = DB::table('clients')
-            ->where('clients.user_id', '=', Auth::user()->id)
+        $clientWithoutMailings = $this->getClientByUserRole()
             ->where('clients.state', '=', 'ActiveBuyer')
             ->where('mailings.state', '=', 'Success')
             ->leftJoin('mailings', 'clients.id', '=', 'mailings.client_id')
@@ -127,16 +133,14 @@ class UsersController extends BaseController {
             ->get();
 
         // Nombre de clients acheteurs de la session (acheteur actifs)
-        $activeBuyers = DB::table('clients')
+        $activeBuyers = $this->getClientByUserRole()
             ->where('state', '=', 'ActiveBuyer')
-            ->where('user_id', '=', Auth::user()->id)
             ->remember(10)
             ->get();
 
         // Nombre de clients vendeurs de la session (vendeur actifs)
-        $activeSellers = DB::table('clients')
+        $activeSellers = $this->getClientByUserRole()
             ->where('state', '=', 'ActiveSeller')
-            ->where('user_id', '=', Auth::user()->id)
             ->remember(10)
             ->get();
 
