@@ -3,63 +3,111 @@ $(document).ready(function() {
 	var searchUrl = $('#client-search').attr('action');
 
 	// Search
+    function applySelectionOnView(data)
+    {
+        var currentSelection = $('#clients').val();
+        var values = currentSelection.split(',');
+
+        values = values.filter(function (x) {
+            return x != '';
+        });
+
+        $("#client-result").html(data);
+
+        values.forEach(function (e) {
+            $("#client-result").find('#clients-' + e).prop('checked', 'checked');
+        });
+
+        $('#clients').trigger('mailing.selection.changed');
+    }
+
+    function processSubmitSearch(event, form, url) {
+        
+        event.preventDefault();
+
+        dataString = $(form).serialize();
+
+        $("#client-result").loader();
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: dataString
+        })
+        .done(function(data) {
+            applySelectionOnView(data);
+        })
+        .fail(function(request, error) {
+            alert('An error occured : ' + error);
+        });
+    }
+
 	function onSubmitSearch(event) {
 		processSubmitSearch(event, event.target, searchUrl);
 
 		lastSubmitedForm = event.target;
 	}
 
-	function processSubmitSearch(event, form, url) {
-		
-		event.preventDefault();
+    function onClickSearch(event, button) {
+        var form = $(button).parent('form');
 
-		dataString = $(form).serialize();
+        retrieveSelection(function() {
+            $(form).submit();
+        });
+    }
 
-		$("#client-result").loader();
+    $('#client-search').submit(onSubmitSearch);
+    $('#client-quick-search').submit(onSubmitSearch);
 
-        $.ajax({
-	        type: "GET",
-	        url: url,
-	        data: dataString
-        })
-        .done(function(data) {
-                $("#client-result").html(data);
-		})
-		.fail(function(request, error) {
-                $("#client-result").html(data);
-		});
-	}
-
-	$('#client-search').submit(onSubmitSearch);
-	$('#client-quick-search').submit(onSubmitSearch);
+    $('#client-search input[type=submit]').on('click', onClickSearch);
+    $('#client-quick-search button[type=submit]').on('click', onClickSearch);
 
     // Paggination
 	$('#client-result').on('click', '.pagination li a', function (event) {
 		processSubmitSearch(event, lastSubmitedForm, this.href);
 	});
 
-	$('#client-search').submit();
-
-    // Mailing clients retrieval
-    $('#client-result').on('click', '#btn-mailing', function (event) {
+    // Counter update (Mailing selection)
+    $('#clients').on('mailing.selection.changed', function () {
         var currentSelection = $('#clients').val();
+        var values = currentSelection.split(',');
 
-        if (!currentSelection) {
-            var url = $('#btn-mailing').attr('data-check');
-            var data = $('#client-search').serialize();
+        values = values.filter(function (x) {
+            return x != '';
+        });
 
-            $.post(url, data)
-                .done(function (data) {
-                    var values = $.map(data, function (x) {
-                        return x.id;
-                    });
+        var $mailingButton = $('#btn-mailing');
+        var defaultText = $mailingButton.attr('data-counter');
 
-                    var clients = values.join(',');
-
-                    $('#clients').val(clients);
-                });
+        if (values.length) {
+            $mailingButton.html(defaultText + ' (' + values.length + ')');
+            $mailingButton.prop('disabled', false);
+        } else {
+            $mailingButton.html(defaultText);
+            $mailingButton.prop('disabled', true);
         }
     });
+
+    // Mailing clients retrieval
+    function retrieveSelection(callback)
+    {
+        var url = $('#client-result').attr('data-check');
+        var data = $('#client-search').serialize();
+
+        $.post(url, data)
+            .done(function (data) {
+                var values = $.map(data, function (x) {
+                    return x.id;
+                });
+
+                var clients = values.join(',');
+
+                $('#clients').val(clients).trigger('mailing.selection.changed');
+
+                if (callback)
+                    callback();
+            });
+    }
 
 	// Mailing selection
 	function handleSelection(event, $checkbox) {
@@ -82,7 +130,7 @@ $(document).ready(function() {
 
 		var clients = values.join(',');
 
-		$('#clients').val(clients);
+		$('#clients').val(clients).trigger('mailing.selection.changed');
 	}
 
 	$('#client-result').on('click', 'tr', function(event) {
@@ -91,6 +139,15 @@ $(document).ready(function() {
         } else {
             handleSelection(event, $(event.target));
         }
+    });
+
+    // Clear Selection
+    $('#client-result').on('click', '#clear-selection', function(event) {
+        $('#client-result').find(':checkbox').attr('checked', false);
+
+        $('#clients').val('').trigger('mailing.selection.changed');
+
+        $(this).hide();
     });
 
     // Mailing edition
@@ -107,4 +164,6 @@ $(document).ready(function() {
 
     	$(template).clone().appendTo($(target));
     });
+
+    $('#client-search input[type=submit]').click();
 });

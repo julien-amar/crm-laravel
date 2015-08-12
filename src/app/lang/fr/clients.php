@@ -103,6 +103,7 @@ return array(
     'grid.actions.mailing' => '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Créer un mailing',
     'grid.actions.add' => '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un client',
     'grid.actions.export' => '<span class="glyphicon glyphicon-download" aria-hidden="true"></span> Exporter',
+    'grid.actions.clear' => 'Vider la séléection',
 
     'grid.columns.state' => 'Etat',
 

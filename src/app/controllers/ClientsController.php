@@ -220,7 +220,7 @@ class ClientsController extends BaseController {
 
         $results = $clients
             ->distinct()
-            ->paginate(10);
+            ->paginate(50);
 
         foreach ($results as $result) {
             $id = $result->id;

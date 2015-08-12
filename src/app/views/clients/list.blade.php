@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div id="client-result">
+    <div id="client-result" data-check="{{ URL::to('clients/selection') }}">
     </div>
 
 @stop

@@ -5,12 +5,16 @@
         </a>
 
         @if ($canExport)
-        {{ Form::button(trans('clients.grid.actions.mailing'), array('id' => 'btn-mailing', 'class' => 'btn btn-primary pull-right margin-right-10', 'data-toggle' => 'modal', 'data-target' => '#exampleModal', 'data-check' => URL::to('clients/selection'))) }}
+        {{ Form::button(trans('clients.grid.actions.mailing'), array('id' => 'btn-mailing', 'class' => 'btn btn-primary pull-right margin-right-10', 'data-toggle' => 'modal', 'data-target' => '#exampleModal', 'data-counter' => trans('clients.grid.actions.mailing'))) }}
 
         <button data-toggle="redirect" data-event="click" data-data="#client-search" data-method="POST" data-target="{{ URL::to('clients/export') }}" class="btn btn-default pull-left">
             {{ trans('clients.grid.actions.export') }}
         </button>
         @endif
+
+        <a id="clear-selection" href="#" data-target="#clients" class="margin-5 pull-left">
+            {{ trans('clients.grid.actions.clear') }}
+        </a>
     </div>
 </div>
 
@@ -33,7 +37,7 @@
             @foreach($results as $result)
                 <tr>
                     <td>
-                        {{ Form::checkbox('clients[]', $result->id, FALSE, array('data-click' => 'hidden') ) }}
+                        {{ Form::checkbox('clients[]', $result->id, FALSE, array('data-click' => 'hidden', 'id' => 'clients-' . $result->id) ) }}
                     </td>
                     <td class="state-{{{ $result->state }}}">
                         {{{ trans('clients.grid.columns.state.' . $result->state) }}}
