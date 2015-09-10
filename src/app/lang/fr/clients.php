@@ -3,7 +3,7 @@
 return array(
     'form.search.title' => 'Recherche',
     'form.search.fields.search' => 'Recherche',
-    'form.search.fields.search.default' => 'mot clé, code postale...',
+    'form.search.fields.search.default' => 'Nom, téléphone, email, société...',
 
     'form.advanced-search.category.date' => 'Relance',
 
@@ -103,7 +103,7 @@ return array(
     'grid.actions.mailing' => '<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> Créer un mailing',
     'grid.actions.add' => '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter un client',
     'grid.actions.export' => '<span class="glyphicon glyphicon-download" aria-hidden="true"></span> Exporter',
-    'grid.actions.clear' => 'Vider la séléection',
+    'grid.actions.clear' => 'Vider la sélection',
 
     'grid.columns.state' => 'Etat',
 

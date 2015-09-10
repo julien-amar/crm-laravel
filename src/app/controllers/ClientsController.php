@@ -62,25 +62,29 @@ class ClientsController extends BaseController {
     private static function agregatePredicate($collection, $criteria, $value)
     {
         return $collection
-            ->where('lastname', 'like', '%' . $value . '%')
-            ->orWhere('phone', 'like', '%' . $value . '%')
-            ->orWhere('mail', 'like', '%' . $value . '%')
-            ->orWhere('company', 'like', '%' . $value . '%');
+            ->where(function($query) use ($value) {
+                $query->where('lastname', 'like', '%' . $value . '%')
+                    ->orWhere('phone', 'like', '%' . $value . '%')
+                    ->orWhere('mail', 'like', '%' . $value . '%')
+                    ->orWhere('company', 'like', '%' . $value . '%');
+        });
     }
 
 
     private static function isNullOrEmptyPredicate($collection, $criteria, $value)
     {
-        if (in_array('1', $value)) {
+        if (in_array('0', $value) && in_array('1', $value)) {
+            return $collection;
+        }
+        else if (in_array('0', $value)) {
             $collection = $collection
-                ->whereNull($criteria)
-                ->orWhere($criteria, '=', '');
-
-            if (in_array('0', $value)) {
-                $collection = $collection
-                    ->orWhere($criteria, '!=', '');
-            }
-        } else {
+                ->where(function($query) use ($criteria, $value) {
+                    $query
+                        ->whereNull($criteria)
+                        ->orWhere($criteria, '=', '');
+            });
+        }
+        else {
             $collection = $collection
                 ->where($criteria, '!=', '');
         }
@@ -160,7 +164,6 @@ class ClientsController extends BaseController {
 
                 if (count($criteriaInfo) == 5) {
                     list($criteria, $criteriaPredicate, $table, $col1, $col2) = $criteriaInfo;
-
                     $clients = $this->$criteriaPredicate($clients, $table, $col1, $col2, $criteria, $queryFilterValue);
                 } else  {
                     $clients = $this->$criteriaPredicate($clients, $criteria, $queryFilterValue);
@@ -219,6 +222,7 @@ class ClientsController extends BaseController {
         }
 
         $results = $clients
+            ->orderBy('clients.lastname', 'clients.firstname')
             ->distinct()
             ->paginate(50);
 
