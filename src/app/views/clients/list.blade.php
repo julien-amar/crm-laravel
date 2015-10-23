@@ -401,19 +401,19 @@
                                 <ul class="dropdown-menu" aria-labelledby="sector_dropdown">
                                     <li>
                                         <a tabindex="-1"  rel='nofollow'>
-                                            {{ Form::checkbox('licenseII', '1', FALSE) }}
+                                            {{ Form::checkbox('licenses[]', '2', FALSE) }}
                                             {{ trans('clients.form.advanced-search.fields.license.licenseII') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a tabindex="-1"  rel='nofollow'>
-                                            {{ Form::checkbox('licenseIII', '1', FALSE) }}
+                                            {{ Form::checkbox('licenses[]', '3', FALSE) }}
                                             {{ trans('clients.form.advanced-search.fields.license.licenseIII') }}
                                         </a>
                                     </li>
                                     <li>
                                         <a tabindex="-1"  rel='nofollow'>
-                                            {{ Form::checkbox('licenseIV', '1', FALSE) }}
+                                            {{ Form::checkbox('licenses[]', '4', FALSE) }}
                                             {{ trans('clients.form.advanced-search.fields.license.licenseIV') }}
                                         </a>
                                     </li>

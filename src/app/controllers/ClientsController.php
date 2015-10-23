@@ -19,9 +19,6 @@ class ClientsController extends BaseController {
         'terrace' => array('terrace', 'equalityPredicate'),
         'extraction' => array('extraction', 'equalityPredicate'),
         'apartment' => array('apartment', 'equalityPredicate'),
-        'licenseII' => array('licenseII', 'equalityPredicate'),
-        'licenseIII' => array('licenseIII', 'equalityPredicate'),
-        'licenseIV' => array('licenseIV', 'equalityPredicate'),
 
         'with-mandat' => array('mandat', 'isNullOrEmptyPredicate'),
 
@@ -45,6 +42,8 @@ class ClientsController extends BaseController {
         'surface-to' => array('surface_to', 'rangeEqualityPredicate'),
         'surface-sell-from' => array('surface_sell_from', 'rangeEqualityPredicate'),
         'surface-sell-to' => array('surface_sell_to', 'rangeEqualityPredicate'),
+
+        'licenses' => array('license', 'licensesValuePredicate'),
 
         'activities' => array('activity_id', 'mutipleValueJoinPredicate', 'clients_activities', 'clients.id', 'clients_activities.client_id'),
         'sectors' => array('sector_id', 'mutipleValueJoinPredicate', 'clients_sectors', 'clients.id', 'clients_sectors.client_id'),
@@ -142,6 +141,26 @@ class ClientsController extends BaseController {
             ->where($criteria, 'like', '%' . $value . '%');
     }
 
+    private static function licensesValuePredicate($collection, $criteria, $values)
+    {
+        return $collection
+                ->where(function($query) use ($criteria, $values) {
+                    $number = '';
+
+                    foreach ($values as $value) {
+
+                        if ($value == '2')
+                            $field = $criteria . 'II';
+                        else if  ($value == '3')
+                            $field = $criteria . 'III';
+                        else if  ($value == '4')
+                            $field = $criteria . 'IV';
+
+                        $query
+                            ->orWhere($field, '=', '1');
+                    }
+            });
+    }
 
     private function getSelectableClient($queryFilters) {
         $clients = DB::table('clients')
