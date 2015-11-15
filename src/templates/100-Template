@@ -2,6 +2,6 @@ Bonjour %firstname% %lastname%,<br />
 <br />
 Sujet : %subject%<br />
 <br />
-%message%<br />
+This is a test message<br />
 <br />
 %user fullname%<br />

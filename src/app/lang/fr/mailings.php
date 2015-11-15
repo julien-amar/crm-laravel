@@ -23,9 +23,7 @@ return array(
     'form.create.fields.message' => 'Message',
     'form.create.fields.message.default' => 'Message',
 
-    'form.create.fields.operations.100-BaissePrix' => 'Baisse de prix',
-    'form.create.fields.operations.100-NouveauBilan' => 'Nouveau bilan',
-    'form.create.fields.operations.200-Autre' => 'Autre...',
+    'form.create.fields.operations.100-Template' => 'Template',
 
     'form.create.fields.file' => 'Ajouter un fichier',
 

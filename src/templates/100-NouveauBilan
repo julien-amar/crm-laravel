@@ -1,7 +1,0 @@
-Bonjour %firstname% %lastname%,<br />
-<br />
-Sujet : NouveauBilan - %subject%<br />
-<br />
-%message%<br />
-<br />
-%user fullname%<br />
