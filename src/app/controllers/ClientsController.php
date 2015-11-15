@@ -34,14 +34,53 @@ class ClientsController extends BaseController {
         'update-date-from' => array('updated_at_from', 'dateRangeEqualityPredicate'),
         'update-date-to' => array('updated_at_to', 'dateRangeEqualityPredicate'),
 
-        'price-from' => array('prix_from', 'rangeEqualityPredicate'),
-        'price-to' => array('prix_to', 'rangeEqualityPredicate'),
-        'rent-from' => array('loyer_from', 'rangeEqualityPredicate'),
-        'rent-to' => array('loyer_to', 'rangeEqualityPredicate'),
-        'surface-from' => array('surface_from', 'rangeEqualityPredicate'),
-        'surface-to' => array('surface_to', 'rangeEqualityPredicate'),
-        'surface-sell-from' => array('surface_sell_from', 'rangeEqualityPredicate'),
-        'surface-sell-to' => array('surface_sell_to', 'rangeEqualityPredicate'),
+        'price-from' => array(array(
+            'prix_from',
+            'prix_to',
+            'price-from',
+            'price-to'), 'rangeEqualityPredicate'),
+
+        'price-to' => array(array(
+            'prix_from',
+            'prix_to',
+            'price-from',
+            'price-to'), 'rangeEqualityPredicate'),
+
+        'rent-from' => array(array(
+            'loyer_from',
+            'loyer_to',
+            'rent-from',
+            'rent-to'), 'rangeEqualityPredicate'),
+
+        'rent-to' => array(array(
+            'loyer_from',
+            'loyer_to',
+            'rent-from',
+            'rent-to'), 'rangeEqualityPredicate'),
+        
+        'surface-from' => array(array(
+            'surface_from',
+            'surface_to',
+            'surface-from',
+            'surface-to'), 'rangeEqualityPredicate'),
+
+        'surface-to' => array(array(
+            'surface_from',
+            'surface_to',
+            'surface-from',
+            'surface-to'), 'rangeEqualityPredicate'),
+        
+        'surface-sell-from' => array(array(
+            'surface_sell_from',
+            'surface_sell_to',
+            'surface-sell-from',
+            'surface-sell-to'), 'rangeEqualityPredicate'),
+
+        'surface-sell-to' => array(array(
+            'surface_sell_from',
+            'surface_sell_to',
+            'surface-sell-from',
+            'surface-sell-to'), 'rangeEqualityPredicate'),
 
         'licenses' => array('license', 'licensesValuePredicate'),
 
@@ -103,12 +142,18 @@ class ClientsController extends BaseController {
 
     private static function rangeEqualityPredicate($collection, $criteria, $value)
     {
-        if (strstr($criteria, '_from') === FALSE) {
-            return $collection->where($criteria, '<=', $value);
-        }
-        else {
-            return $collection->where($criteria, '>=', $value);
-        }
+        list($fromField, $toField, $inputFromField, $inputToField) = $criteria;
+
+        $fromFilterValue = Input::has($inputFromField) ? Input::get($inputFromField) : 0;
+        $toFilterValue = Input::has($inputToField) ? Input::get($inputToField) : 10000000;
+
+        //WHERE NOT (client_price_from > IFNULL(filter_price_to, 1000000) OR (client_price_to < IFNULL(filter_price_from, 0) AND client_price_to > 0) ) 
+        $query = 'NOT (' . $fromField . ' > ? OR (' . $toField . ' < ? AND ' . $toField . ' > 0))';
+
+        //echo $query;
+        //print_r(array($toFilterValue, $fromFilterValue));
+
+        return $collection->whereRaw($query, array($toFilterValue, $fromFilterValue));
     }
 
     private static function dateRangeEqualityPredicate($collection, $criteria, $value)
@@ -241,7 +286,8 @@ class ClientsController extends BaseController {
         }
 
         $results = $clients
-            ->orderBy('clients.lastname', 'clients.firstname')
+            ->orderBy('clients.lastname', 'asc')
+            ->orderBy('clients.firstname', 'asc')
             ->distinct()
             ->paginate(50);
 
