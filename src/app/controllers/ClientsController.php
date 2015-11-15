@@ -275,17 +275,20 @@ class ClientsController extends BaseController {
     }
 
     private function getOperations() {
+        $signatureFilename = '000-Signature';
         $currentPath = dirname(__FILE__) . '/../../templates/';
         $operations = scandir($currentPath);
 
         $operations = array_filter($operations, function($v) {
-            return $v != '.' && $v != '..';
+            return $v != '.' && $v != '..' && $v != $signatureFilename;
         });
 
         $map = array();
 
         foreach ($operations as $operation) {
             $map[$operation] = file_get_contents($currentPath . $operation);
+
+            $map[$operation] = $map[$operation] . file_get_contents($currentPath . $signatureFilename);
         }
 
         return $map;
