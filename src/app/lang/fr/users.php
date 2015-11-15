@@ -38,8 +38,8 @@ return array(
 
     'dashboard.title' => 'Dashboard',
 
-    'dashboard.alerts.client-without-comments' => 'Clients sans commentaires (3 mois)',
-    'dashboard.alerts.client-without-mailing' => 'Clients sans mailing (1 mois)',
+    'dashboard.alerts.client-without-comments' => 'Clients sans commentaires<br/>(3 mois)',
+    'dashboard.alerts.client-without-mailing' => 'Clients sans mailing<br/>(1 mois)',
     'dashboard.alerts.active-buyers' => 'Acheteur actifs',
     'dashboard.alerts.active-sellers' => 'Vendeur actifs',
     
