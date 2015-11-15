@@ -279,7 +279,7 @@ class ClientsController extends BaseController {
         $currentPath = dirname(__FILE__) . '/../../templates/';
         $operations = scandir($currentPath);
 
-        $operations = array_filter($operations, function($v) {
+        $operations = array_filter($operations, function($v) use ($signatureFilename) {
             return $v != '.' && $v != '..' && $v != $signatureFilename;
         });
 
